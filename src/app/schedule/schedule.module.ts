@@ -1,9 +1,10 @@
+import { MyPaginationModule } from './../shared/my-pagination/my-pagination.module';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SharedModule } from './../shared/shared.module';
+import { PopUpModule } from './../shared/popUp/popUp.module';
 
 import { ScheduleComponent } from './schedule.component';
 import { ScheduleInputComponent } from './schedule-input/schedule-input.component';
@@ -20,7 +21,11 @@ import { MyDatepickerComponent } from './../shared/my-datepicker/my-datepicker.c
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
+    
+    PopUpModule,
+    MyPaginationModule,
+
+
     TimepickerModule.forRoot(),
     DropdownModule.forRoot(),
     DatepickerModule.forRoot(),

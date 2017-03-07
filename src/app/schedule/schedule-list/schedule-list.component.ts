@@ -18,6 +18,8 @@ export class ScheduleListComponent implements OnInit {
 		public toast: ToastComponent
 	) { }
 
+	currentPage = 1;
+	itemsPerPage = 1;
 	schedules = [];
 
 	ngOnInit() {

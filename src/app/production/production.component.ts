@@ -13,14 +13,16 @@ export class ProductionComponent implements OnInit {
     private productionService: ProductionService ,
     private popup: PopUpComponent) { }
 
+    public collection: any[] = [1,2,3,4,5,6,7];  
+
   ngOnInit() {
   }
-
   
   add() {
     this.popup.open('新增產品');
   }
-
+ 
+ 
   callBackFun(){
     this.productionService.clearEdit();
   }

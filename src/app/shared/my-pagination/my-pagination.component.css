@@ -1,0 +1,10 @@
+.myInput{
+  padding-left: 1em;
+}
+.myInput>input{
+  display: inline-block;
+  padding: 0;
+  height: 34px;   
+  width: 34px;   
+  text-align: center;
+}

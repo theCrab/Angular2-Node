@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PopUpComponent } from './../shared/popUp/popUp.component';
+import { PopUpComponent } from './../popUp/popUp.component';
 
 @NgModule({
     imports: [
         CommonModule,
     ],
     declarations: [
-        PopUpComponent
+        PopUpComponent,
     ],
     providers: [
-        PopUpComponent
+        PopUpComponent,
     ],
     exports: [
-        PopUpComponent
+        PopUpComponent,
     ]
 })
-export class SharedModule { }
+export class PopUpModule { }

@@ -57,7 +57,6 @@ import { routing } from './app.routing';
     DropdownModule.forRoot(),
     TimepickerModule.forRoot(),
     DatepickerModule.forRoot(),
-
     MachineModule,
     ProductionModule,
     RunscheduleModule,

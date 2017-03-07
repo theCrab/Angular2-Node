@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ToastComponent } from './../../shared/toast/toast.component';
 import { ProductionService } from './../production.service';
@@ -15,6 +15,8 @@ export class ProductionListComponent implements OnInit {
 	constructor(private productionService: ProductionService,
 		public toast: ToastComponent, ) { }
 
+	currentPage = 1;
+	itemsPerPage = 1;
 	productions = [];
 
 	ngOnInit() {
