@@ -1,0 +1,10 @@
+<button class="btn btn-sm btn-primary" (click)="add()">
+      <i class="fa fa-floppy-o"></i> 新增排程
+</button>
+
+
+<app-schedule-list></app-schedule-list>
+<!--[autoClose]="true"-->
+<app-popUp [popupConfig]="popup.popupConfig" (callBackFun)="callBackFun()" >
+    <app-schedule-input></app-schedule-input>
+</app-popUp>

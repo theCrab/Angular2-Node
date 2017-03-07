@@ -1,0 +1,22 @@
+<form class="form-horizontal" role="form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="formGroupInputLarge">設備編號</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" [ngModel]="device?.deviceId" formControlName="deviceId" placeholder="設備編號">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="formGroupInputLarge">資料名稱</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" [ngModel]="device?.name" formControlName="name" placeholder="資料名稱">
+        </div>
+    </div>
+
+    <hr>
+    <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>
+        <font *ngIf="production==null">新增</font>
+        <font *ngIf="production!=null">修改</font>
+    </button>
+</form>

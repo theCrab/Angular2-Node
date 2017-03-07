@@ -1,0 +1,16 @@
+<span class="icon-calendar cursorPoint Redhovre"
+      (click)="switchDateTimePicker()"
+      style="font-size: 2.2em;"></span>
+
+<!--這個是透明遮罩用來擋住下面，點擊外面會把日期選單關掉-->
+<div class="mask" *ngIf="showDatepicker" (click)="save()"></div>
+<div class="popup" *ngIf="showDatepicker">
+    <datepicker [(ngModel)]="dateModel" (selectionDone)="selectDate($event)"></datepicker>
+    <timepicker *ngIf="!onlyDate" [(ngModel)]="dateModel"  [showMeridian]="false"></timepicker>
+
+    <input *ngIf="!onlyDate" 
+            type="button" 
+            class="btn btn-sm btn-primary"
+            value="儲存" 
+            (click)="save()">
+</div>

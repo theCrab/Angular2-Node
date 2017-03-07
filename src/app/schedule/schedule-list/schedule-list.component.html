@@ -1,0 +1,17 @@
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>排程編號</th>
+      <th>產品名稱</th>
+      <th>運作設備</th>
+      <th>預計時間</th>
+      <th>建立人/<br>建立時間</th>
+      <th>狀態</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of schedules" [app-schedule-item] [item]="item"> </tr>
+  </tbody>
+</table>

@@ -1,0 +1,11 @@
+<button class="btn btn-sm btn-primary" (click)="add()">
+      <i class="fa fa-floppy-o"></i> 新增產品
+</button>
+
+
+<app-production-list></app-production-list>
+
+
+<app-popUp [popupConfig]="popup.popupConfig" (callBackFun)="callBackFun()">
+    <app-production-input></app-production-input>
+</app-popUp>

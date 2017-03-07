@@ -1,0 +1,29 @@
+<form class="form-horizontal" role="form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">產品名稱</label>
+    <div class="col-sm-4">
+      <input class="form-control" [ngModel]="production?.name" type="text" formControlName="name" placeholder="產品名稱">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">需求時間</label>
+    <div class="col-sm-4">
+      <input class="form-control" [ngModel]="production?.requireDate" type="datetime-local" formControlName="requireDate" placeholder="需求時間">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">數量</label>
+    <div class="col-sm-4">
+      <input class="form-control" [ngModel]="production?.count" type="text" formControlName="count" placeholder="數量">
+    </div>
+  </div>
+
+  <hr>
+  <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>
+        <font *ngIf="production==null">新增</font>
+        <font *ngIf="production!=null">修改</font>
+  </button>
+</form>

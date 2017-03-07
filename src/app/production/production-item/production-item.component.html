@@ -1,0 +1,25 @@
+<td>
+  <label>{{item.name}}</label>
+</td>
+<td>
+  <label>{{item.count}}</label>
+</td>
+<td>
+  <label>{{item.requireDate | date: 'yyyy-MM-dd HH:mm:ss'}}</label>
+</td>
+<td>
+  <p>{{item.creatorName}}</p>
+  <p>{{item.createData| date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+</td>
+<td>
+  <label></label>
+</td>
+<td>
+  <label></label>
+</td>
+<td>
+  <label>
+          <button class="btn btn-sm btn-warning" (click)="switchEdit(item)"><i class="fa fa-pencil"></i> 修改</button>
+          <button class="btn btn-sm btn-danger" (click)="onDelete(item)"><i class="fa fa-trash"></i> 刪除</button>
+  </label>
+</td>

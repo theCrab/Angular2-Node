@@ -1,0 +1,38 @@
+<form class="form-horizontal" role="form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <!--預計時間-->
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">預計時間</label>
+    <div class="col-sm-4">
+      <input class="form-control" type="text" id="formGroupInputLarge" placeholder="預計時間" [ngModel]="choiceDate | date: 'yyyy-MM-dd HH:mm:ss'"
+        formControlName="scheduleDate">
+    </div>
+    <div class="col-sm-1">
+      <my-datepicker [dateModel]="choiceDate" [onlyDate]="false" (dateModelChange)="choiceDate = $event"></my-datepicker>
+    </div>
+  </div>
+  <!--產品-->
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">產品</label>
+    <div class="col-sm-4">
+
+      <select [ngModel]="schedule?.production?._id" class="form-control" formControlName="production" required> 
+      <option *ngFor="let production of productions" [ngValue]="production._id">{{production.name}}</option> 
+  </select>
+    </div>
+  </div>
+  <!--設備-->
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">設備</label>
+    <div class="col-sm-4">
+      <select [ngModel]="schedule?.device?._id" class="form-control" formControlName="device" required> 
+      <option *ngFor="let device of devices" [ngValue]="device._id">{{device.name}}</option> 
+    </select>
+    </div>
+  </div>
+
+  <hr>
+  <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>
+        <font *ngIf="schedule==null || schedule?._id==null">新增</font>
+        <font *ngIf="schedule?._id!=null">修改</font>
+  </button>
+</form>

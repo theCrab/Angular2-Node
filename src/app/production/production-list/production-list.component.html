@@ -1,0 +1,16 @@
+<table class="table table-bordered table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>產品名稱</th>
+      <th>數量</th>
+      <th>要求時間</th>
+      <th>建立人/<br>建立時間</th>
+      <th>排程</th>
+      <th>狀態</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of productions" [app-production-item] [item]="item"> </tr>
+  </tbody>
+</table>

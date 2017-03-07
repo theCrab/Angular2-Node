@@ -1,0 +1,14 @@
+<table class="table table-bordered table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>設備編號</th>
+      <th>資料名稱</th>
+      <th>建立人</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>   
+    <tr *ngFor="let item of devices" [app-device-item] [item]="item"></tr>
+  </tbody>
+</table>
+
