@@ -68,7 +68,7 @@ router.post('/', function (req, res, next) {
 
 //Alan:修改
 router.patch('/:id', function (req, res, next) {
-    
+
     var decoded = jwt.decode(req.query.token);
 
     User.findById(decoded.user._id, function (errU, user) {
@@ -115,31 +115,18 @@ router.patch('/:id', function (req, res, next) {
 
 //Alan:刪除
 router.delete('/:id', function (req, res, next) {
-    Device.findById(req.params.id, function (err, device) {
+    Device.findOneAndRemove({ _id: req.params.id }, function (err, device) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
             });
-        }
-        if (!device) {
-            return res.status(500).json({
-                title: 'No Device Found!',
-                error: { message: 'Device not found' }
-            });
-        }
-        device.remove(function (err, result) {
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                });
-            }
+        } else {
             res.status(200).json({
-                message: 'Deleted message',
-                obj: result
+                message: 'Deleted Device',
+                obj: device
             });
-        });
+        }
     });
 });
 

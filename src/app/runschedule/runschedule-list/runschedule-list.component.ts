@@ -10,6 +10,9 @@ export class RunscheduleListComponent implements OnInit {
 
   constructor(private scheduleService: ScheduleService) { }
 
+	//Alan:此頁物件
+	private currentPage: Number = 1;
+	private itemsPerPage: Number = 10;
   schedules = [];
   ngOnInit() {
 

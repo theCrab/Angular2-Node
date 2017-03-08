@@ -119,31 +119,18 @@ router.patch('/:id', function (req, res, next) {
 
 //Alan:刪除
 router.delete('/:id', function (req, res, next) {
-    Production.findById(req.params.id, function (err, production) {
+    Production.findOneAndRemove({ _id: req.params.id }, function (err, production) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
                 error: err
             });
-        }
-        if (!production) {
-            return res.status(500).json({
-                title: 'No Production Found!',
-                error: { message: 'Production not found' }
-            });
-        }
-        production.remove(function (err, result) {
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                });
-            }
+        } else {
             res.status(200).json({
-                message: 'Deleted message',
-                obj: result
+                message: 'Deleted production',
+                obj: production
             });
-        });
+        }
     });
 });
 

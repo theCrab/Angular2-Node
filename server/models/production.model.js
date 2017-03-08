@@ -2,6 +2,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var Schedule = require('./schedule.model');
+
 var schema = new Schema({
     name: { type: String, required: true },
     count: { type: Number, required: true },
@@ -16,5 +18,20 @@ var schema = new Schema({
     //Alan:這個產品可能有多個生產過程進行
     schedule: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }]
 });
+
+
+schema.post('findOneAndRemove', function (production) {
+    Schedule.find({ 'production': production }, function (err, schedule) {
+        //Alan:因為是陣列，用drop
+        schedule.forEach(function (item) {
+            item.remove();
+        })
+    });
+});
+
+// schema.pre('save', function(doc) {
+//     console.log('save');
+//     next();
+// });
 
 module.exports = mongoose.model('Production', schema);

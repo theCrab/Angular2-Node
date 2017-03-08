@@ -15,8 +15,9 @@ export class ProductionListComponent implements OnInit {
 	constructor(private productionService: ProductionService,
 		public toast: ToastComponent, ) { }
 
-	currentPage = 1;
-	itemsPerPage = 1;
+	//Alan:此頁物件
+	private currentPage: Number = 1;
+	private itemsPerPage: Number = 10;
 	productions = [];
 
 	ngOnInit() {

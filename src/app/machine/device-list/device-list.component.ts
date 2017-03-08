@@ -35,8 +35,9 @@ export class DeviceListComponent implements OnInit {
 		private toast: ToastComponent ) { }
 
 	//Alan:此頁物件
-	currentPage = 1;
-	itemsPerPage = 1;
+	private currentPage: Number = 1;
+	private itemsPerPage: Number = 10;
+	
 	private devices: Device[];
 
 	ngOnInit() {

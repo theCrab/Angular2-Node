@@ -35,7 +35,7 @@ export class MyPaginationComponent {
 
 
 
-  @Input() perPageNum: number;
+  @Input() perPageNum: number = 10;
 
   @Output() perPageChange: EventEmitter<number> = new EventEmitter<number>();
 
