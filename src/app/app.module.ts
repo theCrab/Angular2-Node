@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 //Alan:主要Component
 import { AppComponent } from './app.component';
 //Service
-import { DataService } from './services/data.service';
 import { ErrorService } from './shared/errors/error.service';
 import { DeviceService } from './machine/device.service';
 import { AuthService } from './auth/auth.service';
@@ -65,7 +64,6 @@ import { routing } from './app.routing';
   ],
   providers: [
     AuthService,
-    DataService,
     DeviceService,
     ProductionService,
     ScheduleService,

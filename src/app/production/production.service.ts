@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
@@ -12,12 +13,12 @@ export class ProductionService {
     constructor(private http: Http, private errorService: ErrorService) { }
 
     productions: Production[] = [];
-    
+
     //Alan:修改時使用
     production = new EventEmitter<Production>();
 
     get() {
-        return this.http.get('http://localhost:3000/production')
+        return this.http.get(environment.serverUrl + '/production')
             .map((response: Response) => {
                 const productions = response.json().obj;
                 let transformedList: Production[] = [];
@@ -50,7 +51,7 @@ export class ProductionService {
             ? '?token=' + localStorage.getItem('token')
             : '';
 
-        return this.http.post('http://localhost:3000/production' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl +'/production' + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 const production = new Production(
@@ -76,7 +77,7 @@ export class ProductionService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.delete('http://localhost:3000/production/' + production._id + token)
+        return this.http.delete(environment.serverUrl +'/production/' + production._id + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
@@ -89,7 +90,7 @@ export class ProductionService {
         this.production.emit(production);
     }
 
-    clearEdit(){
+    clearEdit() {
         this.production.emit(null);
     }
 
@@ -99,7 +100,7 @@ export class ProductionService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.patch('http://localhost:3000/production/' + production._id + token, body, { headers: headers })
+        return this.http.patch(environment.serverUrl +'/production/' + production._id + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 return this.productions[this.productions.indexOf(production)] = new Production(

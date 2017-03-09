@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ErrorService } from './../shared/errors/error.service';
 
 import { User } from './user.model';
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
     signup(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/user', body, { headers: headers })
+        return this.http.post(environment.serverUrl +'/user', body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
@@ -28,7 +29,7 @@ export class AuthService {
     signin(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post('http://localhost:3000/user/signin', body, { headers: headers })
+        return this.http.post(environment.serverUrl +'/user/signin', body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());

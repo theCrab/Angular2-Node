@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ErrorService } from './../shared/errors/error.service';
 
 import { Device } from './device.model';
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class DeviceService {
@@ -19,7 +20,7 @@ export class DeviceService {
     device = new EventEmitter<Device>();
 
     get() {
-        return this.http.get('http://localhost:3000/device')
+        return this.http.get(environment.serverUrl +'/device')
             .map((response: Response) => {
                 const devices = response.json().obj;
                 let transformedList: Device[] = [];
@@ -49,7 +50,7 @@ export class DeviceService {
             ? '?token=' + localStorage.getItem('token')
             : '';
 
-        return this.http.post('http://localhost:3000/device' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl +'/device' + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 const device = new Device(
@@ -72,7 +73,7 @@ export class DeviceService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.delete('http://localhost:3000/device/' + device._id + token)
+        return this.http.delete(environment.serverUrl +'/device/' + device._id + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
@@ -95,7 +96,7 @@ export class DeviceService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.patch('http://localhost:3000/device/' + device._id + token, body, { headers: headers })
+        return this.http.patch(environment.serverUrl +'/device/' + device._id + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 return this.devices[this.devices.indexOf(device)] = new Device(
