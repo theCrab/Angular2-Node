@@ -1,21 +1,36 @@
-<div class="col-md-8 col-md-offset-2">
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="firstName">姓</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+<h1>
+    Welcome Back!
+</h1>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+    <div class="top-row">
+        <div class="field-wrap">
+            <label>
+                姓<span class="req">*</span>
+              </label>
+            <input type="text" formControlName="firstName">
         </div>
-        <div class="form-group">
-            <label for="lastName">名</label>
-            <input type="text" id="lastName" class="form-control" formControlName="lastName">
+
+        <div class="field-wrap">
+            <label>
+                名<span class="req">*</span>
+              </label>
+            <input type="text" id="lastName" formControlName="lastName">
         </div>
-        <div class="form-group">
-            <label for="email">帳號</label>
-            <input type="text" id="email" class="form-control" formControlName="email">
-        </div>
-        <div class="form-group">
-            <label for="password">密碼</label>
-            <input type="password" id="password" class="form-control" formControlName="password">
-        </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">Submit</button>
-    </form>
-</div>
+    </div>
+    <div class="field-wrap">
+        <label>
+              帳號<span class="req">*</span>
+            </label>
+        <input type="email" formControlName="email">
+    </div>
+
+    <div class="field-wrap">
+        <label>
+              密碼<span class="req">*</span>
+        </label>
+        <input type="password" formControlName="password">
+    </div>
+
+    <button class="button button-block" [disabled]="!myForm.valid">Submit</button>
+</form>

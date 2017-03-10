@@ -6,7 +6,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from './../../auth.service';
 @Component({
 	selector: 'app-signin',
-	templateUrl: './signin.component.html'
+	templateUrl: './signin.component.html',
+	styleUrls: ['../authentication.component.css']
 })
 
 export class SigninComponent implements OnInit {
@@ -15,12 +16,14 @@ export class SigninComponent implements OnInit {
 
 	ngOnInit() {
 
-		const token = localStorage.getItem('token') ?
-			'?token=' + localStorage.getItem('token')
-			: '';
-		if (token !== '') {
-			this.router.navigateByUrl('/auth/logout');
-		}
+		// const token = localStorage.getItem('token') ?
+		// 	'?token=' + localStorage.getItem('token')
+		// 	: '';
+		// if (token !== '') {
+		// 	this.router.navigateByUrl('/auth/logout');
+		// }
+
+
 		this.myForm = new FormGroup({
 			email: new FormControl(null, [
 				Validators.required,
@@ -47,6 +50,11 @@ export class SigninComponent implements OnInit {
 			error => console.error(error)
 			);
 		this.myForm.reset();
+	}
+
+	changeLabel(elem) {
+		elem.className = 'active';
+		console.log(elem);
 	}
 
 	myForm: FormGroup;

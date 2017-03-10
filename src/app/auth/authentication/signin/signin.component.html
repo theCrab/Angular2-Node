@@ -1,13 +1,28 @@
-<div class="col-md-8 col-md-offset-2">
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="email">帳號</label>
-            <input type="text" id="email" class="form-control" formControlName="email">
-        </div>
-        <div class="form-group">
-            <label for="password">密碼</label>
-            <input type="password" id="password" class="form-control" formControlName="password">
-        </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">Submit</button>
-    </form>
-</div>
+<h1>
+    Welcome Back!
+</h1>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+    <div class="field-wrap">
+        <label #account>
+              帳號<span class="req">*</span>
+        </label>
+        <input type="email" 
+               [focus-change]="account"
+               formControlName="email">
+    </div>
+
+    <div class="field-wrap">
+        <label #password>
+              密碼<span class="req">*</span>
+        </label>
+        <input type="password" 
+               [focus-change]="password"
+               formControlName="password">
+    </div>
+
+    <p class="forgot"><a href="javascript:void()">Forgot Password?</a></p>
+
+    <button class="button button-block" [disabled]="!myForm.valid">登入</button>
+
+</form>
