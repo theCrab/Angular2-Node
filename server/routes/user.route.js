@@ -5,6 +5,8 @@ var jwt = require('jsonwebtoken');
 
 var User = require('../models/user.model');
 
+var Config = require('../config');
+
 //Alan:註冊
 router.post('/', function (req, res, next) {
     var user = new User({
@@ -49,7 +51,7 @@ router.post('/signin', function(req, res, next) {
             });
         }
         //Alan:jwt設定，細節請看：https://jwt.io/   https://github.com/auth0/node-jsonwebtoken     
-        var token = jwt.sign({user: user}, 'secret', {expiresIn: 86400});
+        var token = jwt.sign({user: user}, Config.jwt_secret, {expiresIn: 7200});
         res.status(200).json({
             message: 'Successfully logged in',
             token: token,
@@ -60,14 +62,19 @@ router.post('/signin', function(req, res, next) {
 
 
 //Alan:signIn
-router.post('/isLogin', function(req, res, next) {
-    jwt.verify(req.query.token, 'secret', function (err, decoded) {
+router.post('/isLoggedIn', function(req, res, next) {
+    jwt.verify(req.query.token, Config.jwt_secret, function (err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'Not Authenticated',
                 error: err
             });
         }
+        res.status(201).json({
+            message: 'login Successfully',
+            obj: true
+        });
+
     })
 });
 

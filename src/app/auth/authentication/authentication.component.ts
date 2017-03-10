@@ -12,9 +12,9 @@ export class AuthenticationComponent implements OnInit {
 
 	constructor(private authService: AuthService, private router: Router) { }
 
-	ngOnInit() { }
+	ngOnInit() {}
 
 	isLoggedIn() {
-		return this.authService.isLoggedIn();
+		// return this.authService.isLoggedIn();
 	}
 }

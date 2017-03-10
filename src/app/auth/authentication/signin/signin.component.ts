@@ -16,13 +16,10 @@ export class SigninComponent implements OnInit {
 
 	ngOnInit() {
 
-		// const token = localStorage.getItem('token') ?
-		// 	'?token=' + localStorage.getItem('token')
-		// 	: '';
-		// if (token !== '') {
+		//Alan:如果是登入狀態，就去登出的地方
+		// if (this.authService.LoginState) {
 		// 	this.router.navigateByUrl('/auth/logout');
 		// }
-
 
 		this.myForm = new FormGroup({
 			email: new FormControl(null, [

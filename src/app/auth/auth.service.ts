@@ -12,13 +12,14 @@ export class AuthService {
 
     constructor(private http: Http, private errorService: ErrorService) { }
 
+    public LoginState: Boolean = false;
     //Alan:登入成功後要去的頁面
     public redirectUrl = "runschedule";
 
     signup(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(environment.serverUrl +'/user', body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/user', body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
@@ -29,8 +30,11 @@ export class AuthService {
     signin(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(environment.serverUrl +'/user/signin', body, { headers: headers })
-            .map((response: Response) => response.json())
+        return this.http.post(environment.serverUrl + '/user/signin', body, { headers: headers })
+            .map((response: Response) => {
+                this.LoginState = true;
+                return response.json();
+            })
             .catch((error: Response) => {
                 this.errorService.handleError(error.json());
                 return Observable.throw(error.json())
@@ -39,12 +43,29 @@ export class AuthService {
 
     logout() {
         this.redirectUrl = "/auth/signin";
+        this.LoginState = false;
         localStorage.clear();
     }
 
-    isLoggedIn(url?: string) {
-        if (url)
-            this.redirectUrl = url;
-        return localStorage.getItem('token') !== null;
+
+    //ALan:加上Observable的型態，就會變成同步的，等他跑完才會執行下去
+    isLoggedIn(): Observable<boolean> {
+
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+
+        const token = localStorage.getItem('token')
+            ? '?token=' + localStorage.getItem('token')
+            : '';
+
+        return this.http.post(environment.serverUrl + '/user/isLoggedIn' + token, '', { headers: headers })
+            .map((response: Response) => {
+                this.LoginState = true
+            })
+            .catch((error: Response) => {
+                // this.errorService.handleError(error.json());
+                localStorage.clear();
+                this.LoginState = false;
+                return Observable.throw(error.json())
+            });
     }
 }
