@@ -7,6 +7,8 @@ var https = require('https');
 
 var Temperature = require('../models/temperature.model')
 
+var Config = require('../config');
+
 //Alan:取得
 router.get('/', function (req, res, next) {
     Temperature.find()

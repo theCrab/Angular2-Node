@@ -4,16 +4,17 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-authentication',
-	templateUrl: './authentication.component.html'
+	templateUrl: './authentication.component.html',
+	styleUrls: ['./authentication.component.css']
 })
 
 export class AuthenticationComponent implements OnInit {
 
-	constructor(private authService: AuthService,private router:Router) { }
+	constructor(private authService: AuthService, private router: Router) { }
 
-	ngOnInit() { }
+	ngOnInit() {}
 
-	isLoggedIn(){
-		return this.authService.isLoggedIn();
+	isLoggedIn() {
+		// return this.authService.isLoggedIn();
 	}
 }

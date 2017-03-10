@@ -1,12 +1,14 @@
-<header class="row spacing">
-    <nav class="col-md-8 col-md-offset-2">
-        <ul class="nav nav-tabs">
-            <li routerLinkActive="active"><a [routerLink]="['signup']">註冊</a></li>
-            <li routerLinkActive="active" *ngIf="!isLoggedIn()" ><a [routerLink]="['signin']">登入</a></li>
-            <li routerLinkActive="active" *ngIf="isLoggedIn()"><a [routerLink]="['logout']">登出</a></li>
-        </ul>
-    </nav>
-</header>
-<div class="row spacing">
-    <router-outlet></router-outlet>
+<div class="form">
+
+    <ul class="tab-group">
+        <li routerLinkActive="active" class="tab"><a [routerLink]="['signup']">Sign Up</a></li>
+        <li routerLinkActive="active" class="tab"><a [routerLink]="['signin']">Log In</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- tab-content -->
+
 </div>
+<!-- /form -->

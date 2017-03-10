@@ -5,6 +5,8 @@ var jwt = require('jsonwebtoken');
 var User = require('../models/user.model');
 var Production = require('../models/production.model');
 
+var Config = require('../config');
+
 //Alan:取得
 router.get('/', function (req, res, next) {
     Production.find()
@@ -24,7 +26,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.use('/', function (req, res, next) {
-    jwt.verify(req.query.token, 'secret', function (err, decoded) {
+    jwt.verify(req.query.token, Config.jwt_secret, function (err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'Not Authenticated',
