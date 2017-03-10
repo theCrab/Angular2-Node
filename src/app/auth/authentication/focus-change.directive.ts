@@ -16,8 +16,6 @@ export class FocusChangeDirective {
   @Input('focus-change') changeElem;
   //Alan:focus加上去的樣式
   @Input() activeClass: activeClass = new activeClass();
-  //Alan:
-
 
   @HostListener('focus') onfocus() {
     this.changeElem.classList.add(this.activeClass.hasvalue);
@@ -31,16 +29,4 @@ export class FocusChangeDirective {
       this.changeElem.classList.remove(this.activeClass.highlight);
     }
   }
-
-  @HostListener('keyup') onkeydown() {
-    if (this.el.nativeElement.value === '') {
-      this.changeElem.className = "";
-    } else {
-      this.changeElem.classList.add(this.activeClass.hasvalue);
-      this.changeElem.classList.add(this.activeClass.highlight);
-    }
-  }
-
-
-
 }
