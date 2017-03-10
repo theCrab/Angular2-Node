@@ -12,6 +12,8 @@ import { ProductionItemComponent } from './production-item/production-item.compo
 import { ProductionInputComponent } from './production-input/production-input.component';
 import { Ng2PaginationModule } from "ng2-pagination";
 
+import { CalendarModule, SpinnerModule } from 'primeng/primeng';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +21,10 @@ import { Ng2PaginationModule } from "ng2-pagination";
     FormsModule,
 
     PopUpModule,
-    MyPaginationModule
+    MyPaginationModule,
+    
+    CalendarModule,
+    SpinnerModule
   ],
   declarations: [
     ProductionComponent,

@@ -10,10 +10,7 @@ import { ScheduleComponent } from './schedule.component';
 import { ScheduleInputComponent } from './schedule-input/schedule-input.component';
 import { ScheduleItemComponent } from './schedule-item/schedule-item.component';
 
-import { TimepickerModule } from 'ng2-bootstrap/timepicker';
-import { DatepickerModule } from 'ng2-bootstrap/datepicker';
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
-import { MyDatepickerComponent } from './../shared/my-datepicker/my-datepicker.component';
+import { CalendarModule } from 'primeng/primeng';
 
 
 @NgModule({
@@ -21,22 +18,17 @@ import { MyDatepickerComponent } from './../shared/my-datepicker/my-datepicker.c
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    
+
     PopUpModule,
     MyPaginationModule,
+    CalendarModule
 
-
-    TimepickerModule.forRoot(),
-    DropdownModule.forRoot(),
-    DatepickerModule.forRoot(),
   ],
   declarations: [
     ScheduleComponent,
     ScheduleListComponent,
     ScheduleInputComponent,
-    ScheduleItemComponent,
-    MyDatepickerComponent
-
+    ScheduleItemComponent
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

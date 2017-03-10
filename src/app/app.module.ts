@@ -21,16 +21,6 @@ import { AuthenticationComponent } from './auth/authentication/authentication.co
 import { ToastComponent } from './shared/toast/toast.component';
 import { ScheduleListComponent } from './schedule/schedule-list/schedule-list.component';
 
-// import { MenuComponent } from './menu/menu.component';
-
-import { TimepickerModule } from 'ng2-bootstrap/timepicker';
-import { DatepickerModule } from 'ng2-bootstrap/datepicker';
-import { DropdownModule, DropdownConfig } from 'ng2-bootstrap/dropdown';
-export function getDropdownConfig(): DropdownConfig {
-  return Object.assign
-    (new DropdownConfig(), { autoClose: 'auto', keyboardNav: true });
-}
-
 
 //Custom Module
 import { MachineModule } from './machine/machine.module';
@@ -53,9 +43,6 @@ import { routing } from './app.routing';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    DropdownModule.forRoot(),
-    TimepickerModule.forRoot(),
-    DatepickerModule.forRoot(),
     MachineModule,
     ProductionModule,
     RunscheduleModule,
@@ -70,7 +57,6 @@ import { routing } from './app.routing';
 
     ErrorService,
     ToastComponent,
-    { provide: DropdownConfig, useFactory: getDropdownConfig },
 
     AppCanActivateService
   ],

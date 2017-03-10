@@ -3,11 +3,18 @@
   <div class="form-group">
     <label class="col-sm-2 control-label" for="formGroupInputLarge">預計時間</label>
     <div class="col-sm-4">
-      <input class="form-control" type="text" id="formGroupInputLarge" placeholder="預計時間" [ngModel]="choiceDate | date: 'yyyy-MM-dd HH:mm:ss'"
-        formControlName="scheduleDate">
-    </div>
-    <div class="col-sm-1">
-      <my-datepicker [dateModel]="choiceDate" [onlyDate]="false" (dateModelChange)="choiceDate = $event"></my-datepicker>
+      <p-calendar [ngModel]="schedule?.scheduleDate"
+                  [readonlyInput]="true" 
+                  [showTime]="true" 
+                  hourFormat="24"
+                  dateFormat="yy-mm-dd" 
+                  [yearNavigator]="true"
+                  [monthNavigator]="true"
+                  [yearRange]="yearRange"
+                  showIcon="true"
+                  icon="icon-calendar"
+                  placeholder="預計時間"
+                  formControlName="scheduleDate"></p-calendar>
     </div>
   </div>
   <!--產品-->
@@ -16,8 +23,9 @@
     <div class="col-sm-4">
 
       <select [ngModel]="schedule?.production?._id" class="form-control" formControlName="production" required> 
-      <option *ngFor="let production of productions" [ngValue]="production._id">{{production.name}}</option> 
-  </select>
+        <option *ngFor="let production of productions" [ngValue]="production._id">{{production.name}}</option> 
+      </select>
+      
     </div>
   </div>
   <!--設備-->
@@ -25,8 +33,8 @@
     <label class="col-sm-2 control-label" for="formGroupInputLarge">設備</label>
     <div class="col-sm-4">
       <select [ngModel]="schedule?.device?._id" class="form-control" formControlName="device" required> 
-      <option *ngFor="let device of devices" [ngValue]="device._id">{{device.name}}</option> 
-    </select>
+        <option *ngFor="let device of devices" [ngValue]="device._id">{{device.name}}</option> 
+      </select>
     </div>
   </div>
 

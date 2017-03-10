@@ -49,7 +49,7 @@ router.post('/signin', function(req, res, next) {
             });
         }
         //Alan:jwt設定，細節請看：https://jwt.io/   https://github.com/auth0/node-jsonwebtoken     
-        var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
+        var token = jwt.sign({user: user}, 'secret', {expiresIn: 86400});
         res.status(200).json({
             message: 'Successfully logged in',
             token: token,

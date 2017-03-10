@@ -10,14 +10,25 @@
   <div class="form-group">
     <label class="col-sm-2 control-label" for="formGroupInputLarge">需求時間</label>
     <div class="col-sm-4">
-      <input class="form-control" [ngModel]="production?.requireDate" type="datetime-local" formControlName="requireDate" placeholder="需求時間">
+      <p-calendar [ngModel]="production?.requireDate"
+            [readonlyInput]="true" 
+            [showTime]="true" 
+            hourFormat="24"
+            dateFormat="yy-mm-dd" 
+            [yearNavigator]="true"
+            [monthNavigator]="true"
+            [yearRange]="yearRange"
+            showIcon="true"
+            icon="icon-calendar"
+            placeholder="需求時間"
+            formControlName="requireDate"></p-calendar>
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-2 control-label" for="formGroupInputLarge">數量</label>
     <div class="col-sm-4">
-      <input class="form-control" [ngModel]="production?.count" type="text" formControlName="count" placeholder="數量">
+      <p-spinner [ngModel]="production?.count" formControlName="count" placeholder="數量"></p-spinner>
     </div>
   </div>
 

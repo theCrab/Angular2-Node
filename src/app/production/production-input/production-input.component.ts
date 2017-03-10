@@ -7,8 +7,6 @@ import { ToastComponent } from './../../shared/toast/toast.component';
 import { ProductionService } from './../production.service';
 import { Production } from './../production.model';
 
-
-
 @Component({
 	selector: 'app-production-input',
 	templateUrl: './production-input.component.html',

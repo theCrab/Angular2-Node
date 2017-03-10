@@ -27,27 +27,29 @@ export class ScheduleInputComponent implements OnInit {
     private formbuilder: FormBuilder
   ) { }
 
+  myForm: FormGroup;
+
+  private yearRange: string;
+
+  //ALan:要修改的物件
+  private schedule: Schedule;
   devices = [];
   productions = [];
 
-  //ALan:要修改的物件
-  private schedule: Schedule = new Schedule(null, null, null);
-
-  myForm: FormGroup;
-
-  private choiceDevice: Device;
-  private choiceProduction: Production;
-  private choiceDate: Date;
-
   ngOnInit() {
+
+    //預設年份往後+5年
+    this.yearRange = `${new Date().getFullYear()}:${new Date().getFullYear() + 5}`;
+
     //Alan:訂閱Service裡面的參數
     this.scheduleService.schedule.subscribe(
       (schedule: Schedule) => {
-        
-        this.schedule = schedule;
-        console.log(this.schedule);
 
-        this.choiceDate = schedule == null ? null : schedule.scheduleDate;
+        this.schedule = schedule;
+
+        if (schedule) {
+          this.schedule.scheduleDate = new Date(this.schedule.scheduleDate);
+        }
       }
     );
 
@@ -61,7 +63,6 @@ export class ScheduleInputComponent implements OnInit {
     this.deviceService.get().subscribe(
       data => {
         this.devices = data;
-        this.schedule.device = this.devices[0];
       },
       error => console.log(error)
     );
@@ -69,7 +70,6 @@ export class ScheduleInputComponent implements OnInit {
     this.productionService.get().subscribe(
       data => {
         this.productions = data;
-        this.schedule.production = this.productions[0];
       },
       error => console.log(error)
     );
