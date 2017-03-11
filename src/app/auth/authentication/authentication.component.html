@@ -1,8 +1,14 @@
-<div class="form">
-
+<div class="form" #formTag>
+    <h1>
+        Machine Ant
+    </h1>
     <ul class="tab-group">
-        <li routerLinkActive="active" class="tab"><a [routerLink]="['signup']">Sign Up</a></li>
-        <li routerLinkActive="active" class="tab"><a [routerLink]="['signin']">Log In</a></li>
+        <li routerLinkActive="active" class="tab">
+            <a [routerLink]="['signup']">註冊</a>
+        </li>
+        <li routerLinkActive="active" class="tab">
+            <a [routerLink]="['signin']">登入</a>
+        </li>
     </ul>
 
     <div class="tab-content">

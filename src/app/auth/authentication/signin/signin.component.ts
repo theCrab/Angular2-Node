@@ -16,7 +16,7 @@ export class SigninComponent implements OnInit {
 
 	ngOnInit() {
 
-		//Alan:如果是登入狀態，就去登出的地方
+		// // Alan:如果是登入狀態，就去登出的地方
 		// if (this.authService.LoginState) {
 		// 	this.router.navigateByUrl('/auth/logout');
 		// }

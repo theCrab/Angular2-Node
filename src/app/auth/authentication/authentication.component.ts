@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, HostListener, AfterViewChecked } from '@angular/core';
 
 @Component({
 	selector: 'app-authentication',
@@ -8,13 +8,25 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./authentication.component.css']
 })
 
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent implements AfterViewChecked {
 
-	constructor(private authService: AuthService, private router: Router) { }
+	@ViewChild('formTag') formTag;
 
-	ngOnInit() {}
+	constructor() { }
 
-	isLoggedIn() {
-		// return this.authService.isLoggedIn();
+	ngAfterViewChecked() {
+		//Alan:如果是載入或是點擊route事件的時候
+		if (event && (event.type == "load" || event.type == "click")) {
+			let marginHeight = (window.innerHeight - this.formTag.nativeElement.offsetHeight) * 0.5;
+
+			this.formTag.nativeElement.style.margin = `${marginHeight}px auto`;
+		}
+	}
+
+	@HostListener('window:resize', ['$event']) onResize(event) {
+		//Alan:window height decrease tag height
+		let marginHeight = (event.target.innerHeight - this.formTag.nativeElement.offsetHeight) * 0.5;
+
+		this.formTag.nativeElement.style.margin = `${marginHeight}px auto`;
 	}
 }

@@ -19,7 +19,7 @@ export class AppCanActivateService implements CanActivate {
         return this.checkLogin(url);
     }
 
-    checkLogin(url: string): Observable<boolean> | boolean {
+    checkLogin(url?: string): Observable<boolean> | boolean {
 
         if (this.authService.LoginState) { return true; }
 

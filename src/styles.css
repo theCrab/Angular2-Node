@@ -1,23 +1,26 @@
-*, *:before, *:after {
-  box-sizing: border-box;
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
 }
 
+
 /*自訂全域css*/
-.cursorPoint{
-	cursor: pointer;
+
+.cursorPoint {
+    cursor: pointer;
 }
 
 .Redhovre {
-        color: #337ab7;
+    color: #337ab7;
 }
 
-    .Redhovre:hover {
-        color: #FF4D00;
-    }
-
-.Bluehovre {
+.Redhovre:hover {
+    color: #FF4D00;
 }
 
-    .Bluehovre:hover {
-        color: skyblue;
-    }
+.Bluehovre {}
+
+.Bluehovre:hover {
+    color: skyblue;
+}

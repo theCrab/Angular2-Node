@@ -1,0 +1,11 @@
+.Alan-sidenav {
+    background-color: rgb(34, 34, 34);
+    color: rgb(255, 255, 255);
+    display: block;
+    line-height: 17.1429px;
+    position: fixed;
+    text-align: center;
+    width: 120px;
+    z-index: 1;
+    height: 100%;
+}

@@ -8,7 +8,7 @@ var User = require('../models/user.model');
 var Config = require('../config');
 
 //Alan:註冊
-router.post('/', function (req, res, next) {
+router.post('/', function(req, res, next) {
     var user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -31,7 +31,7 @@ router.post('/', function (req, res, next) {
 
 //Alan:signIn
 router.post('/signin', function(req, res, next) {
-    User.findOne({email: req.body.email}, function(err, user) {
+    User.findOne({ email: req.body.email }, function(err, user) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -41,17 +41,17 @@ router.post('/signin', function(req, res, next) {
         if (!user) {
             return res.status(401).json({
                 title: 'Login failed',
-                error: {message: 'Invalid login credentials'}
+                error: { message: 'Invalid login credentials' }
             });
         }
         if (!bcrypt.compareSync(req.body.password, user.password)) {
             return res.status(401).json({
                 title: 'Login failed',
-                error: {message: 'Invalid login credentials'}
+                error: { message: 'Invalid login credentials' }
             });
         }
         //Alan:jwt設定，細節請看：https://jwt.io/   https://github.com/auth0/node-jsonwebtoken     
-        var token = jwt.sign({user: user}, Config.jwt_secret, {expiresIn: 7200});
+        var token = jwt.sign({ user: user }, Config.jwt_secret, { expiresIn: 7200 });
         res.status(200).json({
             message: 'Successfully logged in',
             token: token,
@@ -61,9 +61,9 @@ router.post('/signin', function(req, res, next) {
 });
 
 
-//Alan:signIn
+//Alan:isLoggedIn
 router.post('/isLoggedIn', function(req, res, next) {
-    jwt.verify(req.query.token, Config.jwt_secret, function (err, decoded) {
+    jwt.verify(req.query.token, Config.jwt_secret, function(err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'Not Authenticated',

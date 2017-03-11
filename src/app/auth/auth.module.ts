@@ -7,21 +7,21 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { SigninComponent } from './authentication/signin/signin.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
 
-import { FocusChangeDirective } from './authentication/focus-change.directive';
-
 import { authRouting } from './auth.routing';
 
+import { FocusChangeDirective } from "../directive/focus-change.directive";
+
 @NgModule({
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        authRouting
+    ],
     declarations: [
         SigninComponent,
         SignupComponent,
         LogoutComponent,
         FocusChangeDirective
-    ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        authRouting
     ]
 })
 export class AuthModule {

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-TopHeader',
-  templateUrl: './TopHeader.component.html',
-  styleUrls:['./TopHeader.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class TopHeaderComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   constructor() { }
 
@@ -21,9 +21,4 @@ export class TopHeaderComponent implements OnInit {
     }
     return false;
   }
-
-  switchMenu(){
-  }
-
-
 }

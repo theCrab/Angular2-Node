@@ -17,16 +17,5 @@ export class AppComponent implements OnInit {
     public toast: ToastComponent,
     private router: Router) { }
 
-  ngOnInit() {
-    // this.authService.isLoggedIn()
-    //   .subscribe(
-    //   data => {
-    //     console.log('login Success!');
-    //   },
-    //   error => {
-    //     this.router.navigateByUrl(environment.nonAuthenticationUrl);
-    //     console.error(error)
-    //   }
-    //   );
-  }
+  ngOnInit() { }
 }
