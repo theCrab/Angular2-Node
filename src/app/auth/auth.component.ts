@@ -1,14 +1,13 @@
 import { Router } from '@angular/router';
-import { AuthService } from './../auth.service';
 import { Component, ViewChild, HostListener, AfterViewChecked } from '@angular/core';
 
 @Component({
-	selector: 'app-authentication',
-	templateUrl: './authentication.component.html',
-	styleUrls: ['./authentication.component.css']
+	selector: 'app-auth',
+	templateUrl: './auth.component.html',
+	styleUrls: ['./auth.component.css']
 })
 
-export class AuthenticationComponent implements AfterViewChecked {
+export class AuthComponent implements AfterViewChecked {
 
 	@ViewChild('formTag') formTag;
 

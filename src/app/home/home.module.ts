@@ -1,3 +1,4 @@
+import { HomeComponent } from './home.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
@@ -16,6 +17,7 @@ import { ProductionService } from "../production/production.service";
 import { ScheduleService } from "../schedule/schedule.service";
 
 import { homeRouting } from "./home.routing";
+import { NavBlack120Component } from './nav-black120/nav-black120.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { homeRouting } from "./home.routing";
     homeRouting,
   ],
   declarations: [
-  ],
+    HomeComponent,
+    NavBlack120Component
+],
   providers: [
     AppCanActivateService,
     DeviceService,

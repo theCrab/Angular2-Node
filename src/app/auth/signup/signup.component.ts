@@ -1,12 +1,13 @@
-import { User } from './../../user.model';
-import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { AuthService } from "../auth.service";
+import { User } from "../user.model";
 
 @Component({
 	selector: 'app-signup',
 	templateUrl: './signup.component.html',
-	styleUrls: ['../authentication.component.css']
+	styleUrls: ['../auth.component.css']
 })
 
 export class SignupComponent implements OnInit {

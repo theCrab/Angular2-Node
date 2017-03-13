@@ -1,13 +1,15 @@
-import { User } from './../../user.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { AuthService } from './../../auth.service';
+import { AuthService } from "../auth.service";
+import { User } from "../user.model";
+
+import { environment } from "../../../environments/environment";
 @Component({
 	selector: 'app-signin',
 	templateUrl: './signin.component.html',
-	styleUrls: ['../authentication.component.css']
+	styleUrls: ['../auth.component.css']
 })
 
 export class SigninComponent implements OnInit {
@@ -15,12 +17,6 @@ export class SigninComponent implements OnInit {
 	constructor(private authService: AuthService, private router: Router) { }
 
 	ngOnInit() {
-
-		// // Alan:如果是登入狀態，就去登出的地方
-		// if (this.authService.LoginState) {
-		// 	this.router.navigateByUrl('/auth/logout');
-		// }
-
 		this.myForm = new FormGroup({
 			email: new FormControl(null, [
 				Validators.required,

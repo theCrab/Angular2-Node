@@ -5,6 +5,11 @@ import { HttpModule } from '@angular/http';
 
 //Alan:主要Component
 import { AppComponent } from './app.component';
+//Component
+import { ErrorComponent } from './shared/errors/error.component';
+import { ToastComponent } from './shared/toast/toast.component';
+//routing
+import { routing } from './app.routing';
 //Service
 import { ErrorService } from './shared/errors/error.service';
 import { DeviceService } from './machine/device.service';
@@ -12,20 +17,6 @@ import { AuthService } from './auth/auth.service';
 import { ProductionService } from './production/production.service';
 import { ScheduleService } from './schedule/schedule.service';
 import { AppCanActivateService } from './app-canActivate.service';
-//Component
-import { ErrorComponent } from './shared/errors/error.component';
-
-
-import { ToastComponent } from './shared/toast/toast.component';
-import { ScheduleListComponent } from './schedule/schedule-list/schedule-list.component';
-
-
-import { routing } from './app.routing';
-
-
-import { AuthenticationComponent } from './auth/authentication/authentication.component';
-
-import { HomeComponent } from "./home/home.component";
 
 @NgModule({
   imports: [
@@ -39,8 +30,6 @@ import { HomeComponent } from "./home/home.component";
     AppComponent,
     ErrorComponent,
     ToastComponent,
-    AuthenticationComponent,
-    HomeComponent
   ],
   providers: [
     AuthService,
