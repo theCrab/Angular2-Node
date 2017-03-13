@@ -1,0 +1,17 @@
+.w3-sidenav {
+    width: 120px;
+    background: #222;
+}
+
+.mainContent {
+    margin-left: 120px
+}
+
+
+/* Remove margins from "page content" on small screens */
+
+@media only screen and (max-width: 600px) {
+    .mainContent {
+        margin-left: 0
+    }
+}

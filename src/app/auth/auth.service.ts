@@ -14,7 +14,7 @@ export class AuthService {
 
     public LoginState: Boolean = false;
     //Alan:登入成功後要去的頁面
-    public redirectUrl = "runschedule";
+    public redirectUrl = environment.mainPageUrl;
 
     signup(user: User) {
         const body = JSON.stringify(user);
@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     logout() {
-        this.redirectUrl = "/auth/signin";
+        this.redirectUrl = environment.mainPageUrl;
         this.LoginState = false;
         localStorage.clear();
     }

@@ -29,7 +29,13 @@ export class ProductionInputComponent implements OnInit {
 
 		//Alan:訂閱Service裡面的參數
 		this.productionService.production.subscribe(
-			(production: Production) => this.production = production
+			(production: Production) => {
+			this.production = production
+
+				if (production) {
+					this.production.requireDate = new Date(this.production.requireDate);
+				}
+			}
 		);
 
 		this.myForm = new FormGroup({
