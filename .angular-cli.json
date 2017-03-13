@@ -23,14 +23,17 @@
                 "../node_modules/primeng/resources/primeng.min.css",
                 "../node_modules/bootstrap/dist/css/bootstrap.min.css",
                 "../node_modules/font-awesome/css/font-awesome.min.css",
-                "../src/assets/css/font-style.css",
+                "assets/sweetAlert/sweetalert.css",
+                "assets/css/font-style.css",
                 "styles.css"
             ],
             "scripts": [
                 {
-                    "input": "../src/assets/JsBarcode.all.min.js",
+                    "input": "assets/JsBarcode.all.min.js",
                     "output": "JsBarcode"
                 },
+                "assets/sweetAlert/sweetalert.min.js",
+                "assets/ChangeAlertStyle.js",
                 "../node_modules/jquery/dist/jquery.min.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],

@@ -11,6 +11,10 @@ import { ToastComponent } from './shared/toast/toast.component';
 //routing
 import { routing } from './app.routing';
 //Service
+
+import { AlertConfirmComponent } from "./shared/alert-confirm/alert-confirm.component";
+import { AlertConfirmService } from './shared/alert-confirm/alert-confirm.service';
+
 import { ErrorService } from './shared/errors/error.service';
 import { DeviceService } from './machine/device.service';
 import { AuthService } from './auth/auth.service';
@@ -18,22 +22,30 @@ import { ProductionService } from './production/production.service';
 import { ScheduleService } from './schedule/schedule.service';
 import { AppCanActivateService } from './app-canActivate.service';
 
+import { ModalModule, AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+
+
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing
+    routing,
+    ModalModule.forRoot(),
+    AlertModule.forRoot()
   ],
   declarations: [
     AppComponent,
+
+    AlertConfirmComponent,
     ErrorComponent,
     ToastComponent,
   ],
   providers: [
     AuthService,
     ErrorService,
+    AlertConfirmService,
     ToastComponent,
     AppCanActivateService
   ],

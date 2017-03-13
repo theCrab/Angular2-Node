@@ -36,7 +36,8 @@ export class AuthService {
                 return response.json();
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                // this.errorService.handleError(error.json());
+                window.alert(JSON.stringify(error.json().error));
                 return Observable.throw(error.json())
             });
     }
