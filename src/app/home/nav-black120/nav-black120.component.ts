@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from "@angular/router";
+
+import { environment } from "../../../environments/environment";
+import { AuthService } from "../../auth/auth.service";
 
 @Component({
   selector: 'app-nav-black120',
   templateUrl: './nav-black120.component.html',
   styleUrls: ['./nav-black120.component.css']
 })
-export class NavBlack120Component implements OnInit {
+export class NavBlack120Component {
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
+  private mainPage = environment.mainPageUrl;
 
   private menus = [
     {
       routerLink: ['run'],
-      routerTitle: '首頁',
+      routerTitle: '執行排程',
       routerIcon: 'fa fa-home',
       routerLinkActive: 'w3-black'
     },
@@ -37,7 +42,8 @@ export class NavBlack120Component implements OnInit {
     }
   ];
 
-  ngOnInit() {
+  onLogout() {
+    this.authService.logout();
+    this.router.navigateByUrl(environment.nonAuthenticationUrl);
   }
-
 }

@@ -38,6 +38,10 @@ export class SigninComponent implements OnInit {
 			data => {
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('userId', data.userId);
+				
+				if (this.authService.redirectUrl === environment.nonAuthenticationUrl) {
+					this.authService.redirectUrl = environment.mainPageUrl;
+				}
 				this.router.navigateByUrl(this.authService.redirectUrl);
 			},
 			error => console.error(error)

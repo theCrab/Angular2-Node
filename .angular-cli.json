@@ -24,14 +24,15 @@
                 "../node_modules/bootstrap/dist/css/bootstrap.min.css",
                 "../node_modules/font-awesome/css/font-awesome.min.css",
                 "../src/assets/css/font-style.css",
-                "styles.css",
-                "assets/css/AlanStyle.css"
+                "styles.css"
             ],
             "scripts": [
                 {
                     "input": "../src/assets/JsBarcode.all.min.js",
                     "output": "JsBarcode"
-                }
+                },
+                "../node_modules/jquery/dist/jquery.min.js",
+                "../node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {

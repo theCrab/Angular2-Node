@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     logout() {
-        this.redirectUrl = "/auth/signin";
+        this.redirectUrl = environment.mainPageUrl;
         this.LoginState = false;
         localStorage.clear();
     }
