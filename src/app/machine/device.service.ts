@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { EventEmitter } from '@angular/core';
-
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs';
-import { ErrorService } from './../shared/errors/error.service';
+import { Observable } from "rxjs/Observable";
 
 import { Device } from './device.model';
 import { environment } from "../../environments/environment";
+import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
 
 @Injectable()
 export class DeviceService {
 
-    constructor(private http: Http, private errorService: ErrorService) { }
+    constructor(
+        private http: Http,
+        private alertConfirmService: AlertConfirmService
+    ) { }
 
     devices: Device[] = [];
 
@@ -20,7 +20,7 @@ export class DeviceService {
     device = new EventEmitter<Device>();
 
     get() {
-        return this.http.get(environment.serverUrl +'/device')
+        return this.http.get(environment.serverUrl + '/device')
             .map((response: Response) => {
                 const devices = response.json().obj;
                 let transformedList: Device[] = [];
@@ -37,7 +37,7 @@ export class DeviceService {
                 return transformedList;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -50,7 +50,7 @@ export class DeviceService {
             ? '?token=' + localStorage.getItem('token')
             : '';
 
-        return this.http.post(environment.serverUrl +'/device' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/device' + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 const device = new Device(
@@ -62,7 +62,7 @@ export class DeviceService {
                 return device;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
@@ -73,10 +73,10 @@ export class DeviceService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.delete(environment.serverUrl +'/device/' + device._id + token)
+        return this.http.delete(environment.serverUrl + '/device/' + device._id + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -85,7 +85,7 @@ export class DeviceService {
         this.device.emit(device);
     }
 
-    clearEdit(){
+    clearEdit() {
         this.device.emit(null);
     }
 
@@ -96,7 +96,7 @@ export class DeviceService {
         const token = localStorage.getItem('token')
             ? '?token=' + localStorage.getItem('token')
             : '';
-        return this.http.patch(environment.serverUrl +'/device/' + device._id + token, body, { headers: headers })
+        return this.http.patch(environment.serverUrl + '/device/' + device._id + token, body, { headers: headers })
             .map((response: Response) => {
                 const result = response.json();
                 return this.devices[this.devices.indexOf(device)] = new Device(
@@ -106,7 +106,7 @@ export class DeviceService {
                     result.obj.creator);
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }

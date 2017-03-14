@@ -6,17 +6,22 @@ import { HttpModule } from '@angular/http';
 //Alan:主要Component
 import { AppComponent } from './app.component';
 //Component
-import { ErrorComponent } from './shared/errors/error.component';
 import { ToastComponent } from './shared/toast/toast.component';
 //routing
 import { routing } from './app.routing';
 //Service
-import { ErrorService } from './shared/errors/error.service';
+
+import { AlertConfirmComponent } from "./shared/alert-confirm/alert-confirm.component";
+import { AlertConfirmService } from './shared/alert-confirm/alert-confirm.service';
+
 import { DeviceService } from './machine/device.service';
 import { AuthService } from './auth/auth.service';
 import { ProductionService } from './production/production.service';
 import { ScheduleService } from './schedule/schedule.service';
 import { AppCanActivateService } from './app-canActivate.service';
+
+import { ModalModule, AlertModule } from 'ng2-bootstrap';
+
 
 @NgModule({
   imports: [
@@ -24,16 +29,19 @@ import { AppCanActivateService } from './app-canActivate.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing
+    routing,
+    ModalModule.forRoot(),
+    AlertModule.forRoot()
   ],
   declarations: [
     AppComponent,
-    ErrorComponent,
+
+    AlertConfirmComponent,
     ToastComponent,
   ],
   providers: [
     AuthService,
-    ErrorService,
+    AlertConfirmService,
     ToastComponent,
     AppCanActivateService
   ],
