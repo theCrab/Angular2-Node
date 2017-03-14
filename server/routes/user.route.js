@@ -44,7 +44,8 @@ router.post('/signin', function (req, res, next) {
                 error: '不存在的帳號'
             });
         }
-        if (!bcrypt.compareSync(req.body.password, user.password)) {
+        //Alan:加空白避免爆掉
+        if (!bcrypt.compareSync(req.body.password+"", user.password)) {
             return res.status(401).json({
                 title: '登入失敗',
                 error: '帳號或密碼錯誤，請重新填寫'

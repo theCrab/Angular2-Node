@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { PopUpComponent } from './../../shared/popUp/popUp.component';
@@ -12,28 +12,28 @@ import { Production } from './../production.model';
 	templateUrl: './production-input.component.html',
 	styleUrls: ['./production-input.component.css']
 })
-export class ProductionInputComponent implements OnInit {
+export class ProductionInputComponent {
+
+	private isAdd: Boolean = true;
+	//ALan:要修改的物件
+	private production: Production;
+	myForm: FormGroup;
 
 	constructor(
 		private productionService: ProductionService,
 		public toast: ToastComponent,
-		private popup: PopUpComponent) { }
-
-
-	//ALan:要修改的物件
-	private production: Production;
-
-	myForm: FormGroup;
-
-	ngOnInit() {
-
+		private popup: PopUpComponent) {
 		//Alan:訂閱Service裡面的參數
 		this.productionService.production.subscribe(
 			(production: Production) => {
-			this.production = production
+				
+				this.production = production
 
 				if (production) {
+					this.isAdd = false;
 					this.production.requireDate = new Date(this.production.requireDate);
+				} else {
+					this.isAdd = true;
 				}
 			}
 		);
@@ -45,24 +45,9 @@ export class ProductionInputComponent implements OnInit {
 		});
 	}
 
-	onSubmit() {
-		if (this.production) {
-			this.production.name = this.myForm.value.name
-			this.production.count = this.myForm.value.count
-			this.production.requireDate = this.myForm.value.requireDate
 
-			this.productionService.update(this.production)
-				.subscribe(
-				data => {
-					this.toast.setMessage('產品修改成功.', 'success');
-					console.log(data);
-				},
-				error => {
-					this.toast.setMessage(error, 'warning');
-					console.error(error);
-				}
-				);
-		} else {
+	onSubmit() {
+		if (this.isAdd) {
 			const production = new Production(
 				this.myForm.value.name,
 				this.myForm.value.count,
@@ -77,6 +62,23 @@ export class ProductionInputComponent implements OnInit {
 				error => {
 					this.toast.setMessage(error, 'warning');
 					console.error(error)
+				}
+				);
+		} else {
+
+			this.production.name = this.myForm.value.name
+			this.production.count = this.myForm.value.count
+			this.production.requireDate = this.myForm.value.requireDate
+
+			this.productionService.update(this.production)
+				.subscribe(
+				data => {
+					this.toast.setMessage('產品修改成功.', 'success');
+					console.log(data);
+				},
+				error => {
+					this.toast.setMessage(error, 'warning');
+					console.error(error);
 				}
 				);
 		}

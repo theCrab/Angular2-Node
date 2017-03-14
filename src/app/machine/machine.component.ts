@@ -17,11 +17,11 @@ export class MachineComponent implements OnInit {
 
   add() {
     this.popup.open('新增設備');
+    this.deviceService.switchEdit(null);
   }
 
   callBackFun(){
-    // window.alert('Callback Test');
-    this.deviceService.clearEdit();
+    // this.deviceService.clearEdit();
   }
 
 

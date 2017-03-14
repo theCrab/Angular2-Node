@@ -10,20 +10,17 @@ import { Observable } from "rxjs/Observable";
 export class ToastComponent {
   @Input() message = { body: '', type: '' };
 
-  timmer: Subscription;
-
   setMessage(body, type, time = 3000) {
     this.message.body = body;
     this.message.type = type;
 
-    this.timmer = Observable.timer(time).subscribe(() => {
-      close();
-    });
+    setTimeout(() => { this.message.body = ''; }, time);
+
   }
 
   close() {
     this.message.body = '';
-    console.log('close toast');
+    // console.log('close toast');
   }
 
 }

@@ -40,7 +40,7 @@
 
   <hr>
   <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>
-        <font *ngIf="schedule==null || schedule?._id==null">新增</font>
-        <font *ngIf="schedule?._id!=null">修改</font>
+        <font *ngIf="isAdd">新增</font>
+        <font *ngIf="!isAdd">修改</font>
   </button>
 </form>

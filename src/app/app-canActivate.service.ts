@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
-import { environment } from './../environments/environment';
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs";
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthService } from './auth/auth.service';
+import { environment } from './../environments/environment';
 
 @Injectable()
 export class AppCanActivateService implements CanActivate {
@@ -14,16 +14,9 @@ export class AppCanActivateService implements CanActivate {
         private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        let url: string = state.url;
-
-        return this.checkLogin(url);
-    }
-
-    checkLogin(url?: string): Observable<boolean> | boolean {
-
         if (this.authService.LoginState) { return true; }
 
-        this.authService.redirectUrl = url;
+        this.authService.redirectUrl = state.url;
 
         return this.authService.isLoggedIn()
             .map(data => {

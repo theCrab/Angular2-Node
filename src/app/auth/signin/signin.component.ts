@@ -9,21 +9,25 @@ import { environment } from "../../../environments/environment";
 @Component({
 	selector: 'app-signin',
 	templateUrl: './signin.component.html',
-	styleUrls: ['../auth.component.css']
+	styleUrls: ['../auth.component.css', './signin.component.css']
 })
 
 export class SigninComponent implements OnInit {
 
-	constructor(private authService: AuthService, private router: Router) { }
-
-	ngOnInit() {
+	myForm: FormGroup;
+	
+	constructor(private authService: AuthService, private router: Router) {
 		this.myForm = new FormGroup({
 			email: new FormControl(null, [
 				Validators.required,
 				Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 			]),
 			password: new FormControl(null, Validators.required),
+			remeberMe: new FormControl(false)
 		});
+	}
+
+	ngOnInit() {
 	}
 
 	onSubmit() {
@@ -46,7 +50,11 @@ export class SigninComponent implements OnInit {
 			},
 			error => console.error(error)
 			);
-		this.myForm.reset({ email: user.email });
+		this.myForm.reset(
+			{
+				email: user.email,
+				remeberMe: this.myForm.value.remeberMe
+			});
 	}
 
 	changeLabel(elem) {
@@ -54,5 +62,4 @@ export class SigninComponent implements OnInit {
 		console.log(elem);
 	}
 
-	myForm: FormGroup;
 }

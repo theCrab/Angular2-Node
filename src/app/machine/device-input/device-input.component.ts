@@ -1,5 +1,5 @@
 import { PopUpComponent } from './../../shared/popUp/popUp.component';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -13,21 +13,28 @@ import { Device } from './../device.model';
   templateUrl: './device-input.component.html',
   styleUrls: ['./device-input.component.css']
 })
-export class DeviceInputComponent implements OnInit {
+export class DeviceInputComponent  {
+
+  private isAdd: Boolean = true;
+  
+  private device: Device;
+  private myForm: FormGroup;
 
   constructor(
     private deviceService: DeviceService,
     private toast: ToastComponent,
-    private popup: PopUpComponent) { }
+    private popup: PopUpComponent) {
 
-  //ALan:要修改的物件
-  private device: Device;
-
-  private myForm: FormGroup;
-  ngOnInit() {
     //Alan:訂閱Service裡面的參數
     this.deviceService.device.subscribe(
-      (device: Device) => this.device = device
+      (device: Device) => {
+        if (device) {
+          this.isAdd = false;
+        } else {
+          this.isAdd = true;
+        }
+        this.device = device
+      }
     );
 
     this.myForm = new FormGroup({
@@ -37,24 +44,7 @@ export class DeviceInputComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.device) {
-      // Edit
-      this.device.deviceId = this.myForm.value.deviceId;
-      this.device.name = this.myForm.value.name;
-
-      this.deviceService.update(this.device)
-        .subscribe(
-        data => {
-          this.toast.setMessage('設備修改成功.', 'success');
-          console.log(data)
-        },
-        error => {
-          this.toast.setMessage(error, 'warning');
-          console.error(error)
-        }
-        );
-      this.device = null;
-    } else {
+    if (this.isAdd) {
       // Create
       const device = new Device(
         null,
@@ -65,6 +55,22 @@ export class DeviceInputComponent implements OnInit {
         .subscribe(
         data => {
           this.toast.setMessage('設備建立成功.', 'success');
+          console.log(data)
+        },
+        error => {
+          this.toast.setMessage(error, 'warning');
+          console.error(error)
+        }
+        );
+    } else {
+      // Edit
+      this.device.deviceId = this.myForm.value.deviceId;
+      this.device.name = this.myForm.value.name;
+
+      this.deviceService.update(this.device)
+        .subscribe(
+        data => {
+          this.toast.setMessage('設備修改成功.', 'success');
           console.log(data)
         },
         error => {

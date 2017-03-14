@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
 import { ScheduleService } from './../schedule.service';
 import { ProductionService } from './../../production/production.service';
@@ -8,22 +8,16 @@ import { PopUpComponent } from './../../shared/popUp/popUp.component';
 import { ToastComponent } from './../../shared/toast/toast.component';
 
 import { Schedule } from './../schedule.model';
+import { AlertConfirmService } from "../../shared/alert-confirm/alert-confirm.service";
+import { AlertConfirmModel } from "../../shared/alert-confirm/alert-confirm.model";
 @Component({
   selector: '[app-schedule-item]',
   templateUrl: './schedule-item.component.html',
   styleUrls: ['./schedule-item.component.css']
 })
-export class ScheduleItemComponent implements OnInit {
+export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
-  constructor(
-    private scheduleService: ScheduleService,
-    private productionService: ProductionService,
-    private deviceService: DeviceService,
-    public toast: ToastComponent,
-    private popup: PopUpComponent
-  ) { }
   //ALan:要修改的物件
-
   @Input() item: Schedule;
 
   totalTime: any;
@@ -31,6 +25,16 @@ export class ScheduleItemComponent implements OnInit {
     color: 'red',
     text: "未生產",
     state: 0
+  }
+
+  constructor(
+    private scheduleService: ScheduleService,
+    private productionService: ProductionService,
+    private deviceService: DeviceService,
+    public toast: ToastComponent,
+    private popup: PopUpComponent,
+    private alertConfirmService: AlertConfirmService) {
+
   }
 
   ngOnInit() {
@@ -45,42 +49,45 @@ export class ScheduleItemComponent implements OnInit {
     JsBarcode(`#svg${this.item._id}`, this.item._id);
   }
 
-
-  onDelete(schedule: Schedule) {
-    this.scheduleService.delete(schedule)
-      .subscribe(
-      data => {
-        this.toast.setMessage('產品刪除成功.', 'success');
-        console.log(data)
-      },
-      error => {
-        this.toast.setMessage(error, 'warning');
-        console.error(error)
-      }
-      );
-  }
-
   switchEdit(schedule: Schedule) {
     this.scheduleService.switchEdit(schedule)
     this.popup.open(`修改排程－${schedule._id}`);
   }
 
+  onDelete(schedule: Schedule) {
+    this.alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
+      .ok(() => {
+        this.scheduleService.delete(schedule)
+          .subscribe(
+          data => {
+            this.toast.setMessage('產品刪除成功.', 'success');
+            console.log(data)
+          },
+          error => {
+            this.toast.setMessage(error, 'warning');
+            console.error(error)
+          });
+      });
+  }
+
   checkIsAction() {
-    if (this.item.actionDate != null) {
-      if (this.item.finishDate != null) {
-        this.state = {
-          color: 'blue',
-          text: "生產完成",
-          state: 2
-        }
-        //Alan:計算耗時
-        this.totalTime =
-          this.dhms(new Date(this.item.finishDate).getTime() - new Date(this.item.actionDate).getTime());
-      } else {
-        this.state = {
-          color: '#ec971f',
-          text: "生產中",
-          state: 1
+    if (this.item) {
+      if (this.item.actionDate != null) {
+        if (this.item.finishDate != null) {
+          this.state = {
+            color: 'blue',
+            text: "生產完成",
+            state: 2
+          }
+          //Alan:計算耗時
+          this.totalTime =
+            this.dhms(new Date(this.item.finishDate).getTime() - new Date(this.item.actionDate).getTime());
+        } else {
+          this.state = {
+            color: '#ec971f',
+            text: "生產中",
+            state: 1
+          }
         }
       }
     }

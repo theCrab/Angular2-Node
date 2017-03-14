@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { authRouting } from './auth.routing';
 
@@ -12,11 +12,14 @@ import { SigninComponent } from "./signin/signin.component";
 import { SignupComponent } from "./signup/signup.component";
 import { LogoutComponent } from "./logout/logout.component";
 
+import { CustomFormsModule } from 'ng2-validation'
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        authRouting
+        FormsModule,
+        authRouting,
+        CustomFormsModule
     ],
     declarations: [
         AuthComponent,

@@ -21,7 +21,7 @@ import { ScheduleService } from './schedule/schedule.service';
 import { AppCanActivateService } from './app-canActivate.service';
 
 import { ModalModule, AlertModule } from 'ng2-bootstrap';
-
+import { CustomFormsModule } from 'ng2-validation'
 
 @NgModule({
   imports: [
@@ -30,8 +30,10 @@ import { ModalModule, AlertModule } from 'ng2-bootstrap';
     ReactiveFormsModule,
     HttpModule,
     routing,
+
     ModalModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    CustomFormsModule
   ],
   declarations: [
     AppComponent,
