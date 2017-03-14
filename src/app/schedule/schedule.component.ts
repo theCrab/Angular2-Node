@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { PopUpComponent } from './../shared/popUp/popUp.component';
 
@@ -7,21 +7,18 @@ import { ScheduleService } from './../schedule/schedule.service';
   selector: 'app-schedule',
   templateUrl: './schedule.component.html'
 })
-export class ScheduleComponent implements OnInit {
+export class ScheduleComponent  {
 
   constructor(
     private scheduleService: ScheduleService ,
     private popup: PopUpComponent) { }
 
-  ngOnInit() {
-  }
-
   add() {
     this.popup.open('新增設備');
+    this.scheduleService.switchEdit(null);
   }
 
   callBackFun() {
     // window.alert('Callback Test');
-    this.scheduleService.clearEdit();
   }
 }

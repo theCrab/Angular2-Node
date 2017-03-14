@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { ScheduleService } from './../schedule.service';
@@ -16,7 +16,16 @@ import { Device } from './../../machine/device.model';
   templateUrl: './schedule-input.component.html',
   styleUrls: ['./schedule-input.component.css']
 })
-export class ScheduleInputComponent implements OnInit {
+export class ScheduleInputComponent {
+
+	private isAdd: Boolean = true;
+  myForm: FormGroup;
+  //ALan:要修改的物件
+  private schedule: Schedule;
+  devices = [];
+  productions = [];
+
+  private yearRange: string;
 
   constructor(
     private scheduleService: ScheduleService,
@@ -24,19 +33,7 @@ export class ScheduleInputComponent implements OnInit {
     private deviceService: DeviceService,
     public toast: ToastComponent,
     private popup: PopUpComponent,
-    private formbuilder: FormBuilder
-  ) { }
-
-  myForm: FormGroup;
-
-  private yearRange: string;
-
-  //ALan:要修改的物件
-  private schedule: Schedule;
-  devices = [];
-  productions = [];
-
-  ngOnInit() {
+    private formbuilder: FormBuilder) {
 
     //預設年份往後+5年
     this.yearRange = `${new Date().getFullYear()}:${new Date().getFullYear() + 5}`;
@@ -47,9 +44,13 @@ export class ScheduleInputComponent implements OnInit {
 
         this.schedule = schedule;
 
-        if (schedule) {
+
+				if (schedule) {
+					this.isAdd = false;
           this.schedule.scheduleDate = new Date(this.schedule.scheduleDate);
-        }
+				} else {
+					this.isAdd = true;
+				}
       }
     );
 
@@ -74,6 +75,7 @@ export class ScheduleInputComponent implements OnInit {
       error => console.log(error)
     );
   }
+
 
   onSubmit() {
     if (this.schedule && this.schedule._id) {

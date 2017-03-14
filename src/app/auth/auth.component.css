@@ -73,7 +73,7 @@ h1 {
     margin: 0 0 40px;
 }
 
-label {
+label[title] {
     position: absolute;
     top: -2px;
     -webkit-transform: translateY(6px);
@@ -87,27 +87,29 @@ label {
     font-size: 22px;
 }
 
-label .req {
+label[title] .req {
     margin: 2px;
     color: #1ab188;
 }
 
-label.active {
+label[title].active {
     -webkit-transform: translateY(-20px);
     transform: translateY(-20px);
     left: 2px;
     font-size: 14px;
 }
 
-label.active .req {
+label[title].active .req {
     opacity: 0;
 }
 
-label.highlight {
+label[title].highlight {
     color: #ffffff;
 }
 
-input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
 textarea {
     font-size: 22px;
     display: block;

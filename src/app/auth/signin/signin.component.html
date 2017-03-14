@@ -2,26 +2,36 @@
     登入
 </h1>-->
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-
     <div class="field-wrap">
-        <label #account>
+        <label title #account>
               帳號<span class="req">*</span>
         </label>
         <input type="email" 
                [focus-change]="account"
-               formControlName="email">
+               formControlName="email"
+               required>
+        <!--<span class="color-red" *ngIf="myForm.get('email').invalid" >請輸入正確的帳號</span>                              -->
     </div>
 
     <div class="field-wrap">
-        <label #password>
+        <label title #password>
               密碼<span class="req">*</span>
         </label>
         <input type="password" 
                [focus-change]="password"
-               formControlName="password">
+               formControlName="password"
+               required>
+        <!--<span class="color-red" *ngIf="myForm.get('password').invalid">請輸入密碼</span>        -->
     </div>
+    <p class="forgot">
 
-    <p class="forgot"><a href="javascript:void()">Forgot Password?</a></p>
+        <label>
+            <input type="checkbox" formControlName="remeberMe" hidden>
+            <i class="cursorPoint color-white fa" [ngClass]="{true:'fa-check-square-o',false:'fa-square-o'}[myForm.value.remeberMe==true]"></i>
+            <font class="cursorPoint color-white">保持登入</font>
+        </label>        
+        <!--<a href="javascript:void()">Forgot Password?</a>-->
+    </p>
 
     <button class="button button-block">登入</button>
 

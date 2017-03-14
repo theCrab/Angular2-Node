@@ -1,8 +1,11 @@
+import { AlertConfirmModel } from './../../shared/alert-confirm/alert-confirm.model';
+import { AlertConfirmService } from './../../shared/alert-confirm/alert-confirm.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from "../auth.service";
 import { User } from "../user.model";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'app-signup',
@@ -12,9 +15,13 @@ import { User } from "../user.model";
 
 export class SignupComponent implements OnInit {
 
-	constructor(private authService: AuthService) { }
+	myForm: FormGroup;
+	
+	constructor(
+		private authService: AuthService,
+		private alertConfirmService: AlertConfirmService,
+		private router: Router) {
 
-	ngOnInit() {
 		this.myForm = new FormGroup({
 			firstName: new FormControl(null, Validators.required),
 			lastName: new FormControl(null, Validators.required),
@@ -26,9 +33,12 @@ export class SignupComponent implements OnInit {
 		});
 	}
 
+	ngOnInit() {
+	}
+
 	onSubmit() {
 		// console.log(this.myForm);
-		const user=new User(
+		const user = new User(
 			this.myForm.value.email,
 			this.myForm.value.password,
 			this.myForm.value.firstName,
@@ -36,11 +46,15 @@ export class SignupComponent implements OnInit {
 		);
 		this.authService.signup(user)
 			.subscribe(
-				data=>console.log(data),
-				error=>console.error(error)
+			data => {
+				this.alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入"))
+					.ok(() => {
+						this.router.navigateByUrl('/auth/signin');
+					})
+			},
+			error => console.error(error)
 			);
 		this.myForm.reset();
 	}
 
-	myForm: FormGroup;
 }

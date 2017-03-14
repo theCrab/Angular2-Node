@@ -1,0 +1,22 @@
+.colorYellow {
+    color:yellow
+}
+
+.color-blue {
+    color: rgba(23, 108, 177, 1.00);
+}
+    .color-blue:hover {
+        color: #F1654C;
+    }
+
+.color-black {
+    color: black;
+}
+
+.color-white {
+    color: white;
+}
+
+.color-red{
+    color:red;
+}
