@@ -1,17 +1,20 @@
-import { environment } from './../../environments/environment';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs';
-import { ErrorService } from './../shared/errors/error.service';
+import { Observable } from "rxjs/Observable";
 
 import { Production } from './production.model';
+import { environment } from './../../environments/environment';
+import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
+
 
 @Injectable()
 export class ProductionService {
 
-    constructor(private http: Http, private errorService: ErrorService) { }
-
+    constructor(
+        private http: Http,
+        private alertConfirmService: AlertConfirmService
+    ) { }
+    
     productions: Production[] = [];
 
     //Alan:修改時使用
@@ -38,7 +41,7 @@ export class ProductionService {
                 return transformedList;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -66,7 +69,7 @@ export class ProductionService {
                 return production;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
@@ -80,7 +83,7 @@ export class ProductionService {
         return this.http.delete(environment.serverUrl +'/production/' + production._id + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -113,7 +116,7 @@ export class ProductionService {
                     result.obj.createData);
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }

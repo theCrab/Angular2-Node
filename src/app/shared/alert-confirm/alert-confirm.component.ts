@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertConfirmService } from "./alert-confirm.service";
 
-import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap';
+import { AlertConfirmModel } from "./alert-confirm.model";
 
 @Component({
   selector: 'app-alert-confirm',
@@ -10,7 +11,7 @@ import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 })
 export class AlertConfirmComponent {
   @ViewChild('modal') public modal: ModalDirective;
-  private message: string;
+  private message: AlertConfirmModel;
   //Alan:用來切換subscribed狀態
   private subscribedToClosing: boolean = false;
   private isConfirm: boolean = false;
@@ -20,14 +21,14 @@ export class AlertConfirmComponent {
     private alertConfirmService: AlertConfirmService
   ) {
 
-    alertConfirmService.alert$.subscribe((message: string) => {
+    alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
       this.isConfirm = false;
       this.message = message;
       this.modal.show();
       this.handleClose();
     });
 
-    alertConfirmService.confirm$.subscribe((message: string) => {
+    alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
       this.isConfirm = true;
       this.message = message;
       this.modal.show();

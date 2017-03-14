@@ -8,14 +8,14 @@ var User = require('../models/user.model');
 var Config = require('../config');
 
 //Alan:註冊
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
     var user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: bcrypt.hashSync(req.body.password, 10),
         email: req.body.email
     });
-    user.save(function(err, result) {
+    user.save(function (err, result) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -30,8 +30,8 @@ router.post('/', function(req, res, next) {
 });
 
 //Alan:signIn
-router.post('/signin', function(req, res, next) {
-    User.findOne({ email: req.body.email }, function(err, user) {
+router.post('/signin', function (req, res, next) {
+    User.findOne({ email: req.body.email }, function (err, user) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred',
@@ -40,14 +40,14 @@ router.post('/signin', function(req, res, next) {
         }
         if (!user) {
             return res.status(401).json({
-                title: 'Login failed',
-                error: { message: 'Invalid login credentials' }
+                title: '登入失敗',
+                error: '不存在的帳號'
             });
         }
         if (!bcrypt.compareSync(req.body.password, user.password)) {
             return res.status(401).json({
-                title: 'Login failed',
-                error: { message: 'Invalid login credentials' }
+                title: '登入失敗',
+                error: '帳號或密碼錯誤，請重新填寫'
             });
         }
         //Alan:jwt設定，細節請看：https://jwt.io/   https://github.com/auth0/node-jsonwebtoken     
@@ -62,8 +62,8 @@ router.post('/signin', function(req, res, next) {
 
 
 //Alan:isLoggedIn
-router.post('/isLoggedIn', function(req, res, next) {
-    jwt.verify(req.query.token, Config.jwt_secret, function(err, decoded) {
+router.post('/isLoggedIn', function (req, res, next) {
+    jwt.verify(req.query.token, Config.jwt_secret, function (err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'Not Authenticated',

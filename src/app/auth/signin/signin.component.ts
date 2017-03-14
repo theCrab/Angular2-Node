@@ -38,7 +38,7 @@ export class SigninComponent implements OnInit {
 			data => {
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('userId', data.userId);
-				
+
 				if (this.authService.redirectUrl === environment.nonAuthenticationUrl) {
 					this.authService.redirectUrl = environment.mainPageUrl;
 				}
@@ -46,7 +46,7 @@ export class SigninComponent implements OnInit {
 			},
 			error => console.error(error)
 			);
-		this.myForm.reset();
+		this.myForm.reset({ email: user.email });
 	}
 
 	changeLabel(elem) {

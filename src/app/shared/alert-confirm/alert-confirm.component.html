@@ -3,12 +3,12 @@
     <div class="modal-content">
       <div class="modal-body">
         <alert *ngIf="!isConfirm" type="info">
-          <h4 class="inline"><i class="fa fa-info-circle"></i></h4>
-          {{message}}
+          <h4 class="inline"><i class="fa fa-info-circle"></i>{{message?.title}}</h4>
+          {{message?.error}}
         </alert>
         <alert *ngIf="isConfirm" type="warning">
           <h4 class="inline"><i class="fa fa-question-circle"></i></h4>
-          {{message}}
+          {{message?.error}}
         </alert>
       </div>
       <div class="modal-footer">

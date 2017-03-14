@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs';
-import { ErrorService } from './../shared/errors/error.service';
+import { Observable } from "rxjs/Observable";
 
 import { User } from './user.model';
 import { environment } from "../../environments/environment";
+import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
 
 @Injectable()
 export class AuthService {
 
-    constructor(private http: Http, private errorService: ErrorService) { }
+    constructor(
+        private http: Http,
+        private alertConfirmService: AlertConfirmService
+    ) { }
 
     public LoginState: Boolean = false;
     //Alan:登入成功後要去的頁面
@@ -22,7 +24,7 @@ export class AuthService {
         return this.http.post(environment.serverUrl + '/user', body, { headers: headers })
             .map((response: Response) => response.json())
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
@@ -36,8 +38,7 @@ export class AuthService {
                 return response.json();
             })
             .catch((error: Response) => {
-                // this.errorService.handleError(error.json());
-                window.alert(JSON.stringify(error.json().error));
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }

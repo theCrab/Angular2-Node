@@ -1,17 +1,19 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import 'rxjs/Rx';
-import { Observable } from 'rxjs';
-import { ErrorService } from './../shared/errors/error.service';
+import { Observable } from "rxjs/Observable";
 
 import { Schedule } from './schedule.model';
 import { environment } from "../../environments/environment";
+import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
 
 @Injectable()
 export class ScheduleService {
 
-    constructor(private http: Http, private errorService: ErrorService) { }
-
+    constructor(
+        private http: Http,
+        private alertConfirmService: AlertConfirmService
+    ) { }
+    
     schedules: Schedule[] = [];
 
     //Alan:修改時使用
@@ -43,7 +45,7 @@ export class ScheduleService {
                 return transformedList;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -72,7 +74,7 @@ export class ScheduleService {
                 return schedule;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
@@ -86,7 +88,7 @@ export class ScheduleService {
         return this.http.delete(environment.serverUrl + '/schedule/' + schedule._id + token)
             .map((response: Response) => response.json())
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -120,7 +122,7 @@ export class ScheduleService {
                     result.obj.finishDate);
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -155,7 +157,7 @@ export class ScheduleService {
                 return transformedList;
             })
             .catch((error: Response) => {
-                this.errorService.handleError(error.json());
+                this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
