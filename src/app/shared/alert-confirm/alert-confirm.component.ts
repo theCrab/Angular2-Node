@@ -17,6 +17,26 @@ export class AlertConfirmComponent {
   private isConfirm: boolean = false;
   private confirmed: boolean = false;
 
+  private classList = {
+    success: {
+      title: 'alert-success',
+      icon: 'fa-check'
+    },
+    info: {
+      title: 'alert-info',
+      icon: 'fa-info-circle'
+    },
+    warning: {
+      title: 'alert-warning',
+      icon: 'fa-question-circle'
+    },
+    error:{
+      title: 'alert-danger',
+      icon: 'fa-exclamation-circle'
+    }
+  };
+  private nowClassType = this.classList.success;
+
   constructor(
     private alertConfirmService: AlertConfirmService
   ) {
@@ -24,6 +44,7 @@ export class AlertConfirmComponent {
     alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
       this.isConfirm = false;
       this.message = message;
+      this.nowClassType = message.type == null ? this.classList.error : this.classList[`${message.type}`];
       this.modal.show();
       this.handleClose();
     });
@@ -31,6 +52,7 @@ export class AlertConfirmComponent {
     alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
       this.isConfirm = true;
       this.message = message;
+      this.nowClassType = message.type == null ? this.classList.warning : this.classList[`${message.type}`];
       this.modal.show();
       this.handleClose();
     });
@@ -64,5 +86,6 @@ export class AlertConfirmComponent {
     this.confirmed = false;
     this.modal.hide();
   }
+
 
 }

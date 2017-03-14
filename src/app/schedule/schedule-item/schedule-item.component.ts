@@ -66,8 +66,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
           error => {
             this.toast.setMessage(error, 'warning');
             console.error(error)
-          }
-          );
+          });
       });
   }
 

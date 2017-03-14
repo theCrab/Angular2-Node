@@ -3,14 +3,11 @@
     <div class="modal-content">
       <div class="modal-body">
 
-        <alert *ngIf="!isConfirm" type="info">
-          <h4 class="inline"><i class="fa fa-info-circle"></i>{{message?.title}}</h4>
-        </alert>
-
-        <alert *ngIf="isConfirm" type="warning">
-          <h4 class="inline"><i class="fa fa-question-circle"></i>{{message?.title}}</h4>
-        </alert>
-        {{message?.error}}
+        <div class="alert" role="alert" [ngClass]="nowClassType.title">
+          <span class="fa" [ngClass]="nowClassType.icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>{{message?.title || '系統錯誤'}}
+        </div>
+        {{message?.error || '系統發生錯誤'}}
 
       </div>
       <div class="modal-footer">
