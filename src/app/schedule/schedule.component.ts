@@ -15,10 +15,9 @@ export class ScheduleComponent  {
 
   add() {
     this.popup.open('新增設備');
-    this.scheduleService.switchEdit(null);
   }
 
-  callBackFun() {
-    // window.alert('Callback Test');
+  callBackFun() {    
+    this.scheduleService.clearEdit();
   }
 }

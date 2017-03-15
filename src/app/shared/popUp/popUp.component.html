@@ -1,5 +1,7 @@
 <!--第一種，直接放tag在裡面的-->
-<div class="popup" *ngIf="popupConfig.show" [@popup] (click)="close($event)">
+<div class="popup" *ngIf="popupConfig.show" 
+     [@popup] (@popup.done)="animationDone($event)"
+     (click)="close($event)">
   <div class="window" style="margin: 5% auto; width: 80%;">
     <header class="topHeader">
       <label class="popTitle" [innerHTML]="popupConfig.title"></label>

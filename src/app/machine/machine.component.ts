@@ -9,7 +9,9 @@ import { PopUpComponent } from './../shared/popUp/popUp.component';
 })
 export class MachineComponent implements OnInit {
 
-  constructor(public deviceService: DeviceService ,private popup: PopUpComponent) { }
+  constructor(
+    public deviceService: DeviceService,
+    private popup: PopUpComponent) { }
 
   ngOnInit() {
   }
@@ -17,11 +19,10 @@ export class MachineComponent implements OnInit {
 
   add() {
     this.popup.open('新增設備');
-    this.deviceService.switchEdit(null);
   }
 
-  callBackFun(){
-    // this.deviceService.clearEdit();
+  callBackFun() {
+    this.deviceService.clearEdit();
   }
 
 

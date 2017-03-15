@@ -7,15 +7,18 @@ import { PopUpComponent } from './../../shared/popUp/popUp.component';
 import { DeviceService } from './../device.service';
 import { Device } from './../device.model';
 import { AlertConfirmService } from "../../shared/alert-confirm/alert-confirm.service";
+
+let selectorName='app-device-item';
+
 @Component({
-  selector: '[app-device-item]',
+  selector: `[${selectorName}]`,
   templateUrl: './device-item.component.html',
   styleUrls: ['./device-item.component.css']
 })
 export class DeviceItemComponent  {
 
   //ALan:要修改的物件
-  @Input() item: Device;
+  @Input(selectorName) item: Device;
 
   constructor(
     private deviceService: DeviceService,

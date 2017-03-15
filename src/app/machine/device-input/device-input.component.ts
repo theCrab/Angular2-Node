@@ -13,10 +13,10 @@ import { Device } from './../device.model';
   templateUrl: './device-input.component.html',
   styleUrls: ['./device-input.component.css']
 })
-export class DeviceInputComponent  {
+export class DeviceInputComponent {
 
   private isAdd: Boolean = true;
-  
+
   private device: Device;
   private myForm: FormGroup;
 
@@ -28,12 +28,12 @@ export class DeviceInputComponent  {
     //Alan:訂閱Service裡面的參數
     this.deviceService.device.subscribe(
       (device: Device) => {
+        this.device = device;
         if (device) {
           this.isAdd = false;
         } else {
           this.isAdd = true;
         }
-        this.device = device
       }
     );
 
@@ -79,7 +79,7 @@ export class DeviceInputComponent  {
         }
         );
     }
-    this.popup.close();
     this.myForm.reset();
+    this.popup.close();
   }
 }

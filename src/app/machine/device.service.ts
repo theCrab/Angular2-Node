@@ -86,7 +86,7 @@ export class DeviceService {
     }
 
     clearEdit() {
-        // this.device.emit(null);
+        this.device.emit(null);
     }
 
 

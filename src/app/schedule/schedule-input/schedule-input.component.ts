@@ -44,7 +44,6 @@ export class ScheduleInputComponent {
 
         this.schedule = schedule;
 
-
 				if (schedule) {
 					this.isAdd = false;
           this.schedule.scheduleDate = new Date(this.schedule.scheduleDate);

@@ -15,11 +15,11 @@ export class ProductionComponent  {
 
   add() {
     this.popup.open('新增產品');
-    this.productionService.switchEdit(null);
   }
 
 
   callBackFun() {
+    this.productionService.clearEdit();
   }
 
 }
