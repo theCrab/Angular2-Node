@@ -16,7 +16,7 @@ export class RunscheduleItemComponent implements OnInit {
     public toast: ToastComponent) { }
 
   //ALan:要修改的物件
-  @Input() item: Schedule;
+  @Input('app-runschedule-item') item: Schedule;
   totalTime: any;
   state: any = {
     color: 'red',

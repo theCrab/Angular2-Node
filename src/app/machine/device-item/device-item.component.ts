@@ -8,17 +8,15 @@ import { DeviceService } from './../device.service';
 import { Device } from './../device.model';
 import { AlertConfirmService } from "../../shared/alert-confirm/alert-confirm.service";
 
-let selectorName='app-device-item';
-
 @Component({
-  selector: `[${selectorName}]`,
+  selector: `[app-device-item]`,
   templateUrl: './device-item.component.html',
   styleUrls: ['./device-item.component.css']
 })
 export class DeviceItemComponent  {
 
   //ALan:要修改的物件
-  @Input(selectorName) item: Device;
+  @Input('app-device-item') item: Device;
 
   constructor(
     private deviceService: DeviceService,

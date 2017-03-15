@@ -16,7 +16,7 @@ import { AlertConfirmModel } from "../../shared/alert-confirm/alert-confirm.mode
 export class ProductionItemComponent {
 
   //ALan:要修改的物件
-  @Input() item: Production;
+  @Input('app-production-item') item: Production;
 
   constructor(
     private productionService: ProductionService,

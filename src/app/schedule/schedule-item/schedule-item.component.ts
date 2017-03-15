@@ -18,7 +18,7 @@ import { AlertConfirmModel } from "../../shared/alert-confirm/alert-confirm.mode
 export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
   //ALan:要修改的物件
-  @Input() item: Schedule;
+  @Input('app-schedule-item') item: Schedule;
 
   totalTime: any;
   state: any = {
