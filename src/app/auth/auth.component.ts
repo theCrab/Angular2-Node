@@ -16,16 +16,19 @@ export class AuthComponent implements AfterViewChecked {
 	ngAfterViewChecked() {
 		//Alan:如果是載入或是點擊route事件的時候
 		if (event && (event.type == "load" || event.type == "click")) {
-			let marginHeight = (window.innerHeight - this.formTag.nativeElement.offsetHeight) * 0.5;
-
-			this.formTag.nativeElement.style.margin = `${marginHeight}px auto`;
+			this.setSize(window.innerHeight);
 		}
 	}
 
 	@HostListener('window:resize', ['$event']) onResize(event) {
 		//Alan:window height decrease tag height
-		let marginHeight = (event.target.innerHeight - this.formTag.nativeElement.offsetHeight) * 0.5;
+		this.setSize(event.target.innerHeight);
+	}
+
+	private setSize(height: number) {
+		let marginHeight = (height - this.formTag.nativeElement.offsetHeight) * 0.5;
 
 		this.formTag.nativeElement.style.margin = `${marginHeight}px auto`;
+
 	}
 }

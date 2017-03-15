@@ -1,6 +1,6 @@
 import { AlertConfirmModel } from './../../shared/alert-confirm/alert-confirm.model';
 import { AlertConfirmService } from './../../shared/alert-confirm/alert-confirm.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { Router } from "@angular/router";
 
 import { environment } from "../../../environments/environment";
@@ -53,5 +53,11 @@ export class NavBlack120Component {
         this.authService.logout();
         this.router.navigateByUrl(environment.nonAuthenticationUrl);
       });
+  }
+
+  toggle(elem) {
+    if (window.innerHeight <= 768) {
+      elem.click();
+    }
   }
 }
