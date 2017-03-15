@@ -28,7 +28,10 @@
   <div class="form-group">
     <label class="col-sm-2 control-label" for="formGroupInputLarge">數量</label>
     <div class="col-sm-4">
-      <p-spinner [ngModel]="production?.count" formControlName="count" placeholder="數量"></p-spinner>
+      <p-spinner [ngModel]="production?.count" 
+                 formControlName="count" 
+                 [min]="0"
+                 placeholder="數量"></p-spinner>
     </div>
   </div>
 

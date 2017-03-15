@@ -1,3 +1,5 @@
+import { AlertConfirmModel } from './../../shared/alert-confirm/alert-confirm.model';
+import { AlertConfirmService } from './../../shared/alert-confirm/alert-confirm.service';
 import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 
@@ -11,7 +13,10 @@ import { AuthService } from "../../auth/auth.service";
 })
 export class NavBlack120Component {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertConfirmService: AlertConfirmService) { }
 
   private mainPage = environment.mainPageUrl;
 
@@ -43,7 +48,10 @@ export class NavBlack120Component {
   ];
 
   onLogout() {
-    this.authService.logout();
-    this.router.navigateByUrl(environment.nonAuthenticationUrl);
+    this.alertConfirmService.confirm(new AlertConfirmModel("登出", "確定要登出嗎？"))
+      .ok(() => {
+        this.authService.logout();
+        this.router.navigateByUrl(environment.nonAuthenticationUrl);
+      });
   }
 }

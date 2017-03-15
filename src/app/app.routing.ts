@@ -15,8 +15,13 @@ const APP_ROUTES: Routes = [
     {
         path: 'auth',
         loadChildren: './auth/auth.module#AuthModule'
+    },
+    //if this url is not exist, redirect to index
+    {
+        path: '**',
+        redirectTo: 'index'
     }
 ];
 
-
+//  { useHash: true }
 export const routing = RouterModule.forRoot(APP_ROUTES);
