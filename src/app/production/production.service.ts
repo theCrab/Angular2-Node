@@ -30,10 +30,10 @@ export class ProductionService {
                         production.name,
                         production.count,
                         production.requireDate,
+                        production.createData,
                         production._id,
                         production.creator._id,
-                        production.creator.firstName + production.creator.lastName,
-                        production.createData)
+                        production.creator.firstName + production.creator.lastName)
                     );
                 }
                 this.productions = transformedList;
@@ -61,10 +61,10 @@ export class ProductionService {
                     result.obj.name,
                     result.obj.count,
                     result.obj.requireDate,
+                    result.obj.createData,
                     result.obj._id,
                     result.obj.creator._id,
-                    result.obj.creator.firstName + result.obj.creator.lastName,
-                    result.obj.createData);
+                    result.obj.creator.firstName + result.obj.creator.lastName);
                 this.productions.push(production);
                 return production;
             })
@@ -110,10 +110,10 @@ export class ProductionService {
                     result.obj.name,
                     result.obj.count,
                     result.obj.requireDate,
+                    result.obj.createData,
                     result.obj._id,
                     result.obj.creator._id,
-                    result.obj.creator.firstName + result.obj.creator.lastName,
-                    result.obj.createData);
+                    result.obj.creator.firstName + result.obj.creator.lastName);
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());

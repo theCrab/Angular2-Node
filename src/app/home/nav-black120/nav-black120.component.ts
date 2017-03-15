@@ -56,7 +56,7 @@ export class NavBlack120Component {
   }
 
   toggle(elem) {
-    if (window.innerHeight <= 768) {
+    if (window.innerWidth <= 768) {
       elem.click();
     }
   }

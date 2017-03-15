@@ -31,7 +31,6 @@ export class ProductionInputComponent {
 
 				if (production) {
 					this.isAdd = false;
-					this.production.requireDate = new Date(this.production.requireDate);
 				} else {
 					this.isAdd = true;
 				}
