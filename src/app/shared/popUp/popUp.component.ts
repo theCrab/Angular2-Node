@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter, AnimationTransitionEvent } from '@angular/core';
-import { animation } from "../../animation/animation";
+import { popup } from "../../animation/animation";
 
 @Component({
   selector: 'app-popUp',
   templateUrl: './popUp.component.html',
   styleUrls: ['./popUp.component.css'],
   animations: [
-    animation.popup()
+    popup()
   ]
 })
 export class PopUpComponent {
@@ -30,7 +30,7 @@ export class PopUpComponent {
   animationDone(event: AnimationTransitionEvent) {
     //Alan: if the from state is null
     if (!event.fromState) {
-    //Alan: if there is an callBackfunction, then callback
+      //Alan: if there is an callBackfunction, then callback
       if (this.callBackFun) {
         this.callBackFun.emit();
       }
