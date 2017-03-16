@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter, AnimationTransitionEvent } from '@angular/core';
-import { popup } from "../../animation/animation";
+import { animation } from "../../animation/animation";
 
 @Component({
   selector: 'app-popUp',
   templateUrl: './popUp.component.html',
   styleUrls: ['./popUp.component.css'],
   animations: [
-    popup()
+    animation.popup()
   ]
 })
 export class PopUpComponent {
