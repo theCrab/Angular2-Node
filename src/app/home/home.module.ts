@@ -23,10 +23,6 @@ import { NavBlack120Component } from './nav-black120/nav-black120.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RunscheduleModule,
-    ScheduleModule,
-    ProductionModule,
-    MachineModule,
     homeRouting,
   ],
   declarations: [

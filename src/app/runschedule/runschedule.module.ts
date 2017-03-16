@@ -7,11 +7,13 @@ import { RunscheduleComponent } from './runschedule.component';
 import { RunscheduleInputComponent } from './runschedule-input/runschedule-input.component';
 import { RunscheduleItemComponent } from './runschedule-item/runschedule-item.component';
 import { RunscheduleListComponent } from './runschedule-list/runschedule-list.component';
+import { RunscheduleRoutes } from "./runschedule.routing";
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    RunscheduleRoutes,
     MyPaginationModule,
   ],
   declarations: [

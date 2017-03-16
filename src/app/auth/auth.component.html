@@ -1,20 +1,22 @@
-<div class="form" #formTag>
-    <h1>
-        Machine Ant
-    </h1>
-    <ul class="tab-group">
-        <li routerLinkActive="active" class="tab">
-            <a [routerLink]="['signup']">註冊</a>
-        </li>
-        <li routerLinkActive="active" class="tab">
-            <a [routerLink]="['signin']">登入</a>
-        </li>
-    </ul>
+<div class="body">
+    <div class="form" #formTag>
+        <h1>
+            {{systemName}}
+        </h1>
+        <ul class="tab-group">
+            <li routerLinkActive="active" class="tab">
+                <a [routerLink]="['signup']">註冊</a>
+            </li>
+            <li routerLinkActive="active" class="tab">
+                <a [routerLink]="['signin']">登入</a>
+            </li>
+        </ul>
 
-    <div class="tab-content">
-        <router-outlet></router-outlet>
+        <div class="tab-content">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- tab-content -->
+
     </div>
-    <!-- tab-content -->
-
+    <!-- /form -->
 </div>
-<!-- /form -->

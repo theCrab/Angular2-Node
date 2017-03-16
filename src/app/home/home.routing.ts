@@ -16,12 +16,24 @@ const HOME_ROUTES: Routes = [
     {
         path: '',
         component: HomeComponent,
-        canActivate: [AppCanActivateService],       
+        canActivate: [AppCanActivateService],
         children: [
-            { path: 'run', component: RunscheduleComponent, },
-            { path: 'sched', component: ScheduleComponent },
-            { path: 'prod', component: ProductionComponent },
-            { path: 'machine', component: MachineComponent },
+            {
+                path: 'run',
+                loadChildren: '../runschedule/runschedule.module#RunscheduleModule'
+            },
+            {
+                path: 'sched',
+                loadChildren: '../schedule/schedule.module#ScheduleModule'
+            },
+            {
+                path: 'prod',
+                loadChildren: '../production/production.module#ProductionModule'
+            },
+            {
+                path: 'machine',
+                loadChildren: '../machine/machine.module#MachineModule'
+            },
         ]
     }
 ];

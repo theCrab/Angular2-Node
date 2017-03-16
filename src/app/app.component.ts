@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ToastComponent } from './shared/toast/toast.component';
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,7 @@ import { Router } from "@angular/router";
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    public toast: ToastComponent,
-    private router: Router) { }
+  constructor(public toast: ToastComponent) { }
 
   ngOnInit() { }
 

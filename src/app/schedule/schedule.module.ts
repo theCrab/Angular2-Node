@@ -1,3 +1,4 @@
+import { ScheduleRoutes } from './schedule.routing';
 import { MyPaginationModule } from './../shared/my-pagination/my-pagination.module';
 import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -18,7 +19,8 @@ import { CalendarModule } from 'primeng/primeng';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
+    ScheduleRoutes,
+    
     PopUpModule,
     MyPaginationModule,
     CalendarModule

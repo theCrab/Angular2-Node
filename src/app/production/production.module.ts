@@ -13,12 +13,14 @@ import { ProductionInputComponent } from './production-input/production-input.co
 import { Ng2PaginationModule } from "ng2-pagination";
 
 import { CalendarModule, SpinnerModule } from 'primeng/primeng';
+import { ProductionRoutes } from "./production.routing";
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    ProductionRoutes,
 
     PopUpModule,
     MyPaginationModule,

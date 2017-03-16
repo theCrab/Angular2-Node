@@ -1,5 +1,6 @@
-import { Router } from '@angular/router';
-import { Component, ViewChild, HostListener, AfterViewChecked } from '@angular/core';
+import { environment } from './../../environments/environment';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
+import { Router } from "@angular/router";
 
 @Component({
 	selector: 'app-auth',
@@ -7,27 +8,27 @@ import { Component, ViewChild, HostListener, AfterViewChecked } from '@angular/c
 	styleUrls: ['./auth.component.css']
 })
 
-export class AuthComponent implements AfterViewChecked {
+export class AuthComponent implements OnDestroy {
 
+	subscript;
 	@ViewChild('formTag') formTag;
-
-	constructor() { }
-
-	ngAfterViewChecked() {
-		//Alan:when the event is load or click(change route)
-		if (event && (event.type == "load" || event.type == "click")) {
-			this.setSize(window.innerHeight);
-		}
+	private systemName = environment.systemName;
+	constructor(
+		private router: Router) {
+		this.subscript = router.events.subscribe((event: any) => {
+			console.log(event);
+			switch (event.urlAfterRedirects) {
+				case "/auth/signup":
+					this.formTag.nativeElement.style.height = '549px';
+					break;
+				default:
+					this.formTag.nativeElement.style.height = '486px';
+					break;
+			}
+		});
 	}
-z
-	@HostListener('window:resize', ['$event']) onResize(event) {
-		this.setSize(event.target.innerHeight);
-	}
 
-	private setSize(height: number) {
-		//Alan:window height decrease tag height
-		let marginHeight = (height - this.formTag.nativeElement.offsetHeight) * 0.5;
-
-		this.formTag.nativeElement.style.margin = `${marginHeight}px auto`;
+	ngOnDestroy(): void {
+		this.subscript.unsubscribe();
 	}
 }

@@ -22,6 +22,7 @@ import { AppCanActivateService } from './app-canActivate.service';
 
 import { ModalModule, AlertModule } from 'ng2-bootstrap';
 import { CustomFormsModule } from 'ng2-validation'
+import { RouteLoadingComponent } from "./shared/route-loading/route-loading.component";
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { CustomFormsModule } from 'ng2-validation'
 
     AlertConfirmComponent,
     ToastComponent,
+    RouteLoadingComponent
   ],
   providers: [
     AuthService,

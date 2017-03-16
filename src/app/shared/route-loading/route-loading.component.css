@@ -1,0 +1,62 @@
+@-webkit-keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ctnr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 5001;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.ldr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto;
+  width: 10em;
+  height: 10em;
+}
+
+.ldr-blk {
+  height: 35%;
+  width: 35%;
+  -webkit-animation: pulse 0.75s ease-in infinite alternate;
+          animation: pulse 0.75s ease-in infinite alternate;
+  background-color: #f27b15;
+}
+
+.an_delay {
+  -webkit-animation-delay: 0.75s;
+          animation-delay: 0.75s;
+}

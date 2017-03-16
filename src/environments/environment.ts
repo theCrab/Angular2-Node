@@ -8,5 +8,6 @@ export const environment = {
   serverUrl: 'http://localhost:3000',
   //Alan:未登入時的網址
   nonAuthenticationUrl: '/auth',
-  mainPageUrl: '/index/run'
+  mainPageUrl: '/index/run',
+  systemName: 'Machine Ant'
 };

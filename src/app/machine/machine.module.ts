@@ -11,11 +11,14 @@ import { DeviceItemComponent } from './device-item/device-item.component';
 import { DeviceInputComponent } from './device-input/device-input.component';
 
 import { PopUpComponent } from './../shared/popUp/popUp.component';
+import { MachineRoutes } from "./machine.routing";
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MachineRoutes,
+
     PopUpModule,
     MyPaginationModule
   ],

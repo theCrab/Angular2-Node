@@ -18,11 +18,11 @@ export class SigninComponent implements OnInit {
 	
 	constructor(private authService: AuthService, private router: Router) {
 		this.myForm = new FormGroup({
-			email: new FormControl(null, [
+			email: new FormControl('e936106@gmail.com', [
 				Validators.required,
 				Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 			]),
-			password: new FormControl(null, Validators.required),
+			password: new FormControl('1111', Validators.required),
 			remeberMe: new FormControl(false)
 		});
 	}

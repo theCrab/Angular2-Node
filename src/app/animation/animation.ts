@@ -34,7 +34,7 @@ export function flyInOut() {
     ]);
 }
 
-export function popup() {
+export function popup(inTime: number = 150, outTime: number = 150) {
     return trigger('popup', [
         state('in', style({
             opacity: 1
@@ -43,10 +43,10 @@ export function popup() {
             style({
                 opacity: 0,
             }),
-            animate(150)
+            animate(inTime)
         ]),
         transition('* => void', [
-            animate(150, style({
+            animate(outTime, style({
                 opacity: 0
             }))
         ])
