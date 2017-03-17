@@ -10,13 +10,22 @@ export class Schedule {
         public actionDate?: Date,
         public finishDate?: Date) {
 
-        this.scheduleDate = new Date(scheduleDate);
+        this._id = _id;
         this.production = production;
         this.device = device;
         this.creator = creator;
-        this.createData = new Date(createData);
-        this._id = _id;
-        this.actionDate = new Date(actionDate);
-        this.finishDate = new Date(finishDate);
+
+        if (scheduleDate) {
+            this.scheduleDate = new Date(scheduleDate);
+        }
+        if (createData) {
+            this.createData = new Date(createData);
+        }
+        if (actionDate) {
+            this.actionDate = new Date(actionDate);
+        }
+        if (finishDate) {
+            this.finishDate = new Date(finishDate);
+        }
     }
 }

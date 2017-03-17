@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.use('/', function (req, res, next) {
-    jwt.verify(req.query.token, Config.jwt_secret, function (err, decoded) {
+    jwt.verify(req.headers.authorization, Config.jwt_secret, function (err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'Not Authenticated',
@@ -39,7 +39,7 @@ router.use('/', function (req, res, next) {
 
 //Alan:新增
 router.post('/', function (req, res, next) {
-    var decoded = jwt.decode(req.query.token);
+    var decoded = jwt.decode(req.headers.authorization);
 
     User.findById(decoded.user._id, function (err, user) {
         if (err) {
@@ -73,7 +73,7 @@ router.post('/', function (req, res, next) {
 //Alan:修改
 router.patch('/:id', function (req, res, next) {
 
-    var decoded = jwt.decode(req.query.token);
+    var decoded = jwt.decode(req.headers.authorization);
 
     User.findById(decoded.user._id, function (errU, user) {
         if (errU) {

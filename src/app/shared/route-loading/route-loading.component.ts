@@ -17,7 +17,7 @@ import {
   templateUrl: './route-loading.component.html',
   styleUrls: ['./route-loading.component.css', '../popUp/popUp.component.css'],
   animations: [
-    popup(0,300)
+    popup(0, 300)
   ]
 })
 export class RouteLoadingComponent {
@@ -37,15 +37,15 @@ export class RouteLoadingComponent {
     if (event instanceof NavigationStart) {
       this.loading = true;
     }
-    if (event instanceof NavigationEnd) {
+    else if (event instanceof NavigationEnd) {
       this.loading = false;
     }
 
     // Set loading state to false in both of the below events to hide the spinner in case a request fails
-    if (event instanceof NavigationCancel) {
+    else if (event instanceof NavigationCancel) {
       this.loading = false;
     }
-    if (event instanceof NavigationError) {
+    else if (event instanceof NavigationError) {
       this.loading = false;
     }
     // console.log(this.loading);

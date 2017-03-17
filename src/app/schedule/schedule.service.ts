@@ -13,7 +13,7 @@ export class ScheduleService {
         private http: Http,
         private alertConfirmService: AlertConfirmService
     ) { }
-    
+
     schedules: Schedule[] = [];
 
     //Alan:修改時使用
@@ -24,7 +24,7 @@ export class ScheduleService {
 
 
     get() {
-        return this.http.get(environment.serverUrl +'/schedule')
+        return this.http.get(environment.serverUrl + '/schedule')
             .map((response: Response) => {
                 const schedules = response.json().obj;
                 let transformedList: Schedule[] = [];
@@ -52,13 +52,8 @@ export class ScheduleService {
 
     add(schedule: Schedule) {
         const body = JSON.stringify(schedule);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
 
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-
-        return this.http.post(environment.serverUrl +'/schedule' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/schedule', body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
                 const schedule = new Schedule(
@@ -81,12 +76,11 @@ export class ScheduleService {
 
 
     delete(schedule: Schedule) {
-        this.schedules.splice(this.schedules.indexOf(schedule), 1);
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.delete(environment.serverUrl + '/schedule/' + schedule._id + token)
-            .map((response: Response) => response.json())
+        return this.http.delete(environment.serverUrl + '/schedule/' + schedule._id, environment.getRequestOptions())
+            .map((response: Response) => {
+                this.schedules.splice(this.schedules.indexOf(schedule), 1);
+                return response.json()
+            })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
@@ -98,17 +92,14 @@ export class ScheduleService {
         this.schedule.emit(schedule);
     }
 
-    clearEdit(){
+    clearEdit() {
         this.schedule.emit(null);
     }
 
     update(schedule: Schedule) {
         const body = JSON.stringify(schedule);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.patch(environment.serverUrl + '/schedule/' + schedule._id + token, body, { headers: headers })
+
+        return this.http.patch(environment.serverUrl + '/schedule/' + schedule._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
                 return this.schedules[this.schedules.indexOf(schedule)] = new Schedule(
@@ -130,16 +121,12 @@ export class ScheduleService {
     search(schedule?: Schedule) {
 
         const body = JSON.stringify(schedule);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
 
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.post(environment.serverUrl + '/schedule/s' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/schedule/s', body, environment.getRequestOptions())
             .map((response: Response) => {
-                const schedules = response.json().obj;
+                const result: Schedule[] = response.json().obj;
                 let transformedList: Schedule[] = [];
-                for (let schedule of schedules) {
+                for (let schedule of result) {
                     transformedList.push(new Schedule(
                         schedule.scheduleDate,
                         schedule.production,

@@ -44,13 +44,8 @@ export class DeviceService {
 
     add(device: Device) {
         const body = JSON.stringify(device);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
 
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-
-        return this.http.post(environment.serverUrl + '/device' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/device', body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
                 const device = new Device(
@@ -69,12 +64,12 @@ export class DeviceService {
 
 
     delete(device: Device) {
-        this.devices.splice(this.devices.indexOf(device), 1);
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.delete(environment.serverUrl + '/device/' + device._id + token)
-            .map((response: Response) => response.json())
+
+        return this.http.delete(environment.serverUrl + '/device/' + device._id, environment.getRequestOptions())
+            .map((response: Response) => {
+                this.devices.splice(this.devices.indexOf(device), 1);
+                return response.json();
+            })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
@@ -92,11 +87,8 @@ export class DeviceService {
 
     update(device: Device) {
         const body = JSON.stringify(device);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.patch(environment.serverUrl + '/device/' + device._id + token, body, { headers: headers })
+
+        return this.http.patch(environment.serverUrl + '/device/' + device._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
                 return this.devices[this.devices.indexOf(device)] = new Device(

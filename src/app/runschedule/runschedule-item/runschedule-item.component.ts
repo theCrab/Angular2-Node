@@ -17,14 +17,15 @@ export class RunscheduleItemComponent implements OnInit {
 
   //ALan:要修改的物件
   @Input('app-runschedule-item') item: Schedule;
-  totalTime: any;
-  state: any = {
+  private totalTime: any;
+  private state: any = {
     color: 'red',
     text: "未生產",
     state: 0
   }
 
   ngOnInit() {
+    console.log(this.item);
     if (this.item.actionDate != null) {
       if (this.item.finishDate != null) {
         this.state = {
@@ -56,11 +57,11 @@ export class RunscheduleItemComponent implements OnInit {
 
         this.ngOnInit();
 
-        console.log(data);
+        // console.log(data);
       },
       error => {
         this.toast.setMessage(error, 'warning');
-        console.error(error);
+        // console.error(error);
       }
       );
   }

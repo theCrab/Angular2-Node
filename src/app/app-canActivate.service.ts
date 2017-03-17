@@ -20,8 +20,13 @@ export class AppCanActivateService implements CanActivate {
 
         return this.authService.isLoggedIn()
             .map(data => {
-                console.log('login Success!');
-                return true;
+                if (data) {
+                    console.log('login Success!');
+                    return true;
+                }
+                this.router.navigateByUrl(environment.nonAuthenticationUrl);
+                console.error('nonLogin!')
+                return false;
             })
             .catch(error => {
                 this.router.navigateByUrl(environment.nonAuthenticationUrl);

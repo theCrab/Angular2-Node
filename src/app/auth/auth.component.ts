@@ -16,7 +16,7 @@ export class AuthComponent implements OnDestroy {
 	constructor(
 		private router: Router) {
 		this.subscript = router.events.subscribe((event: any) => {
-			console.log(event);
+			// console.log(event);
 			switch (event.urlAfterRedirects) {
 				case "/auth/signup":
 					this.formTag.nativeElement.style.height = '549px';

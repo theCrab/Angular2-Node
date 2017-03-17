@@ -14,7 +14,7 @@ export class ProductionService {
         private http: Http,
         private alertConfirmService: AlertConfirmService
     ) { }
-    
+
     productions: Production[] = [];
 
     //Alan:修改時使用
@@ -48,13 +48,8 @@ export class ProductionService {
 
     add(production: Production) {
         const body = JSON.stringify(production);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
 
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-
-        return this.http.post(environment.serverUrl +'/production' + token, body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
                 const production = new Production(
@@ -76,12 +71,11 @@ export class ProductionService {
 
 
     delete(production: Production) {
-        this.productions.splice(this.productions.indexOf(production), 1);
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.delete(environment.serverUrl +'/production/' + production._id + token)
-            .map((response: Response) => response.json())
+        return this.http.delete(environment.serverUrl + '/production/' + production._id, environment.getRequestOptions())
+            .map((response: Response) => {
+                this.productions.splice(this.productions.indexOf(production), 1);
+                return response.json();
+            })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
@@ -99,11 +93,7 @@ export class ProductionService {
 
     update(production: Production) {
         const body = JSON.stringify(production);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-        return this.http.patch(environment.serverUrl +'/production/' + production._id + token, body, { headers: headers })
+        return this.http.patch(environment.serverUrl + '/production/' + production._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
                 return this.productions[this.productions.indexOf(production)] = new Production(

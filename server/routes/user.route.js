@@ -64,7 +64,7 @@ router.post('/signin', function (req, res, next) {
 
 //Alan:isLoggedIn
 router.post('/isLoggedIn', function (req, res, next) {
-    jwt.verify(req.query.token, Config.jwt_secret, function (err, decoded) {
+    jwt.verify(req.headers.authorization, Config.jwt_secret, function (err, decoded) {
         if (err) {
             return res.status(401).json({
                 title: 'Not Authenticated',

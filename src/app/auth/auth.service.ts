@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 
 import { User } from './user.model';
@@ -20,8 +20,7 @@ export class AuthService {
 
     signup(user: User) {
         const body = JSON.stringify(user);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(environment.serverUrl + '/user', body, { headers: headers })
+        return this.http.post(environment.serverUrl + '/user', body, environment.getRequestOptions())
             .map((response: Response) => response.json())
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
@@ -31,8 +30,8 @@ export class AuthService {
 
     signin(user: User) {
         const body = JSON.stringify(user);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(environment.serverUrl + '/user/signin', body, { headers: headers })
+
+        return this.http.post(environment.serverUrl + '/user/signin', body, environment.getRequestOptions())
             .map((response: Response) => {
                 this.LoginState = true;
                 return response.json();
@@ -53,21 +52,16 @@ export class AuthService {
     //ALan:加上Observable的型態，就會變成同步的，等他跑完才會執行下去
     isLoggedIn(): Observable<boolean> {
 
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-
-        const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
-            : '';
-
-        return this.http.post(environment.serverUrl + '/user/isLoggedIn' + token, '', { headers: headers })
+        return this.http.post(environment.serverUrl + '/user/isLoggedIn', '', environment.getRequestOptions())
             .map((response: Response) => {
                 this.LoginState = true
+                return true;
             })
             .catch((error: Response) => {
                 // this.errorService.handleError(error.json());
                 localStorage.clear();
                 this.LoginState = false;
-                return Observable.throw(error.json())
+                return Observable.of<boolean>(false)
             });
     }
 }

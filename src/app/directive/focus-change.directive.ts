@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, HostListener } from '@angular/core';
+import { Directive, ElementRef, Input, HostListener, OnInit } from '@angular/core';
 
 class activeClass {
   hasvalue: String = "active";
@@ -8,7 +8,7 @@ class activeClass {
 @Directive({
   selector: '[focus-change]'
 })
-export class FocusChangeDirective {
+export class FocusChangeDirective implements OnInit {
 
   constructor(private el: ElementRef) { }
 
@@ -17,16 +17,24 @@ export class FocusChangeDirective {
   //Alan:focus加上去的樣式
   @Input() activeClass: activeClass = new activeClass();
 
+
+  ngOnInit() {
+    this.checkModel();
+  }
+
   @HostListener('focus') onfocus() {
-    this.changeElem.classList.add(this.activeClass.hasvalue);
-    this.changeElem.classList.add(this.activeClass.highlight);
+      this.changeElem.className = `${this.activeClass.hasvalue} ${this.activeClass.highlight}`;
   }
 
   @HostListener('blur') onblur() {
+    this.checkModel();
+  }
+
+  private checkModel() {
     if (this.el.nativeElement.value === '') {
       this.changeElem.className = "";
     } else {
-      this.changeElem.classList.remove(this.activeClass.highlight);
+      this.changeElem.className = `${this.activeClass.hasvalue}`;
     }
   }
 }
