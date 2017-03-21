@@ -19,13 +19,17 @@ var schema = new Schema({
     schedule: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }]
 });
 
+// set the relation between production and schedule
 
+// when remove production, remove all schedule which use this production
 schema.post('findOneAndRemove', function (production) {
     Schedule.find({ 'production': production }, function (err, schedule) {
         //Alan:因為是陣列，用drop
-        schedule.forEach(function (item) {
-            item.remove();
-        })
+        if (!err) {
+            schedule.forEach(function (item) {
+                item.remove();
+            });
+        }
     });
 });
 

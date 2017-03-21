@@ -4,6 +4,7 @@ var jwt = require('jsonwebtoken');
 
 var User = require('../models/user.model');
 var Production = require('../models/production.model');
+var Schedule = require('../models/schedule.model')
 
 var Config = require('../config');
 
@@ -11,6 +12,12 @@ var Config = require('../config');
 router.get('/', function (req, res, next) {
     Production.find()
         .populate('creator', 'firstName lastName')
+        .populate('schedule', function (err, schedule) {
+            var opts = [{ path: 'device', select: 'name' }];
+
+            schedule = Schedule.populate(schedule, opts);
+            promise.then(console.log).end();
+        })
         .exec(function (err, productions) {
             if (err) {
                 return res.status(500).json({
@@ -52,7 +59,7 @@ router.post('/', function (req, res, next) {
         new Production({
             name: req.body.name,
             count: req.body.count,
-            requireDate:req.body.requireDate,
+            requireDate: req.body.requireDate,
             creator: user,
             createData: new Date()
         }).save(function (err, result) {

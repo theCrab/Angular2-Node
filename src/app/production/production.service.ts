@@ -24,16 +24,10 @@ export class ProductionService {
         return this.http.get(environment.serverUrl + '/production')
             .map((response: Response) => {
                 const productions = response.json().obj;
+                console.log(productions);
                 let transformedList: Production[] = [];
                 for (let production of productions) {
-                    transformedList.push(new Production(
-                        production.name,
-                        production.count,
-                        production.requireDate,
-                        production.createData,
-                        production._id,
-                        production.creator._id,
-                        production.creator.firstName + production.creator.lastName)
+                    transformedList.push(this.createModel(production)
                     );
                 }
                 this.productions = transformedList;
@@ -52,14 +46,7 @@ export class ProductionService {
         return this.http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
-                const production = new Production(
-                    result.obj.name,
-                    result.obj.count,
-                    result.obj.requireDate,
-                    result.obj.createData,
-                    result.obj._id,
-                    result.obj.creator._id,
-                    result.obj.creator.firstName + result.obj.creator.lastName);
+                const production = this.createModel(result.obj);
                 this.productions.push(production);
                 return production;
             })
@@ -96,19 +83,27 @@ export class ProductionService {
         return this.http.patch(environment.serverUrl + '/production/' + production._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
-                return this.productions[this.productions.indexOf(production)] = new Production(
-                    result.obj.name,
-                    result.obj.count,
-                    result.obj.requireDate,
-                    result.obj.createData,
-                    result.obj._id,
-                    result.obj.creator._id,
-                    result.obj.creator.firstName + result.obj.creator.lastName);
+                return this.productions[this.productions.indexOf(production)]
+                    = this.createModel(result.obj);
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
+    }
+
+    private createModel(item): Production {
+        return new Production(
+            item.name,
+            item.count,
+            item.requireDate,
+            item.createData,
+            item._id,
+            item.creator._id,
+            item.creator.firstName + item.creator.lastName,
+            item.state,
+            item.finishDate,
+            item.schedule);
     }
 
 }

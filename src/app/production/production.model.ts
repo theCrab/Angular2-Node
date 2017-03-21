@@ -7,7 +7,10 @@ export class Production {
         public createData?: Date,
         public _id?: string,
         public creator?: string,
-        public creatorName?: string) {
+        public creatorName?: string,
+        public state: boolean = false,
+        public finishDate: Date = null,
+        public schedule?) {
         this.name = name;
         this.count = count;
         this.requireDate = new Date(requireDate);
@@ -15,5 +18,8 @@ export class Production {
         this._id = _id;
         this.creator = creator;
         this.creatorName = creatorName;
+        this.state = state;
+        this.finishDate = finishDate;
+        this.schedule = schedule;
     }
 }
