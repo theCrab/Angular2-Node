@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { popup } from "../../animation/animation";
+
 import {
   Router,
   // import as RouterEvent to avoid confusion with the DOM Event
@@ -9,13 +9,14 @@ import {
   NavigationCancel,
   NavigationError
 } from "@angular/router";
+import { popup } from "../../animation/animation";
 
 //Alan:the reference:
 //http://stackoverflow.com/questions/37069609/show-loading-screen-when-navigating-between-routes-in-angular-2
 @Component({
   selector: 'app-route-loading',
   templateUrl: './route-loading.component.html',
-  styleUrls: ['./route-loading.component.css', '../popUp/popUp.component.css'],
+  styleUrls: ['./route-loading.component.css'],
   animations: [
     popup(0, 300)
   ]
@@ -37,17 +38,18 @@ export class RouteLoadingComponent {
     if (event instanceof NavigationStart) {
       this.loading = true;
     }
-    else if (event instanceof NavigationEnd) {
-      this.loading = false;
-    }
+    else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
+      // this timeout is to see the animation,
+      // this.timeOutLoading(100);
+      // you can use this for general
+       this.loading = false;
 
-    // Set loading state to false in both of the below events to hide the spinner in case a request fails
-    else if (event instanceof NavigationCancel) {
-      this.loading = false;
     }
-    else if (event instanceof NavigationError) {
-      this.loading = false;
-    }
-    // console.log(this.loading);
   }
+
+  // private timeOutLoading(time: number) {
+  //   setTimeout(() => {
+  //     this.loading = false;
+  //   }, time);
+  // }
 }
