@@ -34,10 +34,12 @@ schema.post('save', function (schedule) {
 
 // when remove production, remove all schedule which use this production
 schema.post('findOneAndRemove', function (schedule) {
-    Production.find({ 'schedule': schedule }, function (err, production) {
+    Production.find({ 'schedule': schedule }, function (err, productions) {
         if (!err) {
-            production.schedule.pull(schedule);
-            production.save();
+            productions.forEach(function (production) {
+                production.schedule.pull(schedule);
+                production.save();
+            });
         }
     });
 });

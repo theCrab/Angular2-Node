@@ -12,7 +12,13 @@
   <p>{{item.createData | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
 </td>
 <td>
-  <p>{{item | json}}</p>
+  <div class="bg-info block-schedule" *ngFor="let s of item.schedule">
+      <span class="icon-clock" title="排程時間"></span>
+      <span>{{s.scheduleDate | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+      <br>
+      <span class="icon-power" title="生產設備"></span>
+      <span>{{s.device?.name}}</span>
+  </div>
 </td>
 <td>
   <label></label>

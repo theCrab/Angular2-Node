@@ -1,5 +1,6 @@
 //ALan:要生產的產品
 var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
 
 var Schedule = require('./schedule.model');
@@ -23,13 +24,10 @@ var schema = new Schema({
 
 // when remove production, remove all schedule which use this production
 schema.post('findOneAndRemove', function (production) {
-    Schedule.find({ 'production': production }, function (err, schedule) {
-        //Alan:因為是陣列，用drop
-        if (!err) {
-            schedule.forEach(function (item) {
-                item.remove();
-            });
-        }
+    Schedule.find({ 'production': production }, function (err, schedules) {
+        schedules.forEach(function (schedule) {
+            schedule.remove();
+        })
     });
 });
 
@@ -38,7 +36,15 @@ schema.post('findOneAndRemove', function (production) {
 //     next();
 // });
 
-var deepPopulate = require('mongoose-deep-populate')(mongoose);
-schema.plugin(deepPopulate, null);
+schema.plugin(deepPopulate, {
+    populate: {
+        'schedule.device': {
+            select: ['name', 'creator'],
+        }　,
+        'schedule.device.creator': {
+            select: ['firstName', 'lastName'],
+        }
+    }
+});
 
 module.exports = mongoose.model('Production', schema);

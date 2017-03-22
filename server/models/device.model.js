@@ -12,9 +12,9 @@ var schema = new Schema({
 });
 
 schema.post('findOneAndRemove', function (device) {
-    Schedule.find({ 'device': device }, function (err, schedule) {
-        schedule.forEach(function (item) {
-            item.remove();
+    Schedule.find({ 'device': device }, function (err, schedules) {
+        schedules.forEach(function (schedule) {
+            schedule.remove();
         })
     });
 });
