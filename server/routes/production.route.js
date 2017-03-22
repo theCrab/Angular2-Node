@@ -12,12 +12,7 @@ var Config = require('../config');
 router.get('/', function (req, res, next) {
     Production.find()
         .populate('creator', 'firstName lastName')
-        .populate('schedule', function (err, schedule) {
-            var opts = [{ path: 'device', select: 'name' }];
-
-            schedule = Schedule.populate(schedule, opts);
-            promise.then(console.log).end();
-        })
+        .deepPopulate('schedule.device')
         .exec(function (err, productions) {
             if (err) {
                 return res.status(500).json({
@@ -25,10 +20,28 @@ router.get('/', function (req, res, next) {
                     error: err
                 });
             }
+
+            // var opts = { path: 'schedule.device'};
+            // var promise = Schedule.populate(productions, opts, function (err, result) {
+            //     res.status(200).json({
+            //         message: 'Success',
+            //         obj: result
+            //     });
+            // });
+            // productions.forEach(function (production) {
+            //     production.schedule.forEach(function (schedule) {
+            //         var promise = Schedule.populate(schedule, opts, function (err, result) {
+            //             console.log;
+            //         });
+            //     });
+            // });
+
             res.status(200).json({
                 message: 'Success',
                 obj: productions
             });
+
+
         });
 });
 

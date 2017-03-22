@@ -38,4 +38,7 @@ schema.post('findOneAndRemove', function (production) {
 //     next();
 // });
 
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+schema.plugin(deepPopulate, null);
+
 module.exports = mongoose.model('Production', schema);
