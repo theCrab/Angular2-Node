@@ -1,14 +1,14 @@
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
 
-var User = require('../models/user.model');
-var Production = require('../models/production.model');
+const {User} = require('../models/user.model');
+const {Schedule} = require('../models/schedule.model');
+const {Production} = require('../models/production.model');
 
-var Schedule = require('../models/schedule.model');
-var Device = require('../models/device.model');
+const {Device} = require('../models/device.model');
 
-var Config = require('../config');
+const Config = require('../config');
 
 //Alan:取得
 router.get('/', function (req, res, next) {
@@ -44,7 +44,7 @@ router.use('/', function (req, res, next) {
 
 //Alan:新增
 router.post('/', function (req, res, next) {
-    var decoded = jwt.decode(req.headers.authorization);
+    let decoded = jwt.decode(req.headers.authorization);
     //Alan:找到建立人
     User.findById(decoded.user._id, function (err, user) {
         if (err) {
@@ -95,7 +95,7 @@ router.post('/', function (req, res, next) {
 //Alan:search
 router.post('/s', function (req, res, next) {
 
-    var decoded = jwt.decode(req.headers.authorization);
+    let decoded = jwt.decode(req.headers.authorization);
 
     User.findById(decoded.user._id, function (errU, user) {
         if (errU) {
@@ -134,7 +134,7 @@ router.post('/s', function (req, res, next) {
 //Alan:修改
 router.patch('/:id', function (req, res, next) {
 
-    var decoded = jwt.decode(req.headers.authorization);
+    let decoded = jwt.decode(req.headers.authorization);
 
     User.findById(decoded.user._id, function (errU, user) {
         if (errU) {

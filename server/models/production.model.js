@@ -1,11 +1,11 @@
-//ALan:要生產的產品
-var mongoose = require('mongoose');
-var deepPopulate = require('mongoose-deep-populate')(mongoose);
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var Schedule = require('./schedule.model');
+const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-var schema = new Schema({
+const { Schedule } = require('./schedule.model');
+
+let schema = new Schema({
     name: { type: String, required: true },
     count: { type: Number, required: true },
     //Alan:要求時間
@@ -23,14 +23,18 @@ var schema = new Schema({
 // set the relation between production and schedule
 
 // when remove production, remove all schedule which use this production
-schema.post('findOneAndRemove', function (production) {
-    Schedule.find({ 'production': production }, function (err, schedules) {
-        schedules.forEach(function (schedule) {
-            schedule.remove();
-        })
-    });
-});
+schema.post('remove', removeObj);
+schema.post('findOneAndRemove', removeObj);
 
+function removeObj(production) {
+    Schedule.find({ 'production': production }, function (err, schedules) {
+        if (!err) {
+            schedules.forEach(function (schedule) {
+                schedule.remove();
+            })
+        }
+    });
+}
 // schema.pre('save', function(doc) {
 //     console.log('save');
 //     next();
@@ -47,4 +51,4 @@ schema.plugin(deepPopulate, {
     }
 });
 
-module.exports = mongoose.model('Production', schema);
+module.exports.Production = mongoose.model('Production', schema);

@@ -11,7 +11,7 @@ import { AlertConfirmService } from "../../shared/alert-confirm/alert-confirm.se
 @Component({
   selector: `[app-device-item]`,
   templateUrl: './device-item.component.html',
-  styleUrls: ['./device-item.component.css']
+  styleUrls: ['../../production/production-item/production-item.component.css']
 })
 export class DeviceItemComponent  {
 

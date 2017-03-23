@@ -8,6 +8,15 @@
   <p>{{item.creator.firstName + item.creator.lastName}}</p>
 </td>
 <td>
+  <div class="bg-info block-schedule" *ngFor="let s of item.schedule">
+    <i class="icon-clock padding" title="排程時間"></i>
+    <span>{{s.scheduleDate | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+    <br>
+    <i class="icon-power padding" title="生產設備"></i>
+    <span>{{s.production?.name}}</span>
+  </div>
+</td>
+<td>
   <button class="btn btn-sm btn-warning" (click)="switchEdit(item)"><i class="fa fa-pencil"></i> 修改</button>
   <button class="btn btn-sm btn-danger" (click)="deleteItem(item)"><i class="fa fa-trash"></i> 刪除</button>
 </td>

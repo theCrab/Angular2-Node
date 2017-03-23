@@ -1,15 +1,15 @@
-var express = require('express');
-var router = express.Router();
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-var User = require('../models/user.model');
+const {User} = require('../models/user.model');
 
-var Config = require('../config');
+const Config = require('../config');
 
 //Alan:註冊
 router.post('/', function (req, res, next) {
-    var user = new User({
+    let user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: bcrypt.hashSync(req.body.password, 10),
@@ -52,7 +52,7 @@ router.post('/signin', function (req, res, next) {
             });
         }
         //Alan:jwt設定，細節請看：https://jwt.io/   https://github.com/auth0/node-jsonwebtoken     
-        var token = jwt.sign({ user: user }, Config.jwt_secret, { expiresIn: 7200 });
+        let token = jwt.sign({ user: user }, Config.jwt_secret, { expiresIn: 7200 });
         res.status(200).json({
             message: 'Successfully logged in',
             token: token,

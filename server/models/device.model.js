@@ -1,22 +1,38 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var Schedule = require('./schedule.model');
+const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-var schema = new Schema({
+const {Schedule} = require('./schedule.model');
+
+let schema = new Schema({
     deviceId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     data: { type: Object },
     creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    createData: { type: Date, required: true, default: Date.now }
+    createData: { type: Date, required: true, default: Date.now },
+    schedule: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }]
 });
 
-schema.post('findOneAndRemove', function (device) {
-    Schedule.find({ 'device': device }, function (err, schedules) {
+schema.post('remove', removeObj);
+schema.post('findOneAndRemove', removeObj);
+
+function removeObj(device) {
+   Schedule.find({ 'device': device }, function (err, schedules) {
         schedules.forEach(function (schedule) {
             schedule.remove();
         })
     });
-});
+}
 
-module.exports = mongoose.model('Device', schema);
+schema.plugin(deepPopulate, {
+    populate: {
+        'schedule.production': {
+            select: ['name', 'creator'],
+        }　,
+        'schedule.production.creator': {
+            select: ['firstName', 'lastName'],
+        }
+    }
+});
+module.exports.Device = mongoose.model('Device', schema);

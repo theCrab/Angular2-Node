@@ -1,16 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
 
-var User = require('../models/user.model');
-var Device = require('../models/device.model')
+const { User } = require('../models/user.model');
+const { Device } = require('../models/device.model')
 
-var Config = require('../config');
+const Config = require('../config');
 
 //Alan:取得
 router.get('/', function (req, res, next) {
     Device.find()
         .populate('creator', 'firstName lastName')
+        .deepPopulate('schedule.production.creator')
         .exec(function (err, devices) {
             if (err) {
                 return res.status(500).json({
@@ -39,7 +40,7 @@ router.use('/', function (req, res, next) {
 
 //Alan:新增
 router.post('/', function (req, res, next) {
-    var decoded = jwt.decode(req.headers.authorization);
+    let decoded = jwt.decode(req.headers.authorization);
 
     User.findById(decoded.user._id, function (err, user) {
         if (err) {
@@ -71,7 +72,7 @@ router.post('/', function (req, res, next) {
 //Alan:修改
 router.patch('/:id', function (req, res, next) {
 
-    var decoded = jwt.decode(req.headers.authorization);
+    let decoded = jwt.decode(req.headers.authorization);
 
     User.findById(decoded.user._id, function (errU, user) {
         if (errU) {
@@ -106,10 +107,27 @@ router.patch('/:id', function (req, res, next) {
                         error: err
                     });
                 }
-                res.status(200).json({
-                    message: 'Updated message',
-                    obj: result
-                });
+                //find once...to get the relationship
+                Device.findOne(result)
+                    .populate('creator', 'firstName lastName')
+                    .deepPopulate('schedule.production.creator')
+                    .exec(function (err, d) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        }
+                        res.status(200).json({
+                            message: 'Updated message',
+                            obj: d
+                        });
+                    });
+
+                // res.status(200).json({
+                //     message: 'Updated message',
+                //     obj: result
+                // });
             });
         });
     });

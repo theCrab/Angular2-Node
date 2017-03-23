@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var schema = new Schema({
+let schema = new Schema({
     name: { type: String, required: true },
     name_E: { type: String },
     
@@ -14,4 +14,4 @@ var schema = new Schema({
     creator: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
-module.exports = mongoose.model('Menu', schema);
+module.exports.Menu = mongoose.model('Menu', schema);

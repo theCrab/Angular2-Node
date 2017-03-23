@@ -25,12 +25,7 @@ export class DeviceService {
                 const devices = response.json().obj;
                 let transformedList: Device[] = [];
                 for (let device of devices) {
-                    transformedList.push(new Device(
-                        device._id,
-                        device.deviceId,
-                        device.name,
-                        device.creator)
-                    );
+                    transformedList.push(this.createModel(device));
                 }
                 this.devices = transformedList;
 
@@ -48,11 +43,7 @@ export class DeviceService {
         return this.http.post(environment.serverUrl + '/device', body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
-                const device = new Device(
-                    result.obj._id,
-                    result.obj.deviceId,
-                    result.obj.name,
-                    result.obj.creator);
+                const device = this.createModel(result.obj);
                 this.devices.push(device);
                 return device;
             })
@@ -91,11 +82,8 @@ export class DeviceService {
         return this.http.patch(environment.serverUrl + '/device/' + device._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 const result = response.json();
-                return this.devices[this.devices.indexOf(device)] = new Device(
-                    result.obj._id,
-                    result.obj.deviceId,
-                    result.obj.name,
-                    result.obj.creator);
+                return this.devices[this.devices.indexOf(device)]
+                    = this.createModel(result.obj);
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
@@ -103,4 +91,13 @@ export class DeviceService {
             });
     }
 
+    private createModel(item): Device {
+        return new Device(
+            item._id,
+            item.deviceId,
+            item.name,
+            item.creator,
+            item.createData,
+            item.schedule);
+    }
 }

@@ -1,14 +1,18 @@
-var express = require('express');
-var path = require('path');
-var morgan = require('morgan'); // logger
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var app = express();
+global.Promise = require('bluebird');
 
-var port = 3000;
-var db = 'mongodb://localhost:27017/test';
+const express = require('express');
+const path = require('path');
+const morgan = require('morgan'); // logger
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-mongoose.connect(db);
+const database = require('./libs/database');
+
+database.connect();
+
+const app = express();
+
+const port = 3000;
 
 app.set('port', (process.env.PORT || port));
 app.use('/', express.static(__dirname + '/../dist'));
@@ -24,14 +28,12 @@ app.use(function (req, res, next) {
 });
 
 //Alan:routes!!!
-var userRoutes = require('./routes/user.route');
-var temperatureRoutes = require('./routes/temperature.route');
-var deviceRoutes = require('./routes/device.route');
-var productionRoutes = require('./routes/production.route');
-var scheduleRoutes = require('./routes/schedule.route');
+const userRoutes = require('./routes/user.route');
+const deviceRoutes = require('./routes/device.route');
+const productionRoutes = require('./routes/production.route');
+const scheduleRoutes = require('./routes/schedule.route');
 
 app.use('/user', userRoutes);
-app.use('/temperature', temperatureRoutes);
 app.use('/device', deviceRoutes);
 app.use('/production', productionRoutes);
 app.use('/schedule', scheduleRoutes);
