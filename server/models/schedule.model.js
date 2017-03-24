@@ -55,7 +55,6 @@ schema.post('save', function (schedule) {
     });
 
 });
-
 function addDevice(Device, schedule) {
     Device.findById(schedule.device, function (err, d) {
         if (!err) {
@@ -73,23 +72,30 @@ function addProduction(Production, schedule) {
     });
 }
 
-// when remove production, remove all schedule which use this production
-schema.post('remove', removeObj);
-schema.post('findOneAndRemove', removeObj);
 
-function removeObj(schedule) {
+// when remove production, remove all schedule which use this production
+schema.pre('remove', removeObj);
+schema.pre('findOneAndRemove', removeObj);
+
+function removeObj(next) {
     let { Production } = require('./production.model');
+
+    var promiseList = [];
+    let schedule = this;
+
     Production.find({ 'schedule': schedule }, function (err, productions) {
-        if (!err) {
+        if (!err && productions) {
             productions.forEach(function (production) {
                 production.schedule.pull(schedule);
                 production.save();
+                // promiseList.push(promise);
             });
+            // asyncLoop(promiseList, next);
         }
     });
     let { Device } = require('./device.model');
     Device.find({ 'schedule': schedule }, function (err, devices) {
-        if (!err) {
+        if (!err && devices) {
             devices.forEach(function (device) {
                 device.schedule.pull(schedule);
                 device.save();
@@ -97,5 +103,18 @@ function removeObj(schedule) {
         }
     });
 }
+
+
+// function asyncLoop(list, callback, i = 0) {
+//     list[i].then(function () {
+//         console.log(i);
+//         i++;
+//         if (i < list.length) {
+//             asyncLoop(list, i);
+//         } else {
+//             callback();
+//         }
+//     })
+// }
 
 module.exports.Schedule = mongoose.model('Schedule', schema);

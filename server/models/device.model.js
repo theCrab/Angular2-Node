@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-const {Schedule} = require('./schedule.model');
+const { Schedule } = require('./schedule.model');
 
 let schema = new Schema({
     deviceId: { type: String, required: true, unique: true },
@@ -18,10 +18,14 @@ schema.post('remove', removeObj);
 schema.post('findOneAndRemove', removeObj);
 
 function removeObj(device) {
-   Schedule.find({ 'device': device }, function (err, schedules) {
-        schedules.forEach(function (schedule) {
-            schedule.remove();
-        })
+    Schedule.find({ 'device': device }, function (err, schedules) {
+        if (!err && schedules) {
+            schedules.forEach(function (schedule) {
+                setTimeout(function () {
+                    schedule.remove();
+                }, 200);
+            })
+        }
     });
 }
 

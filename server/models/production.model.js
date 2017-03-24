@@ -28,9 +28,11 @@ schema.post('findOneAndRemove', removeObj);
 
 function removeObj(production) {
     Schedule.find({ 'production': production }, function (err, schedules) {
-        if (!err) {
+        if (!err && schedules) {
             schedules.forEach(function (schedule) {
-                schedule.remove();
+                setTimeout(function () {
+                    schedule.remove();
+                }, 200);
             })
         }
     });
