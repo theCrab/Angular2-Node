@@ -74,23 +74,17 @@ function addProduction(Production, schedule) {
 
 
 // when remove production, remove all schedule which use this production
-schema.pre('remove', removeObj);
-schema.pre('findOneAndRemove', removeObj);
+schema.post('remove', removeObj);
+schema.post('findOneAndRemove', removeObj);
 
-function removeObj(next) {
+function removeObj(schedule) {
     let { Production } = require('./production.model');
-
-    var promiseList = [];
-    let schedule = this;
-
     Production.find({ 'schedule': schedule }, function (err, productions) {
         if (!err && productions) {
             productions.forEach(function (production) {
                 production.schedule.pull(schedule);
                 production.save();
-                // promiseList.push(promise);
             });
-            // asyncLoop(promiseList, next);
         }
     });
     let { Device } = require('./device.model');
@@ -103,18 +97,5 @@ function removeObj(next) {
         }
     });
 }
-
-
-// function asyncLoop(list, callback, i = 0) {
-//     list[i].then(function () {
-//         console.log(i);
-//         i++;
-//         if (i < list.length) {
-//             asyncLoop(list, i);
-//         } else {
-//             callback();
-//         }
-//     })
-// }
 
 module.exports.Schedule = mongoose.model('Schedule', schema);

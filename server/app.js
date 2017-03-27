@@ -32,11 +32,13 @@ const userRoutes = require('./routes/user.route');
 const deviceRoutes = require('./routes/device.route');
 const productionRoutes = require('./routes/production.route');
 const scheduleRoutes = require('./routes/schedule.route');
+const fileRoutes = require('./routes/file.route');
 
 app.use('/user', userRoutes);
 app.use('/device', deviceRoutes);
 app.use('/production', productionRoutes);
 app.use('/schedule', scheduleRoutes);
+app.use('/file',fileRoutes);
 
 // all other routes are handled by Angular
 app.get('/*', function (req, res) {
@@ -44,9 +46,9 @@ app.get('/*', function (req, res) {
 });
 
 // all other routes are handled by Angular
-app.get('/tesssss', function (req, res) {
-  res.send('tesss!!ss');
-});
+// app.get('/tesssss', function (req, res) {
+//   res.send('tesss!!ss');
+// });
 
 app.listen(app.get('port'), function () {
   console.log('Angular 2 Full Stack listening on port ' + app.get('port'));
