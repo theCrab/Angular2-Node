@@ -7,23 +7,22 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const database = require('./libs/database');
-
 database.connect();
 
 const app = express();
-
 const port = 3000;
 
 app.set('port', (process.env.PORT || port));
 app.use('/', express.static(__dirname + '/../dist'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
 
@@ -51,7 +50,7 @@ app.get('/*', function (req, res) {
 // });
 
 app.listen(app.get('port'), function () {
-  console.log('Angular 2 Full Stack listening on port ' + app.get('port'));
+  console.log('WWS is ready to connect on port : ' + app.get('port'));
 });
 
 module.exports = app;

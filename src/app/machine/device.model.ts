@@ -6,7 +6,8 @@ export class Device {
         public name: string,
         public creator?: Object,
         public createData?: Date,
-        public schedule?) {
+        public schedule?,
+        public imageUrl?: string) {
 
         this._id = _id;
         this.deviceId = deviceId;
@@ -14,5 +15,6 @@ export class Device {
         this.creator = creator;
         this.createData = new Date(createData);
         this.schedule = schedule;
+        this.imageUrl = imageUrl;
     };
 }

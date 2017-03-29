@@ -12,11 +12,13 @@ import { DeviceInputComponent } from './device-input/device-input.component';
 
 import { PopUpComponent } from './../shared/popUp/popUp.component';
 import { MachineRoutes } from "./machine.routing";
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FileUploadModule,
     MachineRoutes,
 
     PopUpModule,

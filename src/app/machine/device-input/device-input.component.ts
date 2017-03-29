@@ -7,6 +7,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastComponent } from './../../shared/toast/toast.component';
 import { DeviceService } from './../device.service';
 import { Device } from './../device.model';
+import { environment } from "../../../environments/environment";
+import { FileUploader } from "ng2-file-upload";
 
 @Component({
   selector: 'app-device-input',
@@ -40,7 +42,7 @@ export class DeviceInputComponent {
     this.myForm = new FormGroup({
       deviceId: new FormControl(null, Validators.required),
       name: new FormControl(null, Validators.required),
-    });
+    });    
   }
 
   onSubmit() {
@@ -81,5 +83,20 @@ export class DeviceInputComponent {
     }
     this.myForm.reset();
     this.popup.close();
+  }
+
+  
+  uploader: FileUploader = environment.getUploadConfig();
+
+  
+  totalProgress: number = 0;
+  upload() {
+    this.uploader.authToken = localStorage.getItem('token');
+    this.uploader.queue[0].upload(); // 开始上传
+
+    this.uploader.onProgressAll = (progress: number) => {
+      this.totalProgress = progress;
+      // console.log(progress);
+    };
   }
 }

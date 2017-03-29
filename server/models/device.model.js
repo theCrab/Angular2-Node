@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 const { Schedule } = require('./schedule.model');
+const Config = require('../config');
 
 let schema = new Schema({
     deviceId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     data: { type: Object },
+    imageUrl: { type: String, default: Config.defaultImageUrl },
     creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     createData: { type: Date, required: true, default: Date.now },
     schedule: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }]

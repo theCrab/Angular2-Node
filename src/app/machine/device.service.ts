@@ -98,6 +98,7 @@ export class DeviceService {
             item.name,
             item.creator,
             item.createData,
-            item.schedule);
+            item.schedule,
+            item.imageUrl);
     }
 }

@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { FileUploader } from "ng2-file-upload";
 
 export const environment = {
   production: false,
@@ -19,5 +20,17 @@ export const environment = {
         'authorization': localStorage.getItem('token')
       })
     });
-  }
+  },
+  // http://valor-software.com/ng2-file-upload/
+  getUploadConfig(apiUrl = "/file/upload"): FileUploader {
+    return new FileUploader({
+      url: apiUrl,
+      method: "POST",
+      //Alan:the file alias to avoid other non-security upload
+      itemAlias: "MMSUploadFile",
+      authToken: localStorage.getItem('token'),
+      additionalParameter: {test:'sss'}
+    })
+  },
+  defaultImageUrl: 'default%5Cdefault.jpg'
 };

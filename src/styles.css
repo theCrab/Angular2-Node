@@ -4,7 +4,9 @@
     box-sizing: border-box;
 }
 
-
+.none{
+    display: none !important;
+}
 /*自訂全域css*/
 
 .cursorPoint {
