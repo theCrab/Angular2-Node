@@ -15,7 +15,7 @@ import { environment } from "../../../environments/environment";
 export class SigninComponent implements OnInit {
 
 	myForm: FormGroup;
-	
+
 	constructor(private authService: AuthService, private router: Router) {
 		this.myForm = new FormGroup({
 			email: new FormControl('e936106@gmail.com', [
@@ -37,11 +37,17 @@ export class SigninComponent implements OnInit {
 			this.myForm.value.email,
 			this.myForm.value.password,
 		);
+		user.remeberMe = this.myForm.value.remeberMe;
+
 		this.authService.signin(user)
 			.subscribe(
 			data => {
-				localStorage.setItem('token', data.token);
-				localStorage.setItem('userId', data.userId);
+				if (this.myForm.value.remeberMe) {
+					localStorage.setItem('token', data.token);
+					localStorage.setItem('userId', data.userId);
+				}
+				sessionStorage.setItem('token', data.token);
+				sessionStorage.setItem('userId', data.userId);
 
 				if (this.authService.redirectUrl === environment.nonAuthenticationUrl) {
 					this.authService.redirectUrl = environment.mainPageUrl;

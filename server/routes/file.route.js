@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const { loginCheck } = require('../libs/loginCheck');
 
 const multer = require('multer')
 
@@ -28,17 +29,7 @@ router.get('/:url', function (req, res, next) {
 });
 
 
-router.use('/upload', function (req, res, next) {
-    jwt.verify(req.headers.authorization, Config.jwt_secret, function (err, decoded) {
-        if (err) {
-            return res.status(401).json({
-                title: 'Not Authenticated',
-                error: err
-            });
-        }
-        next();
-    })
-});
+router.use('/upload', loginCheck);
 
 router.post('/upload', function (req, res, next) {
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const {User} = require('../models/user.model');
+const { User } = require('../models/user.model');
 
 const Config = require('../config');
 
@@ -41,18 +41,24 @@ router.post('/signin', function (req, res, next) {
         if (!user) {
             return res.status(401).json({
                 title: '登入失敗',
-                error: '不存在的帳號'
+                error: { message: '不存在的帳號' }
             });
         }
         //Alan:加空白避免爆掉
-        if (!bcrypt.compareSync(req.body.password+"", user.password)) {
+        if (!bcrypt.compareSync(req.body.password + "", user.password)) {
             return res.status(401).json({
                 title: '登入失敗',
-                error: '帳號或密碼錯誤，請重新填寫'
+                error: { message: '帳號或密碼錯誤，請重新填寫' }
             });
         }
+
+        let option = {};
+        if (req.body.remeberMe) {
+            option = { expiresIn: Config.tokenExpiresIn }
+        }
+
         //Alan:jwt設定，細節請看：https://jwt.io/   https://github.com/auth0/node-jsonwebtoken     
-        let token = jwt.sign({ user: user }, Config.jwt_secret, { expiresIn: 7200 });
+        let token = jwt.sign({ user: user }, Config.jwt_secret, option);
         res.status(200).json({
             message: 'Successfully logged in',
             token: token,

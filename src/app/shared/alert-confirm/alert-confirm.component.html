@@ -7,7 +7,7 @@
           <span class="fa" [ngClass]="nowClassType.icon" aria-hidden="true"></span>
           <span class="sr-only"></span>{{message?.title || '系統錯誤'}}
         </div>
-        {{message?.error || '系統發生錯誤'}}
+        {{message?.error?.message || message?.message || '系統發生錯誤'}}
 
       </div>
       <div class="modal-footer">

@@ -45,6 +45,7 @@ export class AuthService {
     logout() {
         this.redirectUrl = environment.mainPageUrl;
         this.LoginState = false;
+        sessionStorage.clear();
         localStorage.clear();
     }
 
@@ -60,6 +61,7 @@ export class AuthService {
             .catch((error: Response) => {
                 // this.errorService.handleError(error.json());
                 localStorage.clear();
+                sessionStorage.clear();
                 this.LoginState = false;
                 return Observable.of<boolean>(false)
             });

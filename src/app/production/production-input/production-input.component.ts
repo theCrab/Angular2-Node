@@ -24,8 +24,8 @@ export class ProductionInputComponent {
 	private production: Production;
 	myForm: FormGroup;
 
-	private filePreviewPath: SafeUrl;
-	private fileBoloUrl: string;
+	private filePreviewPath: SafeUrl = `/file/${environment.defaultImageUrl}`;
+	private fileBlobUrl: string;
 
 	constructor(
 		private productionService: ProductionService,
@@ -39,11 +39,11 @@ export class ProductionInputComponent {
 				this.uploader.removeFromQueue(this.uploader.queue[0]);
 			}
 			//Alan:remove previous blob
-			window.URL.revokeObjectURL(this.fileBoloUrl);
+			window.URL.revokeObjectURL(this.fileBlobUrl);
 
 			//Alan:create new blob
-			this.fileBoloUrl = window.URL.createObjectURL(fileItem._file);
-			this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((this.fileBoloUrl));
+			this.fileBlobUrl = window.URL.createObjectURL(fileItem._file);
+			this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((this.fileBlobUrl));
 		}
 
 		//Alan:訂閱Service裡面的參數
@@ -59,13 +59,12 @@ export class ProductionInputComponent {
 				} else {
 					this.isAdd = true;
 
-					this.filePreviewPath = null;
+					this.filePreviewPath = `/file/${environment.defaultImageUrl}`;
 					//Alan:remove previous blob
-					if (this.fileBoloUrl) {
-						window.URL.revokeObjectURL(this.fileBoloUrl);
+					if (this.fileBlobUrl) {
+						window.URL.revokeObjectURL(this.fileBlobUrl);
 						this.uploader.clearQueue();
-						this.fileBoloUrl = null;
-						this.filePreviewPath = null;
+						this.fileBlobUrl = null;
 					}
 				}
 			}

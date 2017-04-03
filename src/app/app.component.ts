@@ -10,6 +10,12 @@ export class AppComponent implements OnInit {
 
   constructor(public toast: ToastComponent) { }
 
-  ngOnInit() { }
+  //Alan:when app init check sessionStorage
+  ngOnInit() {
+    if (sessionStorage.getItem('token') == null) {
+      sessionStorage.setItem('token', localStorage.getItem('token'));
+      sessionStorage.setItem('userId', localStorage.getItem('userId'));
+    }
+  }
 
 }

@@ -5,7 +5,8 @@ const fs = require('fs');
 
 const { User } = require('../models/user.model');
 const { Production } = require('../models/production.model');
-const { Schedule } = require('../models/schedule.model')
+const { Schedule } = require('../models/schedule.model');
+const { loginCheck } = require('../libs/loginCheck');
 
 const Config = require('../config');
 
@@ -25,22 +26,10 @@ router.get('/', function (req, res, next) {
                 message: 'Success',
                 obj: productions
             });
-
-
         });
 });
 
-router.use('/', function (req, res, next) {
-    jwt.verify(req.headers.authorization, Config.jwt_secret, function (err, decoded) {
-        if (err) {
-            return res.status(401).json({
-                title: 'Not Authenticated',
-                error: err
-            });
-        }
-        next();
-    })
-});
+router.use('/', loginCheck);
 
 //Alan:新增
 router.post('/', function (req, res, next) {

@@ -10,14 +10,14 @@ export const environment = {
   production: false,
   serverUrl: 'http://localhost:3000',
   //Alan:未登入時的網址
-  nonAuthenticationUrl: '/auth',
+  nonAuthenticationUrl: '/auth/signin',
   mainPageUrl: '/index/run',
   systemName: 'Machine Ant',
   getRequestOptions(contentType: string = 'application/json'): RequestOptions {
     return new RequestOptions({
       headers: new Headers({
         'Content-Type': contentType,
-        'authorization': localStorage.getItem('token')
+        'authorization': sessionStorage.getItem('token')
       })
     });
   },
@@ -30,7 +30,7 @@ export const environment = {
       removeAfterUpload: true,
       //Alan:the file alias to avoid other non-security upload
       itemAlias: "MMSUploadFile",
-      authToken: localStorage.getItem('token'),
+      authToken: sessionStorage.getItem('token'),
       additionalParameter: { toUrl: toUrl }
     })
   },

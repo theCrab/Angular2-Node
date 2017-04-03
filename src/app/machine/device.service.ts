@@ -140,7 +140,7 @@ export class DeviceService {
 
         return this.http.post(environment.serverUrl + "/file/upload", formData, new RequestOptions({
             headers: new Headers({
-                'authorization': localStorage.getItem('token')
+                'authorization': sessionStorage.getItem('token')
             })
         }))
             .map(res => res)
