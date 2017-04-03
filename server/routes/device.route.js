@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const { User } = require('../models/user.model');
 const { Device } = require('../models/device.model')
@@ -53,7 +54,8 @@ router.post('/', function (req, res, next) {
         new Device({
             deviceId: req.body.deviceId,
             name: req.body.name,
-            creator: user
+            creator: user,
+            imageUrl: req.body.imageUrl
         }).save(function (err, result) {
             if (err) {
                 return res.status(500).json({
@@ -99,6 +101,16 @@ router.patch('/:id', function (req, res, next) {
             device.deviceId = req.body.deviceId;
             device.name = req.body.name;
             device.creator = user;
+
+            let fileUrl = Config.uploadUrl + decodeURI(device.imageUrl);
+            //Alan:if there is change file, and img not equal defaule file, and old file is exit, then remove old file
+            if (device.imageUrl != req.body.imageUrl
+                && device.imageUrl != Config.defaultImageUrl
+                && fs.existsSync(fileUrl)) {
+                fs.unlinkSync(fileUrl);
+            }
+
+            device.imageUrl = req.body.imageUrl;
 
             device.save(function (err, result) {
                 if (err) {

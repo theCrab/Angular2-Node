@@ -1,10 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 
 import { Production } from './production.model';
 import { environment } from './../../environments/environment';
 import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
+import { FileItem } from "ng2-file-upload";
 
 
 @Injectable()
@@ -40,22 +41,39 @@ export class ProductionService {
             });
     }
 
-    add(production: Production) {
-        const body = JSON.stringify(production);
+    add(production: Production, img: FileItem) {
 
-        return this.http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
-            .map((response: Response) => {
-                const result = response.json();
-                const production = this.createModel(result.obj);
-                this.productions.push(production);
-                return production;
-            })
-            .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
-                return Observable.throw(error.json())
-            });
+        if (img) {
+            return this.upload(img._file)
+                .concatMap(
+                (response: Response) => {
+                    let file = response.json();
+
+                    production.imageUrl = file.obj[0].path;
+                    return this.postAdd(production);
+                });
+        } else {
+            return this.postAdd(production);
+        }
     }
 
+
+    update(production: Production, img: FileItem) {
+        let body = JSON.stringify(production);
+
+        if (img) {
+            return this.upload(img._file)
+                .concatMap(
+                (response: Response) => {
+                    let file = response.json();
+
+                    production.imageUrl = file.obj[0].path;
+                    return this.postUpdate(production);
+                });
+        } else {
+            return this.postUpdate(production);
+        }
+    }
 
     delete(production: Production) {
         return this.http.delete(environment.serverUrl + '/production/' + production._id, environment.getRequestOptions())
@@ -78,7 +96,24 @@ export class ProductionService {
         this.production.emit(null);
     }
 
-    update(production: Production) {
+    postAdd(production: Production): Observable<any> {
+        const body = JSON.stringify(production);
+
+        return this.http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
+            .map((response: Response) => {
+                const result = response.json();
+                const production = this.createModel(result.obj);
+                this.productions.push(production);
+                return production;
+            })
+            .catch((error: Response) => {
+                this.alertConfirmService.alert(error.json());
+                return Observable.throw(error.json())
+            });
+    }
+
+
+    postUpdate(production: Production): Observable<any> {
         const body = JSON.stringify(production);
         return this.http.patch(environment.serverUrl + '/production/' + production._id, body, environment.getRequestOptions())
             .map((response: Response) => {
@@ -92,6 +127,20 @@ export class ProductionService {
             });
     }
 
+    upload(file: File): Observable<any> {
+        let formData: FormData = new FormData();
+        formData.append('MMSUploadFile', file, file.name);
+        formData.append('toUrl', 'production');
+
+        return this.http.post(environment.serverUrl + "/file/upload", formData, new RequestOptions({
+            headers: new Headers({
+                'authorization': localStorage.getItem('token')
+            })
+        }))
+            .map(res => res)
+            .catch(error => Observable.throw(error))
+    }
+
     private createModel(item): Production {
         return new Production(
             item.name,
@@ -103,7 +152,8 @@ export class ProductionService {
             item.creator.firstName + item.creator.lastName,
             item.state,
             item.finishDate,
-            item.schedule);
+            item.schedule,
+            item.imageUrl);
     }
 
 }

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const fs = require('fs');
+
 const deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 const { Schedule } = require('./schedule.model');
@@ -20,6 +22,14 @@ schema.post('remove', removeObj);
 schema.post('findOneAndRemove', removeObj);
 
 function removeObj(device) {
+
+    let fileUrl = Config.uploadUrl + decodeURI(device.imageUrl);
+
+    if (device.imageUrl != Config.defaultImageUrl
+        && fs.existsSync(fileUrl)) {
+        fs.unlinkSync(fileUrl);
+    }
+
     Schedule.find({ 'device': device }, function (err, schedules) {
         if (!err && schedules) {
             schedules.forEach(function (schedule) {

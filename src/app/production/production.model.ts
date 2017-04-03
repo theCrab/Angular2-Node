@@ -10,7 +10,8 @@ export class Production {
         public creatorName?: string,
         public state: boolean = false,
         public finishDate: Date = null,
-        public schedule?) {
+        public schedule?,
+        public imageUrl?: string) {
         this.name = name;
         this.count = count;
         this.requireDate = new Date(requireDate);
@@ -21,5 +22,6 @@ export class Production {
         this.state = state;
         this.finishDate = finishDate;
         this.schedule = schedule;
+        this.imageUrl = imageUrl;
     }
 }

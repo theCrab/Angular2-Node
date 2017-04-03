@@ -13,23 +13,25 @@ export const environment = {
   nonAuthenticationUrl: '/auth',
   mainPageUrl: '/index/run',
   systemName: 'Machine Ant',
-  getRequestOptions(): RequestOptions {
+  getRequestOptions(contentType: string = 'application/json'): RequestOptions {
     return new RequestOptions({
       headers: new Headers({
-        'Content-Type': 'application/json',
+        'Content-Type': contentType,
         'authorization': localStorage.getItem('token')
       })
     });
   },
   // http://valor-software.com/ng2-file-upload/
-  getUploadConfig(apiUrl = "/file/upload"): FileUploader {
+  getUploadConfig(toUrl, apiUrl = "/file/upload"): FileUploader {
     return new FileUploader({
       url: apiUrl,
       method: "POST",
+      //Alan: uploaded file release memory
+      removeAfterUpload: true,
       //Alan:the file alias to avoid other non-security upload
       itemAlias: "MMSUploadFile",
       authToken: localStorage.getItem('token'),
-      additionalParameter: {test:'sss'}
+      additionalParameter: { toUrl: toUrl }
     })
   },
   defaultImageUrl: 'default%5Cdefault.jpg'

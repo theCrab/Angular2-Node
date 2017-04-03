@@ -15,7 +15,7 @@ const port = 3000;
 app.set('port', (process.env.PORT || port));
 app.use('/', express.static(__dirname + '/../dist'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
 app.use(function (req, res, next) {

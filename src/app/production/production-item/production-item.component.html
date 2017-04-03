@@ -5,6 +5,9 @@
   <label>{{item.count}}</label>
 </td>
 <td>
+  <img src="/file/{{item.imageUrl}}" height="100">
+</td>
+<td>
   <label>{{item.requireDate | date: 'yyyy-MM-dd HH:mm:ss'}}</label>
 </td>
 <td>
@@ -13,11 +16,11 @@
 </td>
 <td>
   <div class="bg-info block-schedule" *ngFor="let s of item.schedule">
-      <i class="icon-clock padding" title="排程時間"></i>
-      <span>{{s.scheduleDate | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-      <br>
-      <i class="icon-power padding" title="生產設備"></i>
-      <span>{{s.device?.name}}</span>
+    <i class="icon-clock padding" title="排程時間"></i>
+    <span>{{s.scheduleDate | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+    <br>
+    <i class="icon-power padding" title="生產設備"></i>
+    <span>{{s.device?.name}}</span>
   </div>
 </td>
 <td>

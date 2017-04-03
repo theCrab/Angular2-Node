@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const { User } = require('../models/user.model');
 const { Production } = require('../models/production.model');
@@ -58,7 +59,7 @@ router.post('/', function (req, res, next) {
             count: req.body.count,
             requireDate: req.body.requireDate,
             creator: user,
-            createData: new Date()
+            imageUrl: req.body.imageUrl
         }).save(function (err, result) {
             if (err) {
                 return res.status(500).json({
@@ -105,7 +106,17 @@ router.patch('/:id', function (req, res, next) {
             production.count = req.body.count;
             production.requireDate = req.body.requireDate;
             production.creator = user;
-            production.createData = new Date();
+
+            
+            let fileUrl = Config.uploadUrl + decodeURI(production.imageUrl);
+            //Alan:if there is change file, and img not equal defaule file, and old file is exit, then remove old file
+            if (production.imageUrl != req.body.imageUrl
+                && production.imageUrl != Config.defaultImageUrl
+                && fs.existsSync(fileUrl)) {
+                fs.unlinkSync(fileUrl);
+            }
+
+            production.imageUrl = req.body.imageUrl;
 
             production.save(function (err, result) {
                 if (err) {
@@ -148,12 +159,11 @@ router.delete('/:id', function (req, res, next) {
                 title: 'An error occurred',
                 error: err
             });
-        } else {
-            res.status(200).json({
-                message: 'Deleted production',
-                obj: production
-            });
         }
+        res.status(200).json({
+            message: 'Deleted production',
+            obj: production
+        });
     });
 });
 

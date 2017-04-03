@@ -6,6 +6,9 @@ import { ToastComponent } from './../../shared/toast/toast.component';
 
 import { ProductionService } from './../production.service';
 import { Production } from './../production.model';
+import { FileUploader, FileItem } from "ng2-file-upload";
+import { environment } from "../../../environments/environment";
+import { SafeUrl, DomSanitizer } from "@angular/platform-browser";
 
 @Component({
 	selector: 'app-production-input',
@@ -14,25 +17,56 @@ import { Production } from './../production.model';
 })
 export class ProductionInputComponent {
 
+	private uploader: FileUploader = environment.getUploadConfig('production');
+
 	private isAdd: Boolean = true;
 	//ALan:要修改的物件
 	private production: Production;
 	myForm: FormGroup;
 
+	private filePreviewPath: SafeUrl;
+	private fileBoloUrl: string;
+
 	constructor(
 		private productionService: ProductionService,
 		public toast: ToastComponent,
-		private popup: PopUpComponent) {
+		private popup: PopUpComponent,
+		private sanitizer: DomSanitizer) {
+		this.uploader.onAfterAddingFile = (fileItem: FileItem) => {
+
+			//Alan:if lenght more than 1, remove first element
+			if (this.uploader.queue.length > 1) {
+				this.uploader.removeFromQueue(this.uploader.queue[0]);
+			}
+			//Alan:remove previous blob
+			window.URL.revokeObjectURL(this.fileBoloUrl);
+
+			//Alan:create new blob
+			this.fileBoloUrl = window.URL.createObjectURL(fileItem._file);
+			this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((this.fileBoloUrl));
+		}
+
 		//Alan:訂閱Service裡面的參數
 		this.productionService.production.subscribe(
 			(production: Production) => {
-				
+
 				this.production = production
 
 				if (production) {
 					this.isAdd = false;
+
+					this.filePreviewPath = `/file/${production.imageUrl}`;
 				} else {
 					this.isAdd = true;
+
+					this.filePreviewPath = null;
+					//Alan:remove previous blob
+					if (this.fileBoloUrl) {
+						window.URL.revokeObjectURL(this.fileBoloUrl);
+						this.uploader.clearQueue();
+						this.fileBoloUrl = null;
+						this.filePreviewPath = null;
+					}
 				}
 			}
 		);
@@ -52,7 +86,7 @@ export class ProductionInputComponent {
 				this.myForm.value.count,
 				this.myForm.value.requireDate,
 			);
-			this.productionService.add(production)
+			this.productionService.add(production, this.uploader.queue[0])
 				.subscribe(
 				data => {
 					this.toast.setMessage('產品建立成功.', 'success');
@@ -69,7 +103,7 @@ export class ProductionInputComponent {
 			this.production.count = this.myForm.value.count
 			this.production.requireDate = this.myForm.value.requireDate
 
-			this.productionService.update(this.production)
+			this.productionService.update(this.production, this.uploader.queue[0])
 				.subscribe(
 				data => {
 					this.toast.setMessage('產品修改成功.', 'success');
@@ -85,4 +119,17 @@ export class ProductionInputComponent {
 		this.myForm.reset();
 	}
 
+	// totalProgress: number = 0;
+	// upload() {
+	// 	this.uploader.authToken = localStorage.getItem('token');
+
+	// 	// this.uploader.options.additionalParameter = {toUrl};
+
+	// 	this.uploader.queue[0].upload();
+
+	// 	this.uploader.onProgressAll = (progress: number) => {
+	// 		this.totalProgress = progress;
+	// 		// console.log(progress);
+	// 	};
+	// }
 }
