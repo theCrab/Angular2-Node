@@ -1,8 +1,6 @@
 import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
 import { ScheduleService } from './../schedule.service';
-import { ProductionService } from './../../production/production.service';
-import { DeviceService } from './../../machine/device.service';
 
 import { PopUpComponent } from './../../shared/popUp/popUp.component';
 import { ToastComponent } from './../../shared/toast/toast.component';
@@ -28,12 +26,10 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
-    private scheduleService: ScheduleService,
-    private productionService: ProductionService,
-    private deviceService: DeviceService,
-    public toast: ToastComponent,
-    private popup: PopUpComponent,
-    private alertConfirmService: AlertConfirmService) {
+    private _scheduleService: ScheduleService,
+    public _toast: ToastComponent,
+    private _popup: PopUpComponent,
+    private _alertConfirmService: AlertConfirmService) {
 
   }
 
@@ -50,21 +46,21 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
   }
 
   switchEdit(schedule: Schedule) {
-    this.scheduleService.switchEdit(schedule)
-    this.popup.open(`修改排程－${schedule._id}`);
+    this._scheduleService.switchEdit(schedule)
+    this._popup.open(`修改排程－${schedule._id}`);
   }
 
   onDelete(schedule: Schedule) {
-    this.alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
+    this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
-        this.scheduleService.delete(schedule)
+        this._scheduleService.delete(schedule)
           .subscribe(
           data => {
-            this.toast.setMessage('產品刪除成功.', 'success');
+            this._toast.setMessage('產品刪除成功.', 'success');
             console.log(data)
           },
           error => {
-            this.toast.setMessage(error, 'warning');
+            this._toast.setMessage(error, 'warning');
             console.error(error)
           });
       });

@@ -7,6 +7,6 @@
 
 <app-schedule-list></app-schedule-list>
 <!--[autoClose]="true"-->
-<app-popUp [popupConfig]="popup.popupConfig" (callBackFun)="callBackFun()" [autoClose]="true">
+<app-popUp [popupConfig]="_popup.popupConfig" (callBackFun)="callBackFun()" [autoClose]="true">
     <app-schedule-input></app-schedule-input>
 </app-popUp>

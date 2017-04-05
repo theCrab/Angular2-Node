@@ -38,10 +38,10 @@ export class AlertConfirmComponent {
   private nowClassType = this.classList.success;
 
   constructor(
-    private alertConfirmService: AlertConfirmService
+    private _alertConfirmService: AlertConfirmService
   ) {
 
-    alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
+    _alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
       this.isConfirm = false;
       this.message = message;
       this.nowClassType = message.type == null ? this.classList.error : this.classList[`${message.type}`];
@@ -49,7 +49,7 @@ export class AlertConfirmComponent {
       this.handleClose();
     });
 
-    alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
+    _alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
       this.isConfirm = true;
       this.message = message;
       this.nowClassType = message.type == null ? this.classList.warning : this.classList[`${message.type}`];
@@ -65,13 +65,13 @@ export class AlertConfirmComponent {
         this.subscribedToClosing = true;
         if (this.isConfirm) {
           if (this.confirmed) {
-            this.alertConfirmService.confirmCallback._ok();
+            this._alertConfirmService.confirmCallback._ok();
           } else {
-            this.alertConfirmService.confirmCallback._cancel();
+            this._alertConfirmService.confirmCallback._cancel();
           }
           this.confirmed = false;
         } else {
-          this.alertConfirmService.alertCallback._ok();
+          this._alertConfirmService.alertCallback._ok();
         }
       });
     }

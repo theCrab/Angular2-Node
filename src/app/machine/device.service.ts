@@ -11,8 +11,8 @@ import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.servi
 export class DeviceService {
 
     constructor(
-        private http: Http,
-        private alertConfirmService: AlertConfirmService
+        private _http: Http,
+        private _alertConfirmService: AlertConfirmService
     ) { }
 
     devices: Device[] = [];
@@ -21,7 +21,7 @@ export class DeviceService {
     device = new EventEmitter<Device>();
 
     get() {
-        return this.http.get(environment.serverUrl + '/device')
+        return this._http.get(environment.serverUrl + '/device')
             .map((response: Response) => {
                 let devices = response.json().obj;
                 let transformedList: Device[] = [];
@@ -33,7 +33,7 @@ export class DeviceService {
                 return transformedList;
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -84,13 +84,13 @@ export class DeviceService {
 
     delete(device: Device) {
 
-        return this.http.delete(`${environment.serverUrl}/device/${device._id}`, environment.getRequestOptions())
+        return this._http.delete(`${environment.serverUrl}/device/${device._id}`, environment.getRequestOptions())
             .map((response: Response) => {
                 this.devices.splice(this.devices.indexOf(device), 1);
                 return response.json();
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -105,7 +105,7 @@ export class DeviceService {
     postAdd(device: Device): Observable<any> {
         let body = JSON.stringify(device);
 
-        return this.http.post(environment.serverUrl + '/device', body, environment.getRequestOptions())
+        return this._http.post(environment.serverUrl + '/device', body, environment.getRequestOptions())
             .map((response: Response) => {
                 let result = response.json();
                 let device = this.createModel(result.obj);
@@ -113,7 +113,7 @@ export class DeviceService {
                 return device;
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
@@ -121,14 +121,14 @@ export class DeviceService {
     postUpdate(device: Device): Observable<any> {
         let body = JSON.stringify(device);
 
-        return this.http.patch(environment.serverUrl + '/device/' + device._id, body, environment.getRequestOptions())
+        return this._http.patch(environment.serverUrl + '/device/' + device._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 let result = response.json();
                 return this.devices[this.devices.indexOf(device)]
                     = this.createModel(result.obj);
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -138,7 +138,7 @@ export class DeviceService {
         formData.append('MMSUploadFile', file, file.name);
         formData.append('toUrl', 'device');
 
-        return this.http.post(environment.serverUrl + "/file/upload", formData, new RequestOptions({
+        return this._http.post(environment.serverUrl + "/file/upload", formData, new RequestOptions({
             headers: new Headers({
                 'authorization': sessionStorage.getItem('token')
             })

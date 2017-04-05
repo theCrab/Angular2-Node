@@ -12,8 +12,9 @@ import { ScheduleService } from './../../schedule/schedule.service';
 })
 export class RunscheduleItemComponent implements OnInit {
 
-  constructor(private scheduleService: ScheduleService,
-    public toast: ToastComponent) { }
+  constructor(
+    private _scheduleService: ScheduleService,
+    public _toast: ToastComponent) { }
 
   //ALan:要修改的物件
   @Input('app-runschedule-item') item: Schedule;
@@ -50,17 +51,17 @@ export class RunscheduleItemComponent implements OnInit {
 
     this.item.actionDate = new Date();
 
-    this.scheduleService.update(this.item)
+    this._scheduleService.update(this.item)
       .subscribe(
       data => {
-        this.toast.setMessage('開始生產.', 'success');
+        this._toast.setMessage('開始生產.', 'success');
 
         this.ngOnInit();
 
         // console.log(data);
       },
       error => {
-        this.toast.setMessage(error, 'warning');
+        this._toast.setMessage(error, 'warning');
         // console.error(error);
       }
       );
@@ -71,17 +72,17 @@ export class RunscheduleItemComponent implements OnInit {
 
     this.item.finishDate = new Date();
 
-    this.scheduleService.update(this.item)
+    this._scheduleService.update(this.item)
       .subscribe(
       data => {
-        this.toast.setMessage('結束生產.', 'success');
+        this._toast.setMessage('結束生產.', 'success');
 
         this.ngOnInit();
 
         console.log(data);
       },
       error => {
-        this.toast.setMessage(error, 'warning');
+        this._toast.setMessage(error, 'warning');
         console.error(error);
       }
       );

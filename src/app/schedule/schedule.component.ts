@@ -10,14 +10,14 @@ import { ScheduleService } from './../schedule/schedule.service';
 export class ScheduleComponent  {
 
   constructor(
-    private scheduleService: ScheduleService ,
-    private popup: PopUpComponent) { }
+    private _scheduleService: ScheduleService ,
+    private _popup: PopUpComponent) { }
 
   add() {
-    this.popup.open('新增設備');
+    this._popup.open('新增設備');
   }
 
   callBackFun() {    
-    this.scheduleService.clearEdit();
+    this._scheduleService.clearEdit();
   }
 }

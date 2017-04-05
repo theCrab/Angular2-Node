@@ -18,9 +18,9 @@ export class SignupComponent implements OnInit {
 	myForm: FormGroup;
 	
 	constructor(
-		private authService: AuthService,
-		private alertConfirmService: AlertConfirmService,
-		private router: Router) {
+		private _authService: AuthService,
+		private _alertConfirmService: AlertConfirmService,
+		private _router: Router) {
 
 		this.myForm = new FormGroup({
 			firstName: new FormControl(null, Validators.required),
@@ -44,12 +44,12 @@ export class SignupComponent implements OnInit {
 			this.myForm.value.firstName,
 			this.myForm.value.lastName,
 		);
-		this.authService.signup(user)
+		this._authService.signup(user)
 			.subscribe(
 			data => {
-				this.alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入"))
+				this._alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入"))
 					.ok(() => {
-						this.router.navigateByUrl('/auth/signin');
+						this._router.navigateByUrl('/auth/signin');
 					})
 			},
 			error => console.error(error)

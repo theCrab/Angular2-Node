@@ -7,6 +7,6 @@
 <app-production-list></app-production-list>
 
 
-<app-popUp [popupConfig]="popup.popupConfig" (callBackFun)="callBackFun()" [autoClose]="true">
+<app-popUp [popupConfig]="_popup.popupConfig" (callBackFun)="callBackFun()" [autoClose]="true">
     <app-production-input></app-production-input>
 </app-popUp>

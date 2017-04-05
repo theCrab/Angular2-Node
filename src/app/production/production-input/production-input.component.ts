@@ -28,10 +28,10 @@ export class ProductionInputComponent {
 	private fileBlobUrl: string;
 
 	constructor(
-		private productionService: ProductionService,
-		public toast: ToastComponent,
-		private popup: PopUpComponent,
-		private sanitizer: DomSanitizer) {
+		private _productionService: ProductionService,
+		public _toast: ToastComponent,
+		private _popup: PopUpComponent,
+		private _sanitizer: DomSanitizer) {
 		this.uploader.onAfterAddingFile = (fileItem: FileItem) => {
 
 			//Alan:if lenght more than 1, remove first element
@@ -43,11 +43,11 @@ export class ProductionInputComponent {
 
 			//Alan:create new blob
 			this.fileBlobUrl = window.URL.createObjectURL(fileItem._file);
-			this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((this.fileBlobUrl));
+			this.filePreviewPath = this._sanitizer.bypassSecurityTrustUrl((this.fileBlobUrl));
 		}
 
 		//Alan:訂閱Service裡面的參數
-		this.productionService.production.subscribe(
+		this._productionService.production.subscribe(
 			(production: Production) => {
 
 				this.production = production
@@ -85,14 +85,14 @@ export class ProductionInputComponent {
 				this.myForm.value.count,
 				this.myForm.value.requireDate,
 			);
-			this.productionService.add(production, this.uploader.queue[0])
+			this._productionService.add(production, this.uploader.queue[0])
 				.subscribe(
 				data => {
-					this.toast.setMessage('產品建立成功.', 'success');
+					this._toast.setMessage('產品建立成功.', 'success');
 					console.log(data)
 				},
 				error => {
-					this.toast.setMessage(error, 'warning');
+					this._toast.setMessage(error, 'warning');
 					console.error(error)
 				}
 				);
@@ -102,19 +102,19 @@ export class ProductionInputComponent {
 			this.production.count = this.myForm.value.count
 			this.production.requireDate = this.myForm.value.requireDate
 
-			this.productionService.update(this.production, this.uploader.queue[0])
+			this._productionService.update(this.production, this.uploader.queue[0])
 				.subscribe(
 				data => {
-					this.toast.setMessage('產品修改成功.', 'success');
+					this._toast.setMessage('產品修改成功.', 'success');
 					console.log(data);
 				},
 				error => {
-					this.toast.setMessage(error, 'warning');
+					this._toast.setMessage(error, 'warning');
 					console.error(error);
 				}
 				);
 		}
-		this.popup.close();
+		this._popup.close();
 		this.myForm.reset();
 	}
 

@@ -10,7 +10,7 @@ class activeClass {
 })
 export class FocusChangeDirective implements OnInit {
 
-  constructor(private el: ElementRef) { }
+  constructor(private _elem: ElementRef) { }
 
   //Alan:要改變的tag
   @Input('focus-change') changeElem;
@@ -31,7 +31,7 @@ export class FocusChangeDirective implements OnInit {
   }
 
   private checkModel() {
-    if (this.el.nativeElement.value === '') {
+    if (this._elem.nativeElement.value === '') {
       this.changeElem.className = "";
     } else {
       this.changeElem.className = `${this.activeClass.hasvalue}`;

@@ -19,28 +19,28 @@ export class ProductionItemComponent {
   @Input('app-production-item') item: Production;
 
   constructor(
-    private productionService: ProductionService,
-    public toast: ToastComponent,
-    private popup: PopUpComponent,
-    private alertConfirmService: AlertConfirmService) { }
+    private _productionService: ProductionService,
+    public _toast: ToastComponent,
+    private _popup: PopUpComponent,
+    private _alertConfirmService: AlertConfirmService) { }
 
   switchEdit(production: Production) {
-    this.productionService.switchEdit(production)
-    this.popup.open(`修改設備－${production.name}`);
+    this._productionService.switchEdit(production)
+    this._popup.open(`修改設備－${production.name}`);
   }
 
   onDelete(production: Production) {
 
-    this.alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
+    this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
-        this.productionService.delete(production)
+        this._productionService.delete(production)
           .subscribe(
           data => {
-            this.toast.setMessage('產品刪除成功.', 'success');
+            this._toast.setMessage('產品刪除成功.', 'success');
             console.log(data)
           },
           error => {
-            this.toast.setMessage(error, 'warning');
+            this._toast.setMessage(error, 'warning');
             console.error(error)
           }
           );

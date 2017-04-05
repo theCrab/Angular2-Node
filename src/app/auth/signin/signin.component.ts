@@ -16,7 +16,7 @@ export class SigninComponent implements OnInit {
 
 	myForm: FormGroup;
 
-	constructor(private authService: AuthService, private router: Router) {
+	constructor(private _authService: AuthService, private _router: Router) {
 		this.myForm = new FormGroup({
 			email: new FormControl('e936106@gmail.com', [
 				Validators.required,
@@ -39,7 +39,7 @@ export class SigninComponent implements OnInit {
 		);
 		user.remeberMe = this.myForm.value.remeberMe;
 
-		this.authService.signin(user)
+		this._authService.signin(user)
 			.subscribe(
 			data => {
 				if (this.myForm.value.remeberMe) {
@@ -49,10 +49,10 @@ export class SigninComponent implements OnInit {
 				sessionStorage.setItem('token', data.token);
 				sessionStorage.setItem('userId', data.userId);
 
-				if (this.authService.redirectUrl === environment.nonAuthenticationUrl) {
-					this.authService.redirectUrl = environment.mainPageUrl;
+				if (this._authService.redirectUrl === environment.nonAuthenticationUrl) {
+					this._authService.redirectUrl = environment.mainPageUrl;
 				}
-				this.router.navigateByUrl(this.authService.redirectUrl);
+				this._router.navigateByUrl(this._authService.redirectUrl);
 			},
 			error => console.error(error)
 			);

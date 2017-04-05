@@ -14,8 +14,8 @@ import { Device } from './../device.model';
 export class DeviceListComponent implements OnInit {
 
 	constructor(
-		private deviceService: DeviceService,
-		private toast: ToastComponent) { }
+		private _deviceService: DeviceService,
+		private _toast: ToastComponent) { }
 
 	//Alan:此頁物件
 	private currentPage: Number = 1;
@@ -24,7 +24,7 @@ export class DeviceListComponent implements OnInit {
 	private devices: Device[];
 
 	ngOnInit() {
-		this.deviceService.get().subscribe(
+		this._deviceService.get().subscribe(
 			data => {
 				this.devices = data;
 				console.table(this.devices)

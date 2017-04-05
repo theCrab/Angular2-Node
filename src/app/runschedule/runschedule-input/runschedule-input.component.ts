@@ -18,8 +18,8 @@ export class RunscheduleInputComponent {
 	private myForm: FormGroup;
 
 	constructor(
-		private scheduleService: ScheduleService,
-		private toast: ToastComponent) {
+		private _scheduleService: ScheduleService,
+		private _toast: ToastComponent) {
 		this.myForm = new FormGroup({
 			schedule_id: new FormControl(null, Validators.required),
 		});
@@ -37,13 +37,13 @@ export class RunscheduleInputComponent {
 			this.myForm.value.createData,
 			this.myForm.value.schedule_id,
 		);
-		this.scheduleService.search(schedule).subscribe(
+		this._scheduleService.search(schedule).subscribe(
 			data => {
-				this.toast.setMessage('搜尋成功.', 'success');
+				this._toast.setMessage('搜尋成功.', 'success');
 				console.log(data)
 			},
 			error => {
-				this.toast.setMessage(error.json(), 'warning');
+				this._toast.setMessage(error.json(), 'warning');
 				console.error(error)
 			}
 		);

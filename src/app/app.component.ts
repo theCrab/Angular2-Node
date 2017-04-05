@@ -8,7 +8,7 @@ import { ToastComponent } from './shared/toast/toast.component';
 })
 export class AppComponent implements OnInit {
 
-  constructor(public toast: ToastComponent) { }
+  constructor(public _toast: ToastComponent) { }
 
   //Alan:when app init check sessionStorage
   ngOnInit() {

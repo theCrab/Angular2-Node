@@ -14,8 +14,8 @@ import { Schedule } from './../schedule.model';
 export class ScheduleListComponent implements OnInit {
 
 	constructor(
-		private scheduleService: ScheduleService,
-		public toast: ToastComponent
+		private _scheduleService: ScheduleService,
+		public _toast: ToastComponent
 	) { }
 
 	//Alan:此頁物件
@@ -24,7 +24,7 @@ export class ScheduleListComponent implements OnInit {
 	schedules = [];
 
 	ngOnInit() {
-		this.scheduleService.get().subscribe(
+		this._scheduleService.get().subscribe(
 			data => {
 				this.schedules = data;
 			},

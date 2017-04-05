@@ -27,8 +27,8 @@ export class RouteLoadingComponent {
   loading: boolean = true;
 
   constructor(
-    private router: Router) {
-    router.events.subscribe((event: RouterEvent) => {
+    private _router: Router) {
+    _router.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event);
     });
   }

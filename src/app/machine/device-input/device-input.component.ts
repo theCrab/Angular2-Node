@@ -28,10 +28,10 @@ export class DeviceInputComponent {
   private filePreviewPath: SafeUrl;
   private fileBoloUrl: string;
   constructor(
-    private deviceService: DeviceService,
-    private toast: ToastComponent,
-    private popup: PopUpComponent,
-    private sanitizer: DomSanitizer) {
+    private _deviceService: DeviceService,
+    private _toast: ToastComponent,
+    private _popup: PopUpComponent,
+    private _sanitizer: DomSanitizer) {
     //Alan: generate preview image
     //https://github.com/valor-software/ng2-file-upload/issues/158
     this.uploader.onAfterAddingFile = (fileItem: FileItem) => {
@@ -45,11 +45,11 @@ export class DeviceInputComponent {
 
       //Alan:create new blob
       this.fileBoloUrl = window.URL.createObjectURL(fileItem._file);
-      this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((this.fileBoloUrl));
+      this.filePreviewPath = this._sanitizer.bypassSecurityTrustUrl((this.fileBoloUrl));
     }
 
     //Alan:訂閱Service裡面的參數
-    this.deviceService.device.subscribe(
+    this._deviceService.device.subscribe(
       (device: Device) => {
         this.device = device;
         if (device) {
@@ -85,14 +85,14 @@ export class DeviceInputComponent {
         this.myForm.value.deviceId,
         this.myForm.value.name,
       );
-      this.deviceService.add(device, this.uploader.queue[0])
+      this._deviceService.add(device, this.uploader.queue[0])
         .subscribe(
         data => {
-          this.toast.setMessage('設備建立成功.', 'success');
+          this._toast.setMessage('設備建立成功.', 'success');
           console.log(data)
         },
         error => {
-          this.toast.setMessage(error, 'warning');
+          this._toast.setMessage(error, 'warning');
           console.error(error)
         },
         () => {
@@ -104,14 +104,14 @@ export class DeviceInputComponent {
       this.device.deviceId = this.myForm.value.deviceId;
       this.device.name = this.myForm.value.name;
 
-      this.deviceService.update(this.device, this.uploader.queue[0])
+      this._deviceService.update(this.device, this.uploader.queue[0])
         .subscribe(
         data => {
-          this.toast.setMessage('設備修改成功.', 'success');
+          this._toast.setMessage('設備修改成功.', 'success');
           console.log(data)
         },
         error => {
-          this.toast.setMessage(error, 'warning');
+          this._toast.setMessage(error, 'warning');
           console.error(error)
         },
         () => {
@@ -123,7 +123,7 @@ export class DeviceInputComponent {
 
   complete() {
     this.myForm.reset();
-    this.popup.close();
+    this._popup.close();
   }
 
 

@@ -14,9 +14,9 @@ import { AuthService } from "../../auth/auth.service";
 export class NavBlack120Component {
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private alertConfirmService: AlertConfirmService) { }
+    private _authService: AuthService,
+    private _router: Router,
+    private _alertConfirmService: AlertConfirmService) { }
 
   private mainPage = environment.mainPageUrl;
 
@@ -48,10 +48,10 @@ export class NavBlack120Component {
   ];
 
   onLogout() {
-    this.alertConfirmService.confirm(new AlertConfirmModel("登出", "確定要登出嗎？"))
+    this._alertConfirmService.confirm(new AlertConfirmModel("登出", "確定要登出嗎？"))
       .ok(() => {
-        this.authService.logout();
-        this.router.navigateByUrl(environment.nonAuthenticationUrl);
+        this._authService.logout();
+        this._router.navigateByUrl(environment.nonAuthenticationUrl);
       });
   }
 

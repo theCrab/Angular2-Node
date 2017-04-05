@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ScheduleService } from './../schedule.service';
 import { ProductionService } from './../../production/production.service';
@@ -28,18 +28,17 @@ export class ScheduleInputComponent {
   private yearRange: string;
 
   constructor(
-    private scheduleService: ScheduleService,
-    private productionService: ProductionService,
-    private deviceService: DeviceService,
-    public toast: ToastComponent,
-    private popup: PopUpComponent,
-    private formbuilder: FormBuilder) {
+    private _scheduleService: ScheduleService,
+    private _productionService: ProductionService,
+    private _deviceService: DeviceService,
+    public _toast: ToastComponent,
+    private _popup: PopUpComponent) {
 
     //預設年份往後+5年
     this.yearRange = `${new Date().getFullYear()}:${new Date().getFullYear() + 5}`;
 
     //Alan:訂閱Service裡面的參數
-    this.scheduleService.schedule.subscribe(
+    this._scheduleService.schedule.subscribe(
       (schedule: Schedule) => {
 
         this.schedule = schedule;
@@ -59,14 +58,14 @@ export class ScheduleInputComponent {
     });
 
     //Alan:取得設備資料
-    this.deviceService.get().subscribe(
+    this._deviceService.get().subscribe(
       data => {
         this.devices = data;
       },
       error => console.log(error)
     );
     //Alan:取得產品資料		
-    this.productionService.get().subscribe(
+    this._productionService.get().subscribe(
       data => {
         this.productions = data;
       },
@@ -82,14 +81,14 @@ export class ScheduleInputComponent {
       this.schedule.device = this.myForm.value.device;
       this.schedule.createData = new Date();
 
-      this.scheduleService.update(this.schedule)
+      this._scheduleService.update(this.schedule)
         .subscribe(
         data => {
-          this.toast.setMessage('產品修改成功.', 'success');
+          this._toast.setMessage('產品修改成功.', 'success');
           console.log(data);
         },
         error => {
-          this.toast.setMessage(error, 'warning');
+          this._toast.setMessage(error, 'warning');
           console.error(error);
         }
         );
@@ -99,20 +98,20 @@ export class ScheduleInputComponent {
         this.myForm.value.production,
         this.myForm.value.device,
       );
-      this.scheduleService.add(schedule)
+      this._scheduleService.add(schedule)
         .subscribe(
         data => {
-          this.toast.setMessage('產品建立成功.', 'success');
+          this._toast.setMessage('產品建立成功.', 'success');
           console.log(data)
         },
         error => {
-          this.toast.setMessage(error, 'warning');
+          this._toast.setMessage(error, 'warning');
           console.error(error)
         }
         );
     }
     this.myForm.reset();
-    this.popup.close();
+    this._popup.close();
     // console.log(this.myForm);
   }
 }

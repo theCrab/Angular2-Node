@@ -19,29 +19,29 @@ export class DeviceItemComponent  {
   @Input('app-device-item') item: Device;
 
   constructor(
-    private deviceService: DeviceService,
-    private toast: ToastComponent,
-    private popup: PopUpComponent,
-    private alertConfirmService: AlertConfirmService) { }
+    private _deviceService: DeviceService,
+    private _toast: ToastComponent,
+    private _popup: PopUpComponent,
+    private _alertConfirmService: AlertConfirmService) { }
 
 
   switchEdit(device: Device) {
-    this.deviceService.switchEdit(device);
-    this.popup.open(`修改設備－${device.name}`);
+    this._deviceService.switchEdit(device);
+    this._popup.open(`修改設備－${device.name}`);
   }
 
   deleteItem(device: Device) {
 
-    this.alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
+    this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
-        this.deviceService.delete(device)
+        this._deviceService.delete(device)
           .subscribe(
           data => {
-            this.toast.setMessage('設備刪除成功.', 'success');
+            this._toast.setMessage('設備刪除成功.', 'success');
             console.log(data)
           },
           error => {
-            this.toast.setMessage(error, 'warning');
+            this._toast.setMessage(error, 'warning');
             console.error(error)
           }
           );

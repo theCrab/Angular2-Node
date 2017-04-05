@@ -10,12 +10,12 @@ import { AuthService } from "../auth.service";
 
 export class LogoutComponent implements OnInit {
 
-	constructor(private authService: AuthService, private router: Router) { }
+	constructor(private _authService: AuthService, private _router: Router) { }
 
 	ngOnInit() { }
 
 	onLogout() {
-		this.authService.logout();
-		this.router.navigate(['/auth', 'signin']);
+		this._authService.logout();
+		this._router.navigate(['/auth', 'signin']);
 	}
 }

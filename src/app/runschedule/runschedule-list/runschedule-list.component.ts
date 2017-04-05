@@ -8,7 +8,7 @@ import { ScheduleService } from './../../schedule/schedule.service';
 })
 export class RunscheduleListComponent implements OnInit {
 
-  constructor(private scheduleService: ScheduleService) { }
+  constructor(private _scheduleService: ScheduleService) { }
 
 	//Alan:此頁物件
 	private currentPage: Number = 1;
@@ -16,7 +16,7 @@ export class RunscheduleListComponent implements OnInit {
   schedules = [];
   ngOnInit() {
 
-    this.scheduleService.schedulesChange.subscribe(
+    this._scheduleService.schedulesChange.subscribe(
       data => this.schedules = data
     );
   }

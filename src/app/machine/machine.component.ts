@@ -10,19 +10,19 @@ import { PopUpComponent } from './../shared/popUp/popUp.component';
 export class MachineComponent implements OnInit {
 
   constructor(
-    public deviceService: DeviceService,
-    private popup: PopUpComponent) { }
+    public _deviceService: DeviceService,
+    private _popup: PopUpComponent) { }
 
   ngOnInit() {
   }
 
 
   add() {
-    this.popup.open('新增設備');
+    this._popup.open('新增設備');
   }
 
   callBackFun() {
-    this.deviceService.clearEdit();
+    this._deviceService.clearEdit();
   }
 
 

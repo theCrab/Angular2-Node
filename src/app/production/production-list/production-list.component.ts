@@ -12,8 +12,9 @@ import { Production } from './../production.model';
 })
 export class ProductionListComponent implements OnInit {
 
-	constructor(private productionService: ProductionService,
-		public toast: ToastComponent, ) { }
+	constructor(
+		private _productionService: ProductionService,
+		public _toast: ToastComponent, ) { }
 
 	//Alan:此頁物件
 	private currentPage: Number = 1;
@@ -21,7 +22,7 @@ export class ProductionListComponent implements OnInit {
 	productions = [];
 
 	ngOnInit() {
-		this.productionService.get().subscribe(
+		this._productionService.get().subscribe(
 			data => {
 				this.productions = data;
 			},

@@ -10,26 +10,26 @@ export class AppCanActivateService implements CanActivate {
 
 
     constructor(
-        private authService: AuthService,
-        private router: Router) { }
+        private _authService: AuthService,
+        private _router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        if (this.authService.LoginState) { return true; }
+        if (this._authService.LoginState) { return true; }
 
-        this.authService.redirectUrl = state.url;
+        this._authService.redirectUrl = state.url;
 
-        return this.authService.isLoggedIn()
+        return this._authService.isLoggedIn()
             .map(data => {
                 if (data) {
                     console.log('login Success!');
                     return true;
                 }
-                this.router.navigateByUrl(environment.nonAuthenticationUrl);
+                this._router.navigateByUrl(environment.nonAuthenticationUrl);
                 console.error('nonLogin!')
                 return false;
             })
             .catch(error => {
-                this.router.navigateByUrl(environment.nonAuthenticationUrl);
+                this._router.navigateByUrl(environment.nonAuthenticationUrl);
                 console.error('nonLogin!')
                 return Observable.throw(error);
             });
