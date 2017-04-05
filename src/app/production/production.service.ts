@@ -25,7 +25,7 @@ export class ProductionService {
         return this.http.get(environment.serverUrl + '/production')
             .map((response: Response) => {
                 const productions = response.json().obj;
-                console.log(productions);
+                //console.error(error);.log(productions);
                 let transformedList: Production[] = [];
                 for (let production of productions) {
                     transformedList.push(this.createModel(production)

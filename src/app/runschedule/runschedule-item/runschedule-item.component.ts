@@ -26,7 +26,7 @@ export class RunscheduleItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.item);
+    //console.error(error);.log(this.item);
     if (this.item.actionDate != null) {
       if (this.item.finishDate != null) {
         this.state = {
@@ -58,11 +58,11 @@ export class RunscheduleItemComponent implements OnInit {
 
         this.ngOnInit();
 
-        // console.log(data);
+        // //console.log(data);
       },
       error => {
         this._toast.setMessage(error, 'warning');
-        // console.error(error);
+        // //console.error(error);
       }
       );
   }
@@ -79,11 +79,11 @@ export class RunscheduleItemComponent implements OnInit {
 
         this.ngOnInit();
 
-        console.log(data);
+        //console.log(data);
       },
       error => {
         this._toast.setMessage(error, 'warning');
-        console.error(error);
+        //console.error(error);
       }
       );
   }

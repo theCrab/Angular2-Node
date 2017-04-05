@@ -37,11 +37,11 @@ export class ProductionItemComponent {
           .subscribe(
           data => {
             this._toast.setMessage('產品刪除成功.', 'success');
-            console.log(data)
+            //console.error(error);.log(data)
           },
           error => {
             this._toast.setMessage(error, 'warning');
-            console.error(error)
+            //console.error(error);.error(error)
           }
           );
       });

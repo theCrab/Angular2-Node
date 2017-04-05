@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
 						this._router.navigateByUrl('/auth/signin');
 					})
 			},
-			error => console.error(error)
+			// error => console.error(error)
 			);
 		this.myForm.reset();
 	}

@@ -26,7 +26,7 @@ export class ProductionListComponent implements OnInit {
 			data => {
 				this.productions = data;
 			},
-			error => console.log(error)
+			// error => //console.error(error);.log(error)
 		);
 	}
 }

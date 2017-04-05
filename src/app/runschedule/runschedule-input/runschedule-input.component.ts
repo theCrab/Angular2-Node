@@ -40,11 +40,11 @@ export class RunscheduleInputComponent {
 		this._scheduleService.search(schedule).subscribe(
 			data => {
 				this._toast.setMessage('搜尋成功.', 'success');
-				console.log(data)
+				//console.error(error);.log(data)
 			},
 			error => {
 				this._toast.setMessage(error.json(), 'warning');
-				console.error(error)
+				//console.error(error);.error(error)
 			}
 		);
 		this.myForm.reset();

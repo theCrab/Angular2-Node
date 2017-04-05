@@ -27,9 +27,9 @@ export class DeviceListComponent implements OnInit {
 		this._deviceService.get().subscribe(
 			data => {
 				this.devices = data;
-				console.table(this.devices)
+				//console.error(error);.table(this.devices)
 			},
-			error => console.log(error)
+			// error => console.log(error)
 		);
 	}
 }
