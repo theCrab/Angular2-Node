@@ -55,7 +55,7 @@ export class DeviceInputComponent {
         if (device) {
           this.isAdd = false;
 
-          this.filePreviewPath = `/file/${device.imageUrl}`;
+          this.filePreviewPath = device.imageUrl;
         } else {
           this.isAdd = true;
 

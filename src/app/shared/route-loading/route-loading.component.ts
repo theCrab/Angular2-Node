@@ -9,7 +9,7 @@ import {
   NavigationCancel,
   NavigationError
 } from "@angular/router";
-import { popup } from "../../animation/animation";
+import { popup } from "../../lib/animation/animation";
 
 //Alan:the reference:
 //http://stackoverflow.com/questions/37069609/show-loading-screen-when-navigating-between-routes-in-angular-2

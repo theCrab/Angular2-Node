@@ -5,7 +5,7 @@
   <label>{{item.count}}</label>
 </td>
 <td>
-  <img src="/file/{{item.imageUrl}}" height="100">
+  <img [src]="item.imageUrl | fileURL" height="100">
 </td>
 <td>
   <label>{{item.requireDate | date: 'yyyy-MM-dd HH:mm:ss'}}</label>

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, AnimationTransitionEvent } from '@angular/core';
-import { popup } from "../../animation/animation";
+import { popup } from "../../lib/animation/animation";
 
 @Component({
   selector: 'app-popUp',

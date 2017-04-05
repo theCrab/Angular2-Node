@@ -15,12 +15,13 @@ import { Ng2PaginationModule } from "ng2-pagination";
 import { CalendarModule, SpinnerModule } from 'primeng/primeng';
 import { ProductionRoutes } from "./production.routing";
 import { FileUploadModule } from "ng2-file-upload";
+import { FileUrlModule } from "app/lib/pipe/file-url.module";
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    
+
     FileUploadModule,
 
     FormsModule,
@@ -28,9 +29,10 @@ import { FileUploadModule } from "ng2-file-upload";
 
     PopUpModule,
     MyPaginationModule,
-    
+
     CalendarModule,
-    SpinnerModule
+    SpinnerModule,
+    FileUrlModule
   ],
   declarations: [
     ProductionComponent,

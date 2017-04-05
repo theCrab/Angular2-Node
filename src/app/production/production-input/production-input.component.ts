@@ -24,7 +24,7 @@ export class ProductionInputComponent {
 	private production: Production;
 	myForm: FormGroup;
 
-	private filePreviewPath: SafeUrl = `/file/${environment.defaultImageUrl}`;
+	private filePreviewPath: SafeUrl ;
 	private fileBlobUrl: string;
 
 	constructor(
@@ -55,11 +55,11 @@ export class ProductionInputComponent {
 				if (production) {
 					this.isAdd = false;
 
-					this.filePreviewPath = `/file/${production.imageUrl}`;
+					this.filePreviewPath = production.imageUrl;
 				} else {
 					this.isAdd = true;
 
-					this.filePreviewPath = `/file/${environment.defaultImageUrl}`;
+					this.filePreviewPath = null;
 					//Alan:remove previous blob
 					if (this.fileBlobUrl) {
 						window.URL.revokeObjectURL(this.fileBlobUrl);

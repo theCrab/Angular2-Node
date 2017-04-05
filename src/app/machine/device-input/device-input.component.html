@@ -5,7 +5,7 @@
         <label class="col-sm-2 control-label" for="formGroupInputLarge">圖示</label>
         <div class="col-sm-4">
 
-            <img style="display: inline-block" [src]="filePreviewPath" width="200" *ngIf="filePreviewPath" />
+            <img style="display: inline-block" [src]="filePreviewPath | fileURL" width="200"/>
             <!--<button type="button" (click)="upload()">text</button>{{totalProgress}}-->
             <button type="button" class="btn btn-sm btn-primary" (click)="file.click(); file.value=null">
                 <input #file type="file" class="none" ng2FileSelect [uploader]="uploader" />

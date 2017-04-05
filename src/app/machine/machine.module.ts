@@ -13,6 +13,7 @@ import { DeviceInputComponent } from './device-input/device-input.component';
 import { PopUpComponent } from './../shared/popUp/popUp.component';
 import { MachineRoutes } from "./machine.routing";
 import { FileUploadModule } from 'ng2-file-upload';
+import { FileUrlModule } from "app/lib/pipe/file-url.module";
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     MachineRoutes,
 
     PopUpModule,
-    MyPaginationModule
+    MyPaginationModule,
+    FileUrlModule
   ],
   declarations: [
     MachineComponent,

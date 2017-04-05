@@ -1,72 +1,71 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "project": {
-        "name": "device-manager2.0"
-    },
-    "apps": [
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "hellow4"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "../node_modules/primeng/resources/themes/omega/theme.css",
+        "../node_modules/primeng/resources/primeng.min.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css",
+        "assets/css/font-style.css",
+        "assets/css/background.css",
+        "assets/css/color.css",
+        "styles.css"
+      ],
+      "scripts": [
         {
-            "root": "src",
-            "outDir": "dist",
-            "assets": [
-                "assets",
-                "favicon.ico"
-            ],
-            "index": "index.html",
-            "main": "main.ts",
-            "polyfills": "polyfills.ts",
-            "test": "test.ts",
-            "tsconfig": "tsconfig.app.json",
-            "testTsconfig": "tsconfig.spec.json",
-            "prefix": "app",
-            "styles": [
-                "../node_modules/primeng/resources/themes/omega/theme.css",
-                "../node_modules/primeng/resources/primeng.min.css",
-                "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "../node_modules/font-awesome/css/font-awesome.min.css",
-                "assets/css/font-style.css",
-                "assets/css/background.css",
-                "assets/css/color.css",
-                "styles.css"
-            ],
-            "scripts": [
-                {
-                    "input": "assets/JsBarcode.all.min.js",
-                    "output": "JsBarcode",
-                    "lazyloda": true
-                },
-                "../node_modules/jquery/dist/jquery.min.js",
-                "../node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ],
-            "environmentSource": "environments/environment.ts",
-            "environments": {
-                "dev": "environments/environment.ts",
-                "prod": "environments/environment.prod.ts"
-            }
-        }
-    ],
-    "e2e": {
-        "protractor": {
-            "config": "./protractor.conf.js"
-        }
-    },
-    "lint": [
-        {
-            "project": "src/tsconfig.app.json"
+          "input": "assets/JsBarcode.all.min.js",
+          "output": "JsBarcode"
         },
-        {
-            "project": "src/tsconfig.spec.json"
-        },
-        {
-            "project": "e2e/tsconfig.e2e.json"
-        }
-    ],
-    "test": {
-        "karma": {
-            "config": "./karma.conf.js"
-        }
-    },
-    "defaults": {
-        "styleExt": "css",
-        "component": {}
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
     }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
 }

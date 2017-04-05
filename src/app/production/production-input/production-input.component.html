@@ -4,7 +4,7 @@
     <label class="col-sm-2 control-label" for="formGroupInputLarge">圖示</label>
     <div class="col-sm-4">
 
-      <img style="display: inline-block" [src]="filePreviewPath" width="200" *ngIf="filePreviewPath" />
+      <img style="display: inline-block" [src]="filePreviewPath | fileURL" width="200" />
       <!--<button type="button" (click)="upload()">text</button>{{totalProgress}}-->
       <button type="button" class="btn btn-sm btn-primary" (click)="file.click(); file.value=null">
                 <input #file type="file" class="none" ng2FileSelect [uploader]="uploader" />
@@ -25,7 +25,7 @@
     <label class="col-sm-2 control-label" for="formGroupInputLarge">需求時間</label>
     <div class="col-sm-4">
       <p-calendar [ngModel]="production?.requireDate" [readonlyInput]="true" [showTime]="true" hourFormat="24" dateFormat="yy-mm-dd"
-        [yearNavigator]="true" W [monthNavigator]="true" [yearRange]="yearRange" showIcon="true" icon="icon-calendar" placeholder="需求時間"
+        [yearNavigator]="true" [monthNavigator]="true" [yearRange]="yearRange" showIcon="true" icon="icon-calendar" placeholder="需求時間"
         formControlName="requireDate"></p-calendar>
     </div>
   </div>
