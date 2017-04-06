@@ -42,7 +42,11 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
     //https://github.com/lindell/JsBarcode
     //預設為code 128
     //Alan:Id開頭必須為英文字或底線_
-    JsBarcode(`#svg${this.item._id}`, this.item._id);
+    try {
+      JsBarcode(`#svg${this.item._id}`, this.item._id);
+    } catch (error) {
+      console.log('JsBarcode not found!');
+    }
   }
 
   switchEdit(schedule: Schedule) {

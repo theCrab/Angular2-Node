@@ -22,6 +22,11 @@ import { ModalModule, AlertModule } from 'ng2-bootstrap';
 import { CustomFormsModule } from 'ng2-validation'
 import { RouteLoadingComponent } from "./shared/route-loading/route-loading.component";
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
+
 @NgModule({
   imports: [
     BrowserModule,
