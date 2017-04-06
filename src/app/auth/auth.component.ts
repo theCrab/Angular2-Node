@@ -12,7 +12,7 @@ export class AuthComponent implements OnDestroy {
 
 	subscript;
 	@ViewChild('formTag') formTag;
-	private systemName = environment.systemName;
+	public systemName = environment.systemName;
 	constructor(
 		private _router: Router) {
 		this.subscript = _router.events.subscribe((event: any) => {

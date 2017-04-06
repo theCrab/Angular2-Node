@@ -14,7 +14,7 @@ import { environment } from "../../../environments/environment";
 
 export class SigninComponent implements OnInit {
 
-	myForm: FormGroup;
+	public myForm: FormGroup;
 
 	constructor(private _authService: AuthService, private _router: Router) {
 		this.myForm = new FormGroup({

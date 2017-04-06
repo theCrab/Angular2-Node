@@ -11,9 +11,9 @@ export class RunscheduleListComponent implements OnInit {
   constructor(private _scheduleService: ScheduleService) { }
 
 	//Alan:此頁物件
-	private currentPage: Number = 1;
-	private itemsPerPage: Number = 10;
-  schedules = [];
+	public currentPage: Number = 1;
+	public itemsPerPage: Number = 10;
+  public schedules = [];
   ngOnInit() {
 
     this._scheduleService.schedulesChange.subscribe(

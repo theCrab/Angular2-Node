@@ -14,12 +14,12 @@ export class RunscheduleItemComponent implements OnInit {
 
   constructor(
     private _scheduleService: ScheduleService,
-    public _toast: ToastComponent) { }
+    private _toast: ToastComponent) { }
 
   //ALan:要修改的物件
   @Input('app-runschedule-item') item: Schedule;
-  private totalTime: any;
-  private state: any = {
+  public totalTime: any;
+  public state: any = {
     color: 'red',
     text: "未生產",
     state: 0

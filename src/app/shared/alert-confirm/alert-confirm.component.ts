@@ -11,14 +11,14 @@ import { AlertConfirmModel } from "./alert-confirm.model";
 })
 export class AlertConfirmComponent {
   @ViewChild('modal') public modal: ModalDirective;
-  private message: AlertConfirmModel;
+  public message: AlertConfirmModel;
   //Alan:用來切換subscribed狀態
-  private subscribedToClosing: boolean = false;
-  private isConfirm: boolean = false;
-  private confirmed: boolean = false;
-  private isShow: boolean = false;
+  public subscribedToClosing: boolean = false;
+  public isConfirm: boolean = false;
+  public confirmed: boolean = false;
+  public isShow: boolean = false;
 
-  private classList = {
+  public classList = {
     success: {
       title: 'alert-success',
       icon: 'fa-check'
@@ -36,7 +36,7 @@ export class AlertConfirmComponent {
       icon: 'fa-exclamation-circle'
     }
   };
-  private nowClassType = this.classList.success;
+  public nowClassType = this.classList.success;
 
   constructor(
     private _alertConfirmService: AlertConfirmService

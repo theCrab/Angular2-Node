@@ -19,14 +19,14 @@ import { FileUploader, FileItem } from "ng2-file-upload";
 })
 export class DeviceInputComponent {
 
-  private uploader: FileUploader = environment.getUploadConfig('device');
-  private isAdd: Boolean = true;
+  public uploader: FileUploader = environment.getUploadConfig('device');
+  public isAdd: Boolean = true;
 
-  private device: Device;
-  private myForm: FormGroup;
+  public device: Device;
+  public myForm: FormGroup;
 
-  private filePreviewPath: SafeUrl;
-  private fileBoloUrl: string;
+  public filePreviewPath: SafeUrl;
+  public fileBoloUrl: string;
   constructor(
     private _deviceService: DeviceService,
     private _toast: ToastComponent,

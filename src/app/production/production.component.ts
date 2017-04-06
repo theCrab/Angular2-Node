@@ -11,7 +11,7 @@ export class ProductionComponent  {
 
   constructor(
     private _productionService: ProductionService,
-    private _popup: PopUpComponent) { }
+    public _popup: PopUpComponent) { }
 
   add() {
     this._popup.open('新增產品');

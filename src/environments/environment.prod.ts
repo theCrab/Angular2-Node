@@ -3,9 +3,10 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { FileUploader } from "ng2-file-upload";
 
 export const environment = {
-  production: false,
+  production: true,
   serverUrl: '',
-  //Alan:未登入時的網址
+  defaultPerPageNum: 10,
+  //Alan:non login URL
   nonAuthenticationUrl: '/auth/signin',
   mainPageUrl: '/index/run',
   systemName: 'Machine Ant',

@@ -15,7 +15,7 @@ import { Router } from "@angular/router";
 
 export class SignupComponent implements OnInit {
 
-	myForm: FormGroup;
+	public myForm: FormGroup;
 	
 	constructor(
 		private _authService: AuthService,

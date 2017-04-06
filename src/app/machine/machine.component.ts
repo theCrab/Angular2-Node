@@ -10,8 +10,8 @@ import { PopUpComponent } from './../shared/popUp/popUp.component';
 export class MachineComponent implements OnInit {
 
   constructor(
-    public _deviceService: DeviceService,
-    private _popup: PopUpComponent) { }
+    private _deviceService: DeviceService,
+    public _popup: PopUpComponent) { }
 
   ngOnInit() {
   }

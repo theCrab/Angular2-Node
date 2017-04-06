@@ -17,19 +17,19 @@ import { SafeUrl, DomSanitizer } from "@angular/platform-browser";
 })
 export class ProductionInputComponent {
 
-	private uploader: FileUploader = environment.getUploadConfig('production');
+	public uploader: FileUploader = environment.getUploadConfig('production');
 
-	private isAdd: Boolean = true;
+	public isAdd: Boolean = true;
 	//ALan:要修改的物件
-	private production: Production;
-	myForm: FormGroup;
+	public production: Production;
+	public myForm: FormGroup;
 
-	private filePreviewPath: SafeUrl ;
-	private fileBlobUrl: string;
+	public filePreviewPath: SafeUrl ;
+	public fileBlobUrl: string;
 
 	constructor(
 		private _productionService: ProductionService,
-		public _toast: ToastComponent,
+		private _toast: ToastComponent,
 		private _popup: PopUpComponent,
 		private _sanitizer: DomSanitizer) {
 		this.uploader.onAfterAddingFile = (fileItem: FileItem) => {

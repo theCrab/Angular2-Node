@@ -14,12 +14,12 @@ export class ProductionListComponent implements OnInit {
 
 	constructor(
 		private _productionService: ProductionService,
-		public _toast: ToastComponent, ) { }
+		private _toast: ToastComponent, ) { }
 
 	//Alan:此頁物件
-	private currentPage: Number = 1;
-	private itemsPerPage: Number = 10;
-	productions = [];
+	public currentPage: Number = 1;
+	public itemsPerPage: Number = 10;
+	public productions = [];
 
 	ngOnInit() {
 		this._productionService.get().subscribe(

@@ -18,20 +18,20 @@ import { Device } from './../../machine/device.model';
 })
 export class ScheduleInputComponent {
 
-	private isAdd: Boolean = true;
-  myForm: FormGroup;
+	public isAdd: Boolean = true;
+  public myForm: FormGroup;
   //ALan:要修改的物件
-  private schedule: Schedule;
-  devices = [];
-  productions = [];
+  public schedule: Schedule;
+  public devices = [];
+  public productions = [];
 
-  private yearRange: string;
+  public yearRange: string;
 
   constructor(
     private _scheduleService: ScheduleService,
     private _productionService: ProductionService,
     private _deviceService: DeviceService,
-    public _toast: ToastComponent,
+    private _toast: ToastComponent,
     private _popup: PopUpComponent) {
 
     //預設年份往後+5年

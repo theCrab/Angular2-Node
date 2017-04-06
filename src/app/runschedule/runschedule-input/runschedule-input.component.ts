@@ -14,8 +14,8 @@ import { Schedule } from './../../schedule/schedule.model';
 })
 export class RunscheduleInputComponent {
 
-	schedules = [];
-	private myForm: FormGroup;
+	public schedules = [];
+	public myForm: FormGroup;
 
 	constructor(
 		private _scheduleService: ScheduleService,

@@ -18,10 +18,10 @@ export class DeviceListComponent implements OnInit {
 		private _toast: ToastComponent) { }
 
 	//Alan:此頁物件
-	private currentPage: Number = 1;
-	private itemsPerPage: Number = 10;
+	public currentPage: Number = 1;
+	public itemsPerPage: Number = 10;
 
-	private devices: Device[];
+	public devices: Device[];
 
 	ngOnInit() {
 		this._deviceService.get().subscribe(

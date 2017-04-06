@@ -15,13 +15,13 @@ export class ScheduleListComponent implements OnInit {
 
 	constructor(
 		private _scheduleService: ScheduleService,
-		public _toast: ToastComponent
+		private _toast: ToastComponent
 	) { }
 
 	//Alan:此頁物件
-	private currentPage: Number = 1;
-	private itemsPerPage: Number = 10;
-	schedules = [];
+	public currentPage: Number = 1;
+	public itemsPerPage: Number = 10;
+	public schedules = [];
 
 	ngOnInit() {
 		this._scheduleService.get().subscribe(

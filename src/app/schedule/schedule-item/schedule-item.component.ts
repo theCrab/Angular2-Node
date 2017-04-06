@@ -18,8 +18,8 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
   //ALan:要修改的物件
   @Input('app-schedule-item') item: Schedule;
 
-  totalTime: any;
-  state: any = {
+  public totalTime: any;
+  public state: any = {
     color: 'red',
     text: "未生產",
     state: 0
@@ -27,7 +27,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _scheduleService: ScheduleService,
-    public _toast: ToastComponent,
+    private _toast: ToastComponent,
     private _popup: PopUpComponent,
     private _alertConfirmService: AlertConfirmService) {
 

@@ -20,7 +20,7 @@ export class ProductionItemComponent {
 
   constructor(
     private _productionService: ProductionService,
-    public _toast: ToastComponent,
+    private _toast: ToastComponent,
     private _popup: PopUpComponent,
     private _alertConfirmService: AlertConfirmService) { }
 
