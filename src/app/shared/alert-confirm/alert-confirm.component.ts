@@ -16,6 +16,7 @@ export class AlertConfirmComponent {
   private subscribedToClosing: boolean = false;
   private isConfirm: boolean = false;
   private confirmed: boolean = false;
+  private isShow: boolean = false;
 
   private classList = {
     success: {
@@ -30,7 +31,7 @@ export class AlertConfirmComponent {
       title: 'alert-warning',
       icon: 'fa-question-circle'
     },
-    error:{
+    error: {
       title: 'alert-danger',
       icon: 'fa-exclamation-circle'
     }
@@ -42,6 +43,7 @@ export class AlertConfirmComponent {
   ) {
 
     _alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
+      this.isShow = true;
       this.isConfirm = false;
       this.message = message;
       this.nowClassType = message.type == null ? this.classList.error : this.classList[`${message.type}`];
@@ -50,6 +52,7 @@ export class AlertConfirmComponent {
     });
 
     _alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
+      this.isShow = true;
       this.isConfirm = true;
       this.message = message;
       this.nowClassType = message.type == null ? this.classList.warning : this.classList[`${message.type}`];
@@ -62,6 +65,7 @@ export class AlertConfirmComponent {
   private handleClose() {
     if (!this.subscribedToClosing) {
       this.modal.onHidden.subscribe(() => {
+        this.isShow = false;
         this.subscribedToClosing = true;
         if (this.isConfirm) {
           if (this.confirmed) {
