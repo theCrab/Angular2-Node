@@ -47,12 +47,12 @@ export class SignupComponent implements OnInit {
 		this._authService.signup(user)
 			.subscribe(
 			data => {
-				this._alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入"))
+				this._alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入",'success'))
 					.ok(() => {
 						this._router.navigateByUrl('/auth/signin');
 					})
 			},
-			error => console.error(error)
+			// error => console.error(error)
 			);
 		this.myForm.reset();
 	}

@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
 @Component({
@@ -35,7 +36,7 @@ export class MyPaginationComponent {
 
 
 
-  @Input() perPageNum: number = 10;
+  @Input() perPageNum: number = environment.defaultPerPageNum;
 
   @Output() perPageChange: EventEmitter<number> = new EventEmitter<number>();
 

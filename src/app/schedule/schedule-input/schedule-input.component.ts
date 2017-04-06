@@ -62,14 +62,14 @@ export class ScheduleInputComponent {
       data => {
         this.devices = data;
       },
-      error => console.log(error)
+      // error => //console.error(error);.log(error)
     );
     //Alan:取得產品資料		
     this._productionService.get().subscribe(
       data => {
         this.productions = data;
       },
-      error => console.log(error)
+      // error => //console.error(error);.log(error)
     );
   }
 
@@ -85,11 +85,11 @@ export class ScheduleInputComponent {
         .subscribe(
         data => {
           this._toast.setMessage('產品修改成功.', 'success');
-          console.log(data);
+          //console.log(data);
         },
         error => {
           this._toast.setMessage(error, 'warning');
-          console.error(error);
+          //console.error(error);
         }
         );
     } else {
@@ -102,11 +102,11 @@ export class ScheduleInputComponent {
         .subscribe(
         data => {
           this._toast.setMessage('產品建立成功.', 'success');
-          console.log(data)
+          //console.error(error);.log(data)
         },
         error => {
           this._toast.setMessage(error, 'warning');
-          console.error(error)
+          //console.error(error);.error(error)
         }
         );
     }

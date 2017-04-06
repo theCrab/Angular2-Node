@@ -89,11 +89,11 @@ export class ProductionInputComponent {
 				.subscribe(
 				data => {
 					this._toast.setMessage('產品建立成功.', 'success');
-					console.log(data)
+					// console.log(data)
 				},
 				error => {
 					this._toast.setMessage(error, 'warning');
-					console.error(error)
+					// console.error(error)
 				}
 				);
 		} else {
@@ -106,11 +106,11 @@ export class ProductionInputComponent {
 				.subscribe(
 				data => {
 					this._toast.setMessage('產品修改成功.', 'success');
-					console.log(data);
+					//console.log(data);
 				},
 				error => {
 					this._toast.setMessage(error, 'warning');
-					console.error(error);
+					//console.error(error);
 				}
 				);
 		}

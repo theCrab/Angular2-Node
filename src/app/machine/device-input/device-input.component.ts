@@ -89,7 +89,7 @@ export class DeviceInputComponent {
         .subscribe(
         data => {
           this._toast.setMessage('設備建立成功.', 'success');
-          console.log(data)
+          // console.log(data)
         },
         error => {
           this._toast.setMessage(error, 'warning');
@@ -108,11 +108,11 @@ export class DeviceInputComponent {
         .subscribe(
         data => {
           this._toast.setMessage('設備修改成功.', 'success');
-          console.log(data)
+          // console.log(data)
         },
         error => {
           this._toast.setMessage(error, 'warning');
-          console.error(error)
+          // console.error(error)
         },
         () => {
           this.complete();

@@ -38,11 +38,11 @@ export class DeviceItemComponent  {
           .subscribe(
           data => {
             this._toast.setMessage('設備刪除成功.', 'success');
-            console.log(data)
+            // console.log(data)
           },
           error => {
             this._toast.setMessage(error, 'warning');
-            console.error(error)
+            // console.error(error)
           }
           );
       });

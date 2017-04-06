@@ -62,10 +62,4 @@ export class SigninComponent implements OnInit {
 				remeberMe: this.myForm.value.remeberMe
 			});
 	}
-
-	changeLabel(elem) {
-		elem.className = 'active';
-		console.log(elem);
-	}
-
 }

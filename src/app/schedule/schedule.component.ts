@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 
 import { PopUpComponent } from './../shared/popUp/popUp.component';
 
@@ -7,11 +7,12 @@ import { ScheduleService } from './../schedule/schedule.service';
   selector: 'app-schedule',
   templateUrl: './schedule.component.html'
 })
-export class ScheduleComponent  {
+export class ScheduleComponent {
 
   constructor(
     private _scheduleService: ScheduleService ,
-    private _popup: PopUpComponent) { }
+    private _popup: PopUpComponent,
+    private _elem: ElementRef) { }
 
   add() {
     this._popup.open('新增設備');
