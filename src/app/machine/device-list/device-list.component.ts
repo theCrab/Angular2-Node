@@ -1,13 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from "rxjs/Subscription";
 
-
-import { ToastComponent } from './../../shared/toast/toast.component';
 import { DeviceService } from './../device.service';
 import { Device } from './../device.model';
 
 import { filterObject } from './../../lib/pipe/filter.model';
-import { Subscription } from "rxjs/Subscription";
 @Component({
 	selector: 'app-device-list',
 	templateUrl: './device-list.component.html',
@@ -15,7 +12,6 @@ import { Subscription } from "rxjs/Subscription";
 })
 export class DeviceListComponent implements OnDestroy {
 
-	//Alan:此頁物件
 	public currentPage: Number = 1;
 	public itemsPerPage: Number = 10;
 
@@ -25,10 +21,7 @@ export class DeviceListComponent implements OnDestroy {
 	public filterObj: filterObject[] = [];
 
 	constructor(
-		private _deviceService: DeviceService,
-		private _toast: ToastComponent) {
-
-		//Alan:訂閱Service裡面的參數
+		private _deviceService: DeviceService) {
 		this.subscription$ = this._deviceService.devicesChanged
 			.subscribe(
 			(devices: Device[]) => {

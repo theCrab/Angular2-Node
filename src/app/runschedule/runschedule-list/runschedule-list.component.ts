@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from "rxjs/Subscription";
 
 import { ScheduleService } from './../../schedule/schedule.service';
+import { Schedule } from './../../schedule/schedule.model';
 @Component({
   selector: 'app-runschedule-list',
   templateUrl: './runschedule-list.component.html',
   styleUrls: ['./runschedule-list.component.css']
 })
-export class RunscheduleListComponent implements OnInit {
+export class RunscheduleListComponent implements OnDestroy {
 
-  constructor(private _scheduleService: ScheduleService) { }
+  public currentPage: Number = 1;
+  public itemsPerPage: Number = 10;
 
-	//Alan:此頁物件
-	public currentPage: Number = 1;
-	public itemsPerPage: Number = 10;
-  public schedules = [];
-  ngOnInit() {
+  public schedules: Schedule[] = [];
+  private subscription$: Subscription;
 
-    this._scheduleService.schedulesChange.subscribe(
-      data => this.schedules = data
-    );
+  constructor(private _scheduleService: ScheduleService) {
+    this.subscription$ = this._scheduleService.schedulesChanged
+      .subscribe(
+      (schedules: Schedule[]) => {
+        this.schedules = schedules;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }

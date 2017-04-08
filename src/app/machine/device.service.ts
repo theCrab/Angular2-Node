@@ -17,10 +17,11 @@ export class DeviceService {
         private _alertConfirmService: AlertConfirmService
     ) { }
 
-    devices: Device[] = [];
+    private devices: Device[] = [];
+    private editIndex: number;
 
-    device = new Subject<Device>();
-    devicesChanged = new Subject<Device[]>();
+    public device = new Subject<Device>();
+    public devicesChanged = new Subject<Device[]>();
 
     get() {
         return this._http.get(environment.serverUrl + '/device')
@@ -89,11 +90,11 @@ export class DeviceService {
         }
     }
 
-    delete(device: Device) {
+    delete(index: number, device: Device) {
 
         return this._http.delete(`${environment.serverUrl}/device/${device._id}`, environment.getRequestOptions())
             .map((response: Response) => {
-                this.devices.splice(this.devices.indexOf(device), 1);
+                this.devices.splice(index, 1);
 
                 this.devicesChanged.next(this.devices.slice());
                 return this.devices;
@@ -104,10 +105,12 @@ export class DeviceService {
             });
     }
 
-    switchEdit(device: Device) {
-        this.device.next(device);
+    switchEdit(index: number, device: Device) {
+        this.editIndex = index;
+        this.device.next(Object.assign({}, device));
     }
     clearEdit() {
+        this.editIndex = null;
         this.device.next(null);
     }
 
@@ -116,8 +119,7 @@ export class DeviceService {
 
         return this._http.post(environment.serverUrl + '/device', body, environment.getRequestOptions())
             .map((response: Response) => {
-                let result = response.json();
-                let device = this.createModel(result.obj);
+                let device = this.createModel(response.json().obj);
                 this.devices.push(device);
 
                 this.devicesChanged.next(this.devices.slice());
@@ -135,11 +137,11 @@ export class DeviceService {
 
         return this._http.patch(environment.serverUrl + '/device/' + device._id, body, environment.getRequestOptions())
             .map((response: Response) => {
-                let result = response.json();
-                this.devices[this.devices.indexOf(device)] = this.createModel(result.obj);
+                this.devices[this.editIndex]
+                    = this.createModel(response.json().obj);
 
                 this.devicesChanged.next(this.devices.slice());
-                return this.devices;
+                return device;
             })
             .catch((error: Response) => {
                 this._alertConfirmService.alert(error.json());

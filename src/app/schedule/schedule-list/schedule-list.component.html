@@ -12,8 +12,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of schedules | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage}"
-         [app-schedule-item]="item"> </tr>
+    <tr *ngFor="let item of schedules 
+                | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage};
+                let i = index"
+         [app-schedule-item]="item"
+         [index]="i"> </tr>
   </tbody>
 </table>
 
