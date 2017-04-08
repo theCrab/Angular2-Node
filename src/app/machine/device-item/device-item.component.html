@@ -8,7 +8,7 @@
   <img [src]="item.imageUrl | fileURL" height="100">
 </td>
 <td>
-  <p>{{item.creator.firstName + item.creator.lastName}}</p>
+  <p>{{item.creator['firstName'] + item.creator['lastName']}}</p>
 </td>
 <td>
   <div class="bg-info block-schedule" *ngFor="let s of item.schedule">

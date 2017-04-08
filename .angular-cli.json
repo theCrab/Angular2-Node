@@ -30,7 +30,7 @@
       ],
       "scripts": [
         {
-          "input": "assets/JsBarcode.all.min.js",
+          "input": "assets/js/JsBarcode/JsBarcode.code128.min.js",
           "output": "JsBarcode"
         },
         "../node_modules/jquery/dist/jquery.min.js",

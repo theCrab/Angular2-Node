@@ -18,9 +18,9 @@ export class NavBlack120Component {
     private _router: Router,
     private _alertConfirmService: AlertConfirmService) { }
 
-  private mainPage = environment.mainPageUrl;
+  public mainPage = environment.mainPageUrl;
 
-  private menus = [
+  public menus = [
     {
       routerLink: ['run'],
       routerTitle: '執行排程',

@@ -5,6 +5,8 @@ import { Schedule } from './../../schedule/schedule.model';
 import { ToastComponent } from './../../shared/toast/toast.component';
 
 import { ScheduleService } from './../../schedule/schedule.service';
+
+import { DateFormat } from "assets/ts/DateFormat";
 @Component({
   selector: '[app-runschedule-item]',
   templateUrl: './runschedule-item.component.html',
@@ -14,12 +16,12 @@ export class RunscheduleItemComponent implements OnInit {
 
   constructor(
     private _scheduleService: ScheduleService,
-    public _toast: ToastComponent) { }
+    private _toast: ToastComponent) { }
 
   //ALan:要修改的物件
   @Input('app-runschedule-item') item: Schedule;
-  private totalTime: any;
-  private state: any = {
+  public totalTime: any;
+  public state: any = {
     color: 'red',
     text: "未生產",
     state: 0
@@ -36,7 +38,7 @@ export class RunscheduleItemComponent implements OnInit {
         }
         //Alan:計算耗時
         this.totalTime =
-          this.dhms(new Date(this.item.finishDate).getTime() - new Date(this.item.actionDate).getTime());
+          DateFormat.dhms(new Date(this.item.finishDate).getTime() - new Date(this.item.actionDate).getTime());
       } else {
         this.state = {
           color: '#ec971f',
@@ -48,9 +50,7 @@ export class RunscheduleItemComponent implements OnInit {
   }
 
   runSchedule() {
-
     this.item.actionDate = new Date();
-
     this._scheduleService.update(this.item)
       .subscribe(
       data => {
@@ -67,18 +67,13 @@ export class RunscheduleItemComponent implements OnInit {
       );
   }
 
-
   finishSchedule() {
-
     this.item.finishDate = new Date();
-
     this._scheduleService.update(this.item)
       .subscribe(
       data => {
         this._toast.setMessage('結束生產.', 'success');
-
         this.ngOnInit();
-
         //console.log(data);
       },
       error => {
@@ -88,13 +83,4 @@ export class RunscheduleItemComponent implements OnInit {
       );
   }
 
-  dhms(t) {
-    let cd: any = 24 * 60 * 60 * 1000,
-      ch: any = 60 * 60 * 1000,
-      d: any = Math.floor(t / cd),
-      h: any = '0' + Math.floor((t - d * cd) / ch),
-      m: any = '0' + Math.round((t - d * cd - h * ch) / 60000),
-      s: any = '0' + Math.round((t - d * cd - h * ch - m * 1000) / 1000);
-    return [d, h.substr(-2), m.substr(-2), s.substr(-2)].join(':');
-  }
 }

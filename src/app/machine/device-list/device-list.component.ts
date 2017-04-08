@@ -1,35 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from "rxjs/Subscription";
 
-
-import { ToastComponent } from './../../shared/toast/toast.component';
 import { DeviceService } from './../device.service';
 import { Device } from './../device.model';
 
+import { filterObject } from './../../lib/pipe/filter.model';
 @Component({
 	selector: 'app-device-list',
 	templateUrl: './device-list.component.html',
 	styleUrls: ['./device-list.component.css']
 })
-export class DeviceListComponent implements OnInit {
+export class DeviceListComponent implements OnDestroy {
+
+	public currentPage: Number = 1;
+	public itemsPerPage: Number = 10;
+
+	public devices: Device[];
+	private subscription$: Subscription;
+
+	public filterObj: filterObject[] = [];
 
 	constructor(
-		private _deviceService: DeviceService,
-		private _toast: ToastComponent) { }
+		private _deviceService: DeviceService) {
+		this.subscription$ = this._deviceService.devicesChanged
+			.subscribe(
+			(devices: Device[]) => {
+				this.devices = devices;
+			});
 
-	//Alan:此頁物件
-	private currentPage: Number = 1;
-	private itemsPerPage: Number = 10;
-
-	private devices: Device[];
-
-	ngOnInit() {
-		this._deviceService.get().subscribe(
-			data => {
-				this.devices = data;
-				//console.error(error);.table(this.devices)
+		this._deviceService.get()
+			.subscribe(
+			(data) => {
+				console.log('get data success!');
 			},
-			// error => console.log(error)
-		);
+			error => {
+				console.error('get data fail!')
+			});
+	}
+
+	ngOnDestroy(): void {
+		this.subscription$.unsubscribe();
+	}
+
+	clear() {
+		this.filterObj = [];
 	}
 }

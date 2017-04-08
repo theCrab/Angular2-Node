@@ -3,16 +3,16 @@
   <!--{{item._id}}-->
 </td>
 <td>
-  <label>{{item.production?.name}}</label>
+  <label>{{ item?.production['name'] }}</label>
 </td>
 <td>
-  <label>{{item.device?.name}}</label>
+  <label>{{ item?.device['name'] }}</label>
 </td>
 <td>
   <label>{{item?.scheduleDate | date: 'yyyy-MM-dd HH:mm:ss'}}</label>
 </td>
 <td>
-  <p>{{item.creator?.firstName + item.creator?.lastName}}</p>
+  <p>{{ item?.creator['firstName'] + item?.creator['lastName'] }}</p>
   <p>{{item.createData | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
 </td>
 <td>

@@ -1,6 +1,8 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+
 import { Observable } from "rxjs/Observable";
+import { Subject } from 'rxjs/Subject';
 
 import { Schedule } from './schedule.model';
 import { environment } from "../../environments/environment";
@@ -14,35 +16,21 @@ export class ScheduleService {
         private alertConfirmService: AlertConfirmService
     ) { }
 
-    schedules: Schedule[] = [];
+    private schedules: Schedule[] = [];
+    private editIndex: number;
 
-    //Alan:修改時使用
-    schedule = new EventEmitter<Schedule>();
-
-    //Alan:宣告一個發射器，把東西發射出去
-    @Output() schedulesChange: EventEmitter<any> = new EventEmitter<any>();
-
+    public schedule = new Subject<Schedule>();
+    public schedulesChanged = new Subject<Schedule[]>();
 
     get() {
         return this.http.get(environment.serverUrl + '/schedule')
             .map((response: Response) => {
-                const schedules = response.json().obj;
-                let transformedList: Schedule[] = [];
-                for (let schedule of schedules) {
-                    transformedList.push(new Schedule(
-                        schedule.scheduleDate,
-                        schedule.production,
-                        schedule.device,
-                        schedule.creator,
-                        schedule.createData,
-                        schedule._id,
-                        schedule.actionDate,
-                        schedule.finishDate)
-                    );
-                }
-                this.schedules = transformedList;
-
-                return transformedList;
+                this.schedules = response.json().obj
+                    .map((item) => {
+                        return this.createModel(item)
+                    });
+                this.schedulesChanged.next(this.schedules.slice());
+                return this.schedules;
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
@@ -55,17 +43,10 @@ export class ScheduleService {
 
         return this.http.post(environment.serverUrl + '/schedule', body, environment.getRequestOptions())
             .map((response: Response) => {
-                const result = response.json();
-                const schedule = new Schedule(
-                    result.obj.scheduleDate,
-                    result.obj.production,
-                    result.obj.device,
-                    result.obj.creator,
-                    result.obj.createData,
-                    result.obj._id,
-                    result.obj.actionDate,
-                    result.obj.finishDate);
+                let schedule = this.createModel(response.json().obj);
                 this.schedules.push(schedule);
+
+                this.schedulesChanged.next(this.schedules.slice());
                 return schedule;
             })
             .catch((error: Response) => {
@@ -74,48 +55,45 @@ export class ScheduleService {
             });
     }
 
-
-    delete(schedule: Schedule) {
-        return this.http.delete(environment.serverUrl + '/schedule/' + schedule._id, environment.getRequestOptions())
-            .map((response: Response) => {
-                this.schedules.splice(this.schedules.indexOf(schedule), 1);
-                return response.json()
-            })
-            .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
-                return Observable.throw(error.json());
-            });
-    }
-
-
-    switchEdit(schedule: Schedule) {
-        this.schedule.emit(schedule);
-    }
-
-    clearEdit() {
-        this.schedule.emit(null);
-    }
-
     update(schedule: Schedule) {
         const body = JSON.stringify(schedule);
 
         return this.http.patch(environment.serverUrl + '/schedule/' + schedule._id, body, environment.getRequestOptions())
             .map((response: Response) => {
-                const result = response.json();
-                return this.schedules[this.schedules.indexOf(schedule)] = new Schedule(
-                    result.obj.scheduleDate,
-                    result.obj.production,
-                    result.obj.device,
-                    result.obj.creator,
-                    result.obj.createData,
-                    result.obj._id,
-                    result.obj.actionDate,
-                    result.obj.finishDate);
+                this.schedules[this.editIndex]
+                    = this.createModel(response.json().obj);
+
+                this.schedulesChanged.next(this.schedules.slice());
+                return schedule;
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
+    }
+
+    delete(index: number, schedule: Schedule) {
+        return this.http.delete(environment.serverUrl + '/schedule/' + schedule._id, environment.getRequestOptions())
+            .map((response: Response) => {
+                this.schedules.splice(index, 1);
+
+                this.schedulesChanged.next(this.schedules.slice());
+                return this.schedule;
+            })
+            .catch((error: Response) => {
+                this.alertConfirmService.alert(error.json());
+                return Observable.throw(error.json());
+            });
+    }
+
+    switchEdit(index: number, schedule: Schedule) {
+        this.editIndex = index;
+        this.schedule.next(Object.assign({}, schedule));
+    }
+
+    clearEdit() {
+        this.editIndex = null;
+        this.schedule.next(null);
     }
 
     search(schedule?: Schedule) {
@@ -139,7 +117,7 @@ export class ScheduleService {
                     );
                 }
                 this.schedules = transformedList;
-                this.schedulesChange.emit(this.schedules);
+                this.schedulesChanged.next(this.schedules);
 
                 return transformedList;
             })
@@ -149,5 +127,16 @@ export class ScheduleService {
             });
     }
 
+    private createModel(item): Schedule {
+        return new Schedule(
+            item.scheduleDate,
+            item.production,
+            item.device,
+            item.creator,
+            item.createData,
+            item._id,
+            item.actionDate,
+            item.finishDate);
+    }
 
 }

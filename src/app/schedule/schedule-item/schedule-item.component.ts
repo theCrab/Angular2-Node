@@ -1,13 +1,15 @@
 import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
 import { ScheduleService } from './../schedule.service';
+import { Schedule } from './../schedule.model';
+
+import { AlertConfirmService } from './../../shared/alert-confirm/alert-confirm.service';
+import { AlertConfirmModel } from './../../shared/alert-confirm/alert-confirm.model';
 
 import { PopUpComponent } from './../../shared/popUp/popUp.component';
 import { ToastComponent } from './../../shared/toast/toast.component';
+import { DateFormat } from "assets/ts/DateFormat";
 
-import { Schedule } from './../schedule.model';
-import { AlertConfirmService } from "../../shared/alert-confirm/alert-confirm.service";
-import { AlertConfirmModel } from "../../shared/alert-confirm/alert-confirm.model";
 @Component({
   selector: '[app-schedule-item]',
   templateUrl: './schedule-item.component.html',
@@ -17,9 +19,10 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
   //ALan:要修改的物件
   @Input('app-schedule-item') item: Schedule;
+  @Input('index') index: number;
 
-  totalTime: any;
-  state: any = {
+  public totalTime: any;
+  public state: any = {
     color: 'red',
     text: "未生產",
     state: 0
@@ -27,7 +30,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
   constructor(
     private _scheduleService: ScheduleService,
-    public _toast: ToastComponent,
+    private _toast: ToastComponent,
     private _popup: PopUpComponent,
     private _alertConfirmService: AlertConfirmService) {
 
@@ -42,21 +45,25 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
     //https://github.com/lindell/JsBarcode
     //預設為code 128
     //Alan:Id開頭必須為英文字或底線_
-    JsBarcode(`#svg${this.item._id}`, this.item._id);
+    try {
+      JsBarcode(`#svg${this.item._id}`, this.item._id);
+    } catch (error) {
+      console.log('JsBarcode not found!');
+    }
   }
 
   switchEdit(schedule: Schedule) {
-    this._scheduleService.switchEdit(schedule)
+    this._scheduleService.switchEdit(this.index, schedule)
     this._popup.open(`修改排程－${schedule._id}`);
   }
 
   onDelete(schedule: Schedule) {
     this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
-        this._scheduleService.delete(schedule)
+        this._scheduleService.delete(this.index, schedule)
           .subscribe(
           data => {
-            this._toast.setMessage('產品刪除成功.', 'success');
+            this._toast.setMessage('排程刪除成功.', 'success');
             //console.error(error);.log(data)
           },
           error => {
@@ -77,7 +84,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
           }
           //Alan:計算耗時
           this.totalTime =
-            this.dhms(new Date(this.item.finishDate).getTime() - new Date(this.item.actionDate).getTime());
+            DateFormat.dhms(new Date(this.item.finishDate).getTime() - new Date(this.item.actionDate).getTime());
         } else {
           this.state = {
             color: '#ec971f',
@@ -87,14 +94,5 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
         }
       }
     }
-  }
-  dhms(t) {
-    let cd: any = 24 * 60 * 60 * 1000,
-      ch: any = 60 * 60 * 1000,
-      d: any = Math.floor(t / cd),
-      h: any = '0' + Math.floor((t - d * cd) / ch),
-      m: any = '0' + Math.round((t - d * cd - h * ch) / 60000),
-      s: any = '0' + Math.round((t - d * cd - h * ch - m * 1000) / 1000);
-    return [d, h.substr(-2), m.substr(-2), s.substr(-2)].join(':');
   }
 }

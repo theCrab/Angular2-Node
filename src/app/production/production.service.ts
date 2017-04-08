@@ -6,6 +6,7 @@ import { Production } from './production.model';
 import { environment } from './../../environments/environment';
 import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
 import { FileItem } from "ng2-file-upload";
+import { Subject } from "rxjs/Subject";
 
 
 @Injectable()
@@ -16,24 +17,21 @@ export class ProductionService {
         private alertConfirmService: AlertConfirmService
     ) { }
 
-    productions: Production[] = [];
+    private productions: Production[] = [];
+    private editIndex: number;
 
-    //Alan:修改時使用
-    production = new EventEmitter<Production>();
+    public production = new Subject<Production>();
+    public productionsChanged = new Subject<Production[]>();
 
     get() {
         return this.http.get(environment.serverUrl + '/production')
             .map((response: Response) => {
-                const productions = response.json().obj;
-                //console.error(error);.log(productions);
-                let transformedList: Production[] = [];
-                for (let production of productions) {
-                    transformedList.push(this.createModel(production)
-                    );
-                }
-                this.productions = transformedList;
-
-                return transformedList;
+                this.productions = response.json().obj
+                    .map((item) => {
+                        return this.createModel(item)
+                    });
+                this.productionsChanged.next(this.productions.slice());
+                return this.productions;
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
@@ -57,7 +55,6 @@ export class ProductionService {
         }
     }
 
-
     update(production: Production, img: FileItem) {
         let body = JSON.stringify(production);
 
@@ -75,11 +72,13 @@ export class ProductionService {
         }
     }
 
-    delete(production: Production) {
+    delete(index: number, production: Production) {
         return this.http.delete(environment.serverUrl + '/production/' + production._id, environment.getRequestOptions())
             .map((response: Response) => {
-                this.productions.splice(this.productions.indexOf(production), 1);
-                return response.json();
+                this.productions.splice(index, 1);
+
+                this.productionsChanged.next(this.productions.slice());
+                return this.production;
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());
@@ -88,12 +87,14 @@ export class ProductionService {
     }
 
 
-    switchEdit(production: Production) {
-        this.production.emit(production);
+    switchEdit(index: number, production: Production) {
+        this.editIndex = index;
+        this.production.next(Object.assign({}, production));
     }
 
     clearEdit() {
-        this.production.emit(null);
+        this.editIndex = null;
+        this.production.next(null);
     }
 
     postAdd(production: Production): Observable<any> {
@@ -101,9 +102,10 @@ export class ProductionService {
 
         return this.http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
             .map((response: Response) => {
-                const result = response.json();
-                const production = this.createModel(result.obj);
+                let production = this.createModel(response.json().obj);
                 this.productions.push(production);
+
+                this.productionsChanged.next(this.productions.slice());
                 return production;
             })
             .catch((error: Response) => {
@@ -116,10 +118,12 @@ export class ProductionService {
     postUpdate(production: Production): Observable<any> {
         const body = JSON.stringify(production);
         return this.http.patch(environment.serverUrl + '/production/' + production._id, body, environment.getRequestOptions())
-            .map((response: Response) => {
-                const result = response.json();
-                return this.productions[this.productions.indexOf(production)]
-                    = this.createModel(result.obj);
+            .map((response: Response) => {                
+                this.productions[this.editIndex]
+                    = this.createModel(response.json().obj);
+
+                this.productionsChanged.next(this.productions.slice());
+                return production;
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());

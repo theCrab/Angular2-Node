@@ -22,7 +22,7 @@
     <label class="col-sm-2 control-label" for="formGroupInputLarge">產品</label>
     <div class="col-sm-4">
 
-      <select [ngModel]="schedule?.production?._id" class="form-control" formControlName="production" required> 
+      <select [ngModel]="schedule?.production['_id']" class="form-control" formControlName="production" required> 
         <option *ngFor="let production of productions" [ngValue]="production._id">{{production.name}}</option> 
       </select>
       
@@ -32,7 +32,7 @@
   <div class="form-group">
     <label class="col-sm-2 control-label" for="formGroupInputLarge">設備</label>
     <div class="col-sm-4">
-      <select [ngModel]="schedule?.device?._id" class="form-control" formControlName="device" required> 
+      <select [ngModel]="schedule?.device['_id']" class="form-control" formControlName="device" required> 
         <option *ngFor="let device of devices" [ngValue]="device._id">{{device.name}}</option> 
       </select>
     </div>

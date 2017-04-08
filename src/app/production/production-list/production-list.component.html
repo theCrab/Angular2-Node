@@ -12,8 +12,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of productions | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage}"
-         [app-production-item]="item">
+    <tr *ngFor="let item of productions 
+                | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage};
+                let i = index"
+         [app-production-item]="item"
+         [index]="i">
     </tr>
   </tbody>
 </table>

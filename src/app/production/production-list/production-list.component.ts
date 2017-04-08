@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from "rxjs/Subscription";
 
-import { ToastComponent } from './../../shared/toast/toast.component';
 import { ProductionService } from './../production.service';
 import { Production } from './../production.model';
 
@@ -10,23 +10,34 @@ import { Production } from './../production.model';
 	templateUrl: './production-list.component.html',
 	styleUrls: ['./production-list.component.css']
 })
-export class ProductionListComponent implements OnInit {
+export class ProductionListComponent implements OnDestroy {
+
+	public currentPage: Number = 1;
+	public itemsPerPage: Number = 10;
+
+	public productions:Production[] = [];
+	private subscription$: Subscription;
 
 	constructor(
-		private _productionService: ProductionService,
-		public _toast: ToastComponent, ) { }
+		private _productionService: ProductionService) {
 
-	//Alan:此頁物件
-	private currentPage: Number = 1;
-	private itemsPerPage: Number = 10;
-	productions = [];
+		this.subscription$ = this._productionService.productionsChanged
+			.subscribe(
+			(productions: Production[]) => {
+				this.productions = productions;
+			});
 
-	ngOnInit() {
-		this._productionService.get().subscribe(
-			data => {
-				this.productions = data;
+		this._productionService.get()
+			.subscribe(
+			(data) => {
+				console.log('get data success!');
 			},
-			// error => //console.error(error);.log(error)
-		);
+			error => {
+				console.error('get data fail!')
+			});
+	}
+
+	ngOnDestroy(): void {
+		this.subscription$.unsubscribe();
 	}
 }
