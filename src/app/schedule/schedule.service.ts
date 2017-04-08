@@ -1,6 +1,8 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+
 import { Observable } from "rxjs/Observable";
+import { Subject } from 'rxjs/Subject';
 
 import { Schedule } from './schedule.model';
 import { environment } from "../../environments/environment";
@@ -17,7 +19,7 @@ export class ScheduleService {
     schedules: Schedule[] = [];
 
     //Alan:修改時使用
-    schedule = new EventEmitter<Schedule>();
+    schedule = new Subject<Schedule>();
 
     //Alan:宣告一個發射器，把東西發射出去
     @Output() schedulesChange: EventEmitter<any> = new EventEmitter<any>();
@@ -89,11 +91,11 @@ export class ScheduleService {
 
 
     switchEdit(schedule: Schedule) {
-        this.schedule.emit(schedule);
+        this.schedule.next(schedule);
     }
 
     clearEdit() {
-        this.schedule.emit(null);
+        this.schedule.next(null);
     }
 
     update(schedule: Schedule) {

@@ -7,6 +7,8 @@ import { Device } from './device.model';
 import { environment } from "../../environments/environment";
 import { AlertConfirmService } from "../shared/alert-confirm/alert-confirm.service";
 
+import { Subject } from "rxjs/Subject";
+
 @Injectable()
 export class DeviceService {
 
@@ -17,25 +19,30 @@ export class DeviceService {
 
     devices: Device[] = [];
 
-    //Alan:修改時使用
-    device = new EventEmitter<Device>();
+    device = new Subject<Device>();
+    devicesChanged = new Subject<Device[]>();
 
     get() {
         return this._http.get(environment.serverUrl + '/device')
             .map((response: Response) => {
-                let devices = response.json().obj;
-                let transformedList: Device[] = [];
-                for (let device of devices) {
-                    transformedList.push(this.createModel(device));
-                }
-                this.devices = transformedList;
-
-                return transformedList;
+                this.devices = response.json().obj
+                    .map((item) => {
+                        return this.createModel(item)
+                    });
+                this.devicesChanged.next(this.devices.slice());
+                return this.devices;
             })
             .catch((error: Response) => {
                 this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
+    }
+
+    search(value: string) {
+        let searchTmp = this.devices.filter(device => {
+            return device.name.toLocaleLowerCase().includes(value);
+        });
+        this.devicesChanged.next(searchTmp);
     }
 
     add(device: Device, img: FileItem) {
@@ -87,7 +94,9 @@ export class DeviceService {
         return this._http.delete(`${environment.serverUrl}/device/${device._id}`, environment.getRequestOptions())
             .map((response: Response) => {
                 this.devices.splice(this.devices.indexOf(device), 1);
-                return response.json();
+
+                this.devicesChanged.next(this.devices.slice());
+                return this.devices;
             })
             .catch((error: Response) => {
                 this._alertConfirmService.alert(error.json());
@@ -96,10 +105,10 @@ export class DeviceService {
     }
 
     switchEdit(device: Device) {
-        this.device.emit(device);
+        this.device.next(device);
     }
     clearEdit() {
-        this.device.emit(null);
+        this.device.next(null);
     }
 
     postAdd(device: Device): Observable<any> {
@@ -110,6 +119,9 @@ export class DeviceService {
                 let result = response.json();
                 let device = this.createModel(result.obj);
                 this.devices.push(device);
+
+                this.devicesChanged.next(this.devices.slice());
+
                 return device;
             })
             .catch((error: Response) => {
@@ -124,8 +136,10 @@ export class DeviceService {
         return this._http.patch(environment.serverUrl + '/device/' + device._id, body, environment.getRequestOptions())
             .map((response: Response) => {
                 let result = response.json();
-                return this.devices[this.devices.indexOf(device)]
-                    = this.createModel(result.obj);
+                this.devices[this.devices.indexOf(device)] = this.createModel(result.obj);
+
+                this.devicesChanged.next(this.devices.slice());
+                return this.devices;
             })
             .catch((error: Response) => {
                 this._alertConfirmService.alert(error.json());

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ScheduleService } from './../schedule.service';
@@ -11,14 +11,18 @@ import { PopUpComponent } from './../../shared/popUp/popUp.component';
 import { Schedule } from './../schedule.model';
 import { Production } from './../../production/production.model';
 import { Device } from './../../machine/device.model';
+import { Subscription } from "rxjs/Subscription";
+
 @Component({
   selector: 'app-schedule-input',
   templateUrl: './schedule-input.component.html',
   styleUrls: ['./schedule-input.component.css']
 })
-export class ScheduleInputComponent {
+export class ScheduleInputComponent implements OnDestroy{
 
-	public isAdd: Boolean = true;
+	private subscription$: Subscription;
+  
+  public isAdd: Boolean = true;
   public myForm: FormGroup;
   //ALan:要修改的物件
   public schedule: Schedule;
@@ -36,20 +40,6 @@ export class ScheduleInputComponent {
 
     //預設年份往後+5年
     this.yearRange = `${new Date().getFullYear()}:${new Date().getFullYear() + 5}`;
-
-    //Alan:訂閱Service裡面的參數
-    this._scheduleService.schedule.subscribe(
-      (schedule: Schedule) => {
-
-        this.schedule = schedule;
-
-				if (schedule) {
-					this.isAdd = false;
-				} else {
-					this.isAdd = true;
-				}
-      }
-    );
 
     this.myForm = new FormGroup({
       scheduleDate: new FormControl(null, Validators.required),
@@ -71,8 +61,22 @@ export class ScheduleInputComponent {
       },
       // error => //console.error(error);.log(error)
     );
-  }
 
+
+    //Alan:訂閱Service裡面的參數
+    this.subscription$ = this._scheduleService.schedule.subscribe(
+      (schedule: Schedule) => {
+
+        this.schedule = schedule;
+
+        if (schedule) {
+          this.isAdd = false;
+        } else {
+          this.isAdd = true;
+        }
+      }
+    );
+  }
 
   onSubmit() {
     if (this.schedule && this.schedule._id) {
@@ -113,5 +117,9 @@ export class ScheduleInputComponent {
     this.myForm.reset();
     this._popup.close();
     // console.log(this.myForm);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }

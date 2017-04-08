@@ -2,6 +2,7 @@ import { environment } from './../../environments/environment';
 import { Component, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
 
+import { Subscription } from 'rxjs/Subscription';
 @Component({
 	selector: 'app-auth',
 	templateUrl: './auth.component.html',
@@ -10,12 +11,12 @@ import { Router } from "@angular/router";
 
 export class AuthComponent implements OnDestroy {
 
-	subscript;
+	private subscription$: Subscription;
 	@ViewChild('formTag') formTag;
 	public systemName = environment.systemName;
 	constructor(
 		private _router: Router) {
-		this.subscript = _router.events.subscribe((event: any) => {
+		this.subscription$ = _router.events.subscribe((event: any) => {
 			// console.log(event);
 			switch (event.urlAfterRedirects) {
 				case "/auth/signup":
@@ -29,6 +30,6 @@ export class AuthComponent implements OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscript.unsubscribe();
+		this.subscription$.unsubscribe();
 	}
 }

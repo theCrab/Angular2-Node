@@ -24,16 +24,10 @@ export class ProductionService {
     get() {
         return this.http.get(environment.serverUrl + '/production')
             .map((response: Response) => {
-                const productions = response.json().obj;
-                //console.error(error);.log(productions);
-                let transformedList: Production[] = [];
-                for (let production of productions) {
-                    transformedList.push(this.createModel(production)
-                    );
-                }
-                this.productions = transformedList;
-
-                return transformedList;
+                return this.productions = response.json().obj
+                    .map((item) => {
+                        return this.createModel(item)
+                    });
             })
             .catch((error: Response) => {
                 this.alertConfirmService.alert(error.json());

@@ -1,5 +1,5 @@
 import { PopUpComponent } from './../../shared/popUp/popUp.component';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -11,13 +11,16 @@ import { Device } from './../device.model';
 import { environment } from "../../../environments/environment";
 
 import { FileUploader, FileItem } from "ng2-file-upload";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-device-input',
   templateUrl: './device-input.component.html',
   styleUrls: ['./device-input.component.css']
 })
-export class DeviceInputComponent {
+export class DeviceInputComponent implements OnDestroy {
+
+  private subscription$: Subscription;
 
   public uploader: FileUploader = environment.getUploadConfig('device');
   public isAdd: Boolean = true;
@@ -27,11 +30,17 @@ export class DeviceInputComponent {
 
   public filePreviewPath: SafeUrl;
   public fileBoloUrl: string;
+
   constructor(
     private _deviceService: DeviceService,
     private _toast: ToastComponent,
     private _popup: PopUpComponent,
     private _sanitizer: DomSanitizer) {
+
+    this.myForm = new FormGroup({
+      deviceId: new FormControl(null, Validators.required),
+      name: new FormControl(null, Validators.required),
+    });
     //Alan: generate preview image
     //https://github.com/valor-software/ng2-file-upload/issues/158
     this.uploader.onAfterAddingFile = (fileItem: FileItem) => {
@@ -47,9 +56,8 @@ export class DeviceInputComponent {
       this.fileBoloUrl = window.URL.createObjectURL(fileItem._file);
       this.filePreviewPath = this._sanitizer.bypassSecurityTrustUrl((this.fileBoloUrl));
     }
-
     //Alan:訂閱Service裡面的參數
-    this._deviceService.device.subscribe(
+    this.subscription$ = this._deviceService.device.subscribe(
       (device: Device) => {
         this.device = device;
         if (device) {
@@ -63,18 +71,13 @@ export class DeviceInputComponent {
           //Alan:remove previous blob
           if (this.fileBoloUrl) {
             window.URL.revokeObjectURL(this.fileBoloUrl);
-						this.uploader.clearQueue();
+            this.uploader.clearQueue();
             this.fileBoloUrl = null;
             this.filePreviewPath = null;
           }
         }
       }
     );
-
-    this.myForm = new FormGroup({
-      deviceId: new FormControl(null, Validators.required),
-      name: new FormControl(null, Validators.required),
-    });
   }
 
   onSubmit() {
@@ -126,7 +129,9 @@ export class DeviceInputComponent {
     this._popup.close();
   }
 
-
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
+  }
 
   // totalProgress: number = 0;
   // upload() {
