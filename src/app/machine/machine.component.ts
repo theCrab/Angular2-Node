@@ -11,13 +11,13 @@ import { Subject } from "rxjs/Subject";
 })
 export class MachineComponent {
 
-  public search$ = new Subject<string>();
+  // public search$ = new Subject<string>();
   constructor(
     private _deviceService: DeviceService,
     public _popup: PopUpComponent) {
-    this.search$
-      .debounceTime(500)
-      .subscribe(value => this._deviceService.search(value));
+    // this.search$
+    //   .debounceTime(500)
+    //   .subscribe(value => this._deviceService.search(value));
   }
 
   add() {
