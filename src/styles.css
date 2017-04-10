@@ -26,3 +26,7 @@
 .Bluehovre:hover {
     color: skyblue;
 }
+
+input.ng-invalid.ng-touched{
+    border: 1px solid red
+}

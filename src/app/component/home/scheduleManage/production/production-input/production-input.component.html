@@ -1,0 +1,79 @@
+<form class="form-horizontal" role="form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">圖示</label>
+    <div class="col-sm-4">
+
+      <img style="display: inline-block" [src]="filePreviewPath | fileURL" width="200" />
+      <!--<button type="button" (click)="upload()">text</button>{{totalProgress}}-->
+      <button type="button" class="btn btn-sm btn-primary" (click)="file.click(); file.value=null">
+                <input #file type="file" class="none" ng2FileSelect [uploader]="uploader" />
+                <i class="fa fa-upload"></i>
+                <font>選擇圖片</font>
+            </button>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">
+      <i class="color-red">*</i>
+      產品名稱
+    </label>
+    <div class="col-sm-4">
+      <input class="form-control" [ngModel]="production?.name" type="text" formControlName="name" placeholder="產品名稱">
+      
+      <div class="alert alert-danger" role="alert" 
+          *ngIf="myForm.get('name').invalid && (myForm.get('name').touched || submitted)" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only"></span> 必填項目
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">
+      <i class="color-red">*</i>
+      需求時間
+    </label>
+    <div class="col-sm-4">
+      <p-calendar [ngModel]="production?.requireDate"
+                  [readonlyInput]="true" 
+                  [showTime]="true" 
+                  hourFormat="24" 
+                  dateFormat="yy-mm-dd"
+                  [yearNavigator]="true" 
+                  [monthNavigator]="true" 
+                  showIcon="true" 
+                  icon="icon-calendar" 
+                  placeholder="需求時間"
+                  formControlName="requireDate"></p-calendar>
+      
+      <div class="alert alert-danger" role="alert" 
+          *ngIf="myForm.get('requireDate').invalid && (myForm.get('requireDate').touched || submitted)" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only"></span> 必填項目
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="formGroupInputLarge">
+      <i class="color-red">*</i>
+      數量
+    </label>
+    <div class="col-sm-4">
+      <p-spinner [ngModel]="production?.count" formControlName="count" [min]="0" placeholder="數量"></p-spinner>
+      <div class="alert alert-danger" role="alert" 
+          *ngIf="myForm.get('count').invalid && (myForm.get('count').touched || submitted)" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only"></span> 必填項目
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>
+        <font *ngIf="isAdd">新增</font>
+        <font *ngIf="!isAdd">修改</font>
+  </button>
+</form>

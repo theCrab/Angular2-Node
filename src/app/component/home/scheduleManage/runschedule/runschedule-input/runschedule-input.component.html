@@ -1,0 +1,11 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <input class="form-control" type="text" formControlName="schedule_id" placeholder="排程單號">
+  <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> 查詢</button>
+  
+  <!--<div class="alert alert-danger" role="alert" 
+      *ngIf="myForm.get('schedule_id').invalid && (myForm.get('schedule_id').touched || submitted)" >
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only"></span> 不可為空
+  </div>-->
+
+</form>

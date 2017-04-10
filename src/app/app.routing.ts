@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from "@angular/router";
 
 import { AppCanActivateService } from './app-canActivate.service';
@@ -10,11 +11,11 @@ const APP_ROUTES: Routes = [
     },
     {
         path: 'index',
-        loadChildren: './home/home.module#HomeModule'
+        loadChildren: './component/home/home.module#HomeModule'
     },
     {
         path: 'auth',
-        loadChildren: './auth/auth.module#AuthModule'
+        loadChildren: './component/auth/auth.module#AuthModule'
     },
     //if this url is not exist, redirect to index
     {
@@ -24,4 +25,8 @@ const APP_ROUTES: Routes = [
 ];
 
 //  { useHash: true }
-export const routing = RouterModule.forRoot(APP_ROUTES);
+@NgModule({
+  imports: [RouterModule.forRoot(APP_ROUTES)],
+  exports: [RouterModule]
+})
+export class routing { }

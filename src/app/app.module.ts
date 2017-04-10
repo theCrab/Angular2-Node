@@ -7,25 +7,26 @@ import { HttpModule } from '@angular/http';
 //Alan:主要Component
 import { AppComponent } from './app.component';
 //Component
-import { ToastComponent } from './shared/toast/toast.component';
-import { AlertConfirmComponent } from "./shared/alert-confirm/alert-confirm.component";
+
+import { AlertConfirmComponent } from "app/shared/component/alert-confirm/alert-confirm.component";
+import { ToastComponent } from "app/shared/component/toast/toast.component";
+import { RouteLoadingComponent } from "app/shared/component/route-loading/route-loading.component";
 //routing
 import { routing } from './app.routing';
 //Service
-
-import { AlertConfirmService } from './shared/alert-confirm/alert-confirm.service';
-
-import { AuthService } from './auth/auth.service';
 import { AppCanActivateService } from './app-canActivate.service';
+import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
+import { AuthService } from "app/component/auth/auth.service";
 
+//3rd
 import { ModalModule, AlertModule } from 'ng2-bootstrap';
 import { CustomFormsModule } from 'ng2-validation'
-import { RouteLoadingComponent } from "./shared/route-loading/route-loading.component";
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 
 @NgModule({
   imports: [

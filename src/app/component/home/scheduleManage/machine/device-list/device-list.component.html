@@ -1,0 +1,24 @@
+<table class="table table-bordered table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>設備編號</th>
+      <th>資料名稱</th>
+      <th>圖示</th>
+      <th>建立人</th>
+      <th>排程</th>
+      <th>功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of devices
+                | search:filterObj
+                | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage}
+                ; let i = index " 
+        [app-device-item]="item"
+        [index]="i"></tr>
+  </tbody>
+</table>
+
+<my-pagination (pageChange)="currentPage = $event;" 
+               (perPageChange)="itemsPerPage = $event;"
+               [perPageNum]="itemsPerPage"></my-pagination>

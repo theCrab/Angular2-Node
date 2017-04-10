@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ToastComponent } from './shared/toast/toast.component';
+import { ToastComponent } from "app/shared/component/toast/toast.component";
 
 @Component({
   selector: 'app-root',
