@@ -57,7 +57,6 @@
 
   <hr>
   <button class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i>
-        <font *ngIf="isAdd">新增</font>
-        <font *ngIf="!isAdd">修改</font>
+        <font>{{ isAdd ? '新增': '修改'}}</font>
   </button>
 </form>

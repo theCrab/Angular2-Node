@@ -21,6 +21,7 @@ export class SigninComponent implements OnInit {
 		this.myForm = new FormGroup({
 			email: new FormControl('e936106@gmail.com', [
 				Validators.required,
+				Validators.email,
 				Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 			]),
 			password: new FormControl('1111', Validators.required),
