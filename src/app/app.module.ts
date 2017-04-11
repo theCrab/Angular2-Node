@@ -1,4 +1,3 @@
-import { BusyModule } from 'angular2-busy';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -34,7 +33,6 @@ import 'rxjs/add/observable/throw';
     BrowserModule,
     BrowserAnimationsModule,
     
-    BusyModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
