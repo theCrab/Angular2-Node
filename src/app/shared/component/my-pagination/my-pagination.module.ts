@@ -17,9 +17,6 @@ import { MyPaginationComponent } from './my-pagination.component';
   declarations: [
     MyPaginationComponent,
   ],
-  providers: [
-    MyPaginationComponent,
-  ],
   exports: [
     MyPaginationComponent,
     Ng2PaginationModule

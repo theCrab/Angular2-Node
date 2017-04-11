@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertConfirmService } from "./alert-confirm.service";
 
@@ -43,6 +45,7 @@ export class AlertConfirmComponent implements OnInit {
   ngOnInit() {
 
     this._alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
+      this.subs();
       this.isShow = true;
       this.isConfirm = false;
       this.message = message;
@@ -52,6 +55,7 @@ export class AlertConfirmComponent implements OnInit {
     });
 
     this._alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
+      this.subs();
       this.isShow = true;
       this.isConfirm = true;
       this.message = message;
@@ -66,6 +70,7 @@ export class AlertConfirmComponent implements OnInit {
       this.modal.onHidden.subscribe(() => {
         this.isShow = false;
         this.subscribedToClosing = true;
+        this.unSubs();
         if (this.isConfirm) {
           if (this.confirmed) {
             this._alertConfirmService.confirmCallback._ok();
@@ -88,6 +93,36 @@ export class AlertConfirmComponent implements OnInit {
   private cancel(): void {
     this.confirmed = false;
     this.modal.hide();
+  }
+
+  private subscription$: Subscription;
+  private keydownEvent = Observable.fromEvent(document, 'keydown')
+    // .do(() => {
+    //   console.log(event);
+    // })
+    .filter((event: KeyboardEvent, index) => {
+      return event.keyCode === 27 || event.key === "Enter";
+    })
+    .map(
+    ((event: KeyboardEvent) => {
+      return event.keyCode !== 27
+    }));
+
+  subs() {
+    this.subscription$ = this.keydownEvent.subscribe(
+      ((result: boolean) => {
+        if (result) {
+          this.ok();
+        } else {
+          this.cancel();
+        }
+        // this.subscription$.unsubscribe();
+      })
+    );
+  }
+
+  unSubs() {
+    this.subscription$.unsubscribe();
   }
 
 

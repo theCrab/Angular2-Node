@@ -1,7 +1,8 @@
+import { PopupService } from './popup.service';
+import { PopUpComponent } from './popUp.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PopUpComponent } from './../popUp/popUp.component';
 
 @NgModule({
     imports: [
@@ -12,6 +13,7 @@ import { PopUpComponent } from './../popUp/popUp.component';
     ],
     providers: [
         PopUpComponent,
+        PopupService
     ],
     exports: [
         PopUpComponent,
