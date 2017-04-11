@@ -1,5 +1,5 @@
 import { PopupService } from './popup.service';
-import { Component, Input, Output, EventEmitter, AnimationTransitionEvent, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AnimationTransitionEvent, HostListener, OnInit, OnDestroy, ElementRef, style } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -30,14 +30,20 @@ export class PopUpComponent implements OnInit, OnDestroy {
       })
     )
   }
+  body: ElementRef = new ElementRef(document.getElementsByTagName("body")[0]);
+
 
   open(title?) {
+    this.body.nativeElement.style = 'overflow : hidden'
+
     this._popupService.subs();
     this.popupConfig.title = title;
     this.popupConfig.show = true;
   }
 
   close() {
+    this.body.nativeElement.style = ''
+
     this._popupService.unSubs();
     this.popupConfig.show = false;
   }

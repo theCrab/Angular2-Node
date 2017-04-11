@@ -1,10 +1,12 @@
-<!--https://embed.plnkr.co/AuFMJVHpk9OaLr62puS1/-->
-<div class="background" style="background:transparent"
-     [@popup] (@popup.done)="animationDone($event)" *ngIf="popupConfig.show">
-  <div class="dialog">
+<!--第一種，直接放tag在裡面的-->
+<div class="popup" *ngIf="popupConfig.show" [@popup] (@popup.done)="animationDone($event)">
+  <div class="window">
     <header class="topHeader">
       <label class="popTitle" [innerHTML]="popupConfig.title"></label>
+
     </header>
+
+    <!--關閉按鈕-->
     <span class="RightTop cursorPoint" (click)="close()">
                 <span class="icon-cross cycleCross " style="background-color: white"></span>
     </span>
@@ -12,8 +14,8 @@
     <article class="content">
       <ng-content></ng-content>
     </article>
-
   </div>
+
   <div *ngIf="autoClose; else elseBlackground" class="background" (click)="close()"></div>
 
   <ng-template #elseBlackground>

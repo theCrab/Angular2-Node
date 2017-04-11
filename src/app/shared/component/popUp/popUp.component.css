@@ -1,68 +1,73 @@
 .background {
-    position: fixed;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1049;
+    z-index: 1050;
 }
 
-.dialog {
+.popup {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1050;
+    overflow-y: auto;
+    overflow-x: hidden;
+    bottom: 0;
+    left: 0;
+}
+
+.window {
+    z-index: 1051;
+    width: 80%;
+    margin: 5% auto;
+    background: #fff;
+    position: relative;
+    box-shadow: 0px 0px 10px 3px #797979;
+    -webkit-overflow-scrolling: touch;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
     border-radius: 1em;
-    z-index: 1050;
-    position: fixed;
-    right: 0;
-    left: 0;
-    top: 40px;
-    margin-right: auto;
-    margin-left: auto;
-    min-height: 200px;
-    max-width: 80%;
-    background-color: #fff;
-    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+    margin-bottom: 0 !important;
 }
 
+
+
 @media (max-width: 768px) {
-    .dialog {
+    .window {
         top: 20px;
-        max-width: 100%;
+        width: 100%;
     }
 }
 
-.dialog__close-btn {
-    border: 0;
-    background: none;
-    color: #2d2d2d;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 1.2em;
-}
 
-.topHeader {
+
+
+
+
+.topHeader{
     background: #42adec;
-    height: 3em;
+    height: 3em; 
     border-radius: 0.9em .9em 0 0;
 }
-
-.topHeader .popTitle {
+.topHeader .popTitle{
     font-weight: bold;
-    font-family: Microsoft JhengHei;
+    font-family:Microsoft JhengHei;
     padding: 0.35em 0 0 0.5em;
     font-size: 1.5em;
     color: white;
 }
 
-.content {
+
+.content{    
     padding: 0.5em;
 }
 
 
-/*右上角區塊*/
 
+/*右上角區塊*/
 .RightTop {
     color: #2b7b82;
     position: absolute;
@@ -71,13 +76,11 @@
     padding: 12px 12px 16px 16px;
 }
 
-.RightTop:hover {
-    color: #FF4D00;
-}
-
+    .RightTop:hover {
+        color: #FF4D00;
+    }
 
 /*XX外面圓形區塊*/
-
 .cycleCross {
     border: 1px solid;
     border-radius: 30px;
