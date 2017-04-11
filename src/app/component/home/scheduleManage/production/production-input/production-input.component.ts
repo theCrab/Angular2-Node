@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
@@ -17,7 +17,7 @@ import { environment } from "environments/environment";
 	templateUrl: './production-input.component.html',
 	styleUrls: ['./production-input.component.css']
 })
-export class ProductionInputComponent implements OnDestroy {
+export class ProductionInputComponent implements OnInit, OnDestroy {
 
 	private subscription$: Subscription;
 
@@ -31,12 +31,13 @@ export class ProductionInputComponent implements OnDestroy {
 	public filePreviewPath: SafeUrl;
 	public fileBlobUrl: string;
 
-
 	constructor(
 		private _productionService: ProductionService,
 		private _toast: ToastComponent,
 		private _popup: PopUpComponent,
-		private _sanitizer: DomSanitizer) {
+		private _sanitizer: DomSanitizer) { }
+		
+	ngOnInit() {
 		this.myForm = new FormGroup({
 			name: new FormControl(null, Validators.required),
 			requireDate: new FormControl(null, Validators.required),
@@ -81,10 +82,7 @@ export class ProductionInputComponent implements OnDestroy {
 					}
 				}
 			);
-
-
 	}
-
 
 	onSubmit() {
 		this.submitted = true;

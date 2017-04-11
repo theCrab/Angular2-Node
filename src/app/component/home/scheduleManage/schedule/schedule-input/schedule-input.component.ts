@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ScheduleService } from './../schedule.service';
@@ -18,7 +18,7 @@ import { Subscription } from "rxjs/Subscription";
   templateUrl: './schedule-input.component.html',
   styleUrls: ['./schedule-input.component.css']
 })
-export class ScheduleInputComponent implements OnDestroy {
+export class ScheduleInputComponent implements OnInit, OnDestroy {
 
   private subscription$: Subscription;
 
@@ -39,8 +39,9 @@ export class ScheduleInputComponent implements OnDestroy {
     private _productionService: ProductionService,
     private _deviceService: DeviceService,
     private _toast: ToastComponent,
-    private _popup: PopUpComponent) {
+    private _popup: PopUpComponent) { }
 
+  ngOnInit() {
     //預設年份往後+5年
     this.yearRange = `${new Date().getFullYear()}:${new Date().getFullYear() + 5}`;
 
@@ -81,7 +82,6 @@ export class ScheduleInputComponent implements OnDestroy {
   }
 
   onSubmit() {
-
     this.submitted = true;
     if (this.myForm.valid) {
       if (this.schedule && this.schedule._id) {

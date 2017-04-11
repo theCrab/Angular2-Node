@@ -9,7 +9,7 @@ import { AlertConfirmModel } from "./alert-confirm.model";
   templateUrl: './alert-confirm.component.html',
   styleUrls: ['./alert-confirm.component.css']
 })
-export class AlertConfirmComponent {
+export class AlertConfirmComponent implements OnInit {
   @ViewChild('modal') public modal: ModalDirective;
   public message: AlertConfirmModel;
   //Alan:用來切換subscribed狀態
@@ -38,11 +38,11 @@ export class AlertConfirmComponent {
   };
   public nowClassType = this.classList.success;
 
-  constructor(
-    private _alertConfirmService: AlertConfirmService
-  ) {
+  constructor(private _alertConfirmService: AlertConfirmService) { }
 
-    _alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
+  ngOnInit() {
+
+    this._alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
       this.isShow = true;
       this.isConfirm = false;
       this.message = message;
@@ -51,7 +51,7 @@ export class AlertConfirmComponent {
       this.handleClose();
     });
 
-    _alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
+    this._alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
       this.isShow = true;
       this.isConfirm = true;
       this.message = message;
@@ -59,7 +59,6 @@ export class AlertConfirmComponent {
       this.modal.show();
       this.handleClose();
     });
-
   }
 
   private handleClose() {

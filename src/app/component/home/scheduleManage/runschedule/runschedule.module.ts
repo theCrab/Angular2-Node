@@ -2,11 +2,12 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { RunscheduleRoutingModule } from './runschedule-routing.module';
+
 import { RunscheduleComponent } from './runschedule.component';
 import { RunscheduleInputComponent } from './runschedule-input/runschedule-input.component';
 import { RunscheduleItemComponent } from './runschedule-item/runschedule-item.component';
 import { RunscheduleListComponent } from './runschedule-list/runschedule-list.component';
-import { RunscheduleRoutes } from "./runschedule.routing";
 
 import { MyPaginationModule } from "app/shared/component/my-pagination/my-pagination.module";
 
@@ -14,7 +15,7 @@ import { MyPaginationModule } from "app/shared/component/my-pagination/my-pagina
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RunscheduleRoutes,
+    RunscheduleRoutingModule,
     MyPaginationModule,
   ],
   declarations: [

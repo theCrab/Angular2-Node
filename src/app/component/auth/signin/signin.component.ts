@@ -17,7 +17,9 @@ export class SigninComponent implements OnInit {
 
 	public myForm: FormGroup;
 
-	constructor(private _authService: AuthService, private _router: Router) {
+	constructor(private _authService: AuthService, private _router: Router) { }
+
+	ngOnInit() {
 		this.myForm = new FormGroup({
 			email: new FormControl('e936106@gmail.com', [
 				Validators.required,
@@ -27,9 +29,6 @@ export class SigninComponent implements OnInit {
 			password: new FormControl('1111', Validators.required),
 			remeberMe: new FormControl(false)
 		});
-	}
-
-	ngOnInit() {
 	}
 
 	onSubmit() {

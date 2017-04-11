@@ -1,9 +1,10 @@
+import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { Routes, RouterModule } from "@angular/router";
 
 import { AppCanActivateService } from "app/app-canActivate.service";
 
-const HOME_ROUTES: Routes = [
+const routes: Routes = [
     {
         path: '',
         redirectTo: 'run',
@@ -34,4 +35,8 @@ const HOME_ROUTES: Routes = [
     }
 ];
 
-export const homeRouting = RouterModule.forChild(HOME_ROUTES);
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class HomeRoutingModule { }

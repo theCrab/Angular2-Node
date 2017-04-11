@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { AppCanActivateService } from './app-canActivate.service';
 
-const APP_ROUTES: Routes = [
+const routes: Routes = [
     {
         path: '',
         redirectTo: 'index',
@@ -26,7 +26,7 @@ const APP_ROUTES: Routes = [
 
 //  { useHash: true }
 @NgModule({
-  imports: [RouterModule.forRoot(APP_ROUTES)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class routing { }
+export class AppRoutingModule { }

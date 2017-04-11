@@ -7,7 +7,7 @@ import { ProductionService } from './scheduleManage/production/production.servic
 import { DeviceService } from './scheduleManage/machine/device.service';
 import { HomeComponent } from './home.component';
 import { NavBlack120Component } from './nav-black120/nav-black120.component';
-import { homeRouting } from "./home.routing";
+import { HomeRoutingModule } from "./home-routing.module";
 
 import { AppCanActivateService } from "app/app-canActivate.service";
 
@@ -15,7 +15,7 @@ import { AppCanActivateService } from "app/app-canActivate.service";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    homeRouting,
+    HomeRoutingModule,
   ],
   declarations: [
     HomeComponent,

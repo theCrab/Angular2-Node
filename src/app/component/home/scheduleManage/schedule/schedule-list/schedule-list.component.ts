@@ -9,7 +9,7 @@ import { Schedule } from './../schedule.model';
 	templateUrl: './schedule-list.component.html',
 	styleUrls: ['./schedule-list.component.css']
 })
-export class ScheduleListComponent implements OnDestroy {
+export class ScheduleListComponent implements OnInit, OnDestroy {
 
 	public currentPage: Number = 1;
 	public itemsPerPage: Number = 10;
@@ -17,9 +17,9 @@ export class ScheduleListComponent implements OnDestroy {
 	public schedules: Schedule[] = [];
 	private subscription$: Subscription;
 
-	constructor(
-		private _scheduleService: ScheduleService) {
+	constructor(private _scheduleService: ScheduleService) { }
 
+	ngOnInit() {
 		this.subscription$ = this._scheduleService.schedulesChanged
 			.subscribe(
 			(schedules: Schedule[]) => {

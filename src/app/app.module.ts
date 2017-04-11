@@ -1,3 +1,4 @@
+import { BusyModule } from 'angular2-busy';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,7 +13,7 @@ import { AlertConfirmComponent } from "app/shared/component/alert-confirm/alert-
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { RouteLoadingComponent } from "app/shared/component/route-loading/route-loading.component";
 //routing
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 //Service
 import { AppCanActivateService } from './app-canActivate.service';
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
@@ -32,10 +33,12 @@ import 'rxjs/add/observable/throw';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    
+    BusyModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing,
+    AppRoutingModule,
 
     ModalModule.forRoot(),
     AlertModule.forRoot(),

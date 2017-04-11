@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from "rxjs/Subscription";
 
 import { ScheduleService } from './../../schedule/schedule.service';
@@ -8,7 +8,7 @@ import { Schedule } from './../../schedule/schedule.model';
   templateUrl: './runschedule-list.component.html',
   styleUrls: ['./runschedule-list.component.css']
 })
-export class RunscheduleListComponent implements OnDestroy {
+export class RunscheduleListComponent implements OnInit, OnDestroy {
 
   public currentPage: Number = 1;
   public itemsPerPage: Number = 10;
@@ -16,7 +16,9 @@ export class RunscheduleListComponent implements OnDestroy {
   public schedules: Schedule[] = [];
   private subscription$: Subscription;
 
-  constructor(private _scheduleService: ScheduleService) {
+  constructor(private _scheduleService: ScheduleService) { }
+  
+  ngOnInit() {
     this.subscription$ = this._scheduleService.schedulesChanged
       .subscribe(
       (schedules: Schedule[]) => {

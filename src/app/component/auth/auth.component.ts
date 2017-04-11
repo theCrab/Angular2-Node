@@ -17,7 +17,7 @@ export class AuthComponent implements OnDestroy {
 	public systemName = environment.systemName;
 	constructor(
 		private _router: Router) {
-		this.subscription$ = _router.events.subscribe((event: any) => {
+		_router.events.subscribe((event: any) => {
 			// console.log(event);
 			switch (event.urlAfterRedirects) {
 				case "/auth/signup":

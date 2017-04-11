@@ -33,9 +33,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
     private _scheduleService: ScheduleService,
     private _toast: ToastComponent,
     private _popup: PopUpComponent,
-    private _alertConfirmService: AlertConfirmService) {
-
-  }
+    private _alertConfirmService: AlertConfirmService) { }
 
   ngOnInit() {
     this.checkIsAction();

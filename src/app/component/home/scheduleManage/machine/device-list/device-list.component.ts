@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from "rxjs/Subscription";
 
 import { DeviceService } from './../device.service';
@@ -11,18 +11,20 @@ import { filterObject } from "app/shared/pipe/filter.model";
 	templateUrl: './device-list.component.html',
 	styleUrls: ['./device-list.component.css']
 })
-export class DeviceListComponent implements OnDestroy {
+export class DeviceListComponent implements OnInit, OnDestroy {
 
 	public currentPage: Number = 1;
 	public itemsPerPage: Number = 10;
 
 	public devices: Device[];
 	private subscription$: Subscription;
+	busy: Subscription;
 
 	public filterObj: filterObject[] = [];
 
-	constructor(
-		private _deviceService: DeviceService) {
+	constructor(private _deviceService: DeviceService) { }
+
+	ngOnInit() {
 		this.subscription$ = this._deviceService.devicesChanged
 			.subscribe(
 			(devices: Device[]) => {

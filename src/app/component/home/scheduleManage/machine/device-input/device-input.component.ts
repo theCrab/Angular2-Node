@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
@@ -18,7 +18,7 @@ import { environment } from "environments/environment";
   templateUrl: './device-input.component.html',
   styleUrls: ['./device-input.component.css']
 })
-export class DeviceInputComponent implements OnDestroy {
+export class DeviceInputComponent implements OnInit,OnDestroy {
 
   private subscription$: Subscription;
 
@@ -37,8 +37,9 @@ export class DeviceInputComponent implements OnDestroy {
     private _deviceService: DeviceService,
     private _toast: ToastComponent,
     private _popup: PopUpComponent,
-    private _sanitizer: DomSanitizer) {
+    private _sanitizer: DomSanitizer) { }
 
+  ngOnInit() {
     this.myForm = new FormGroup({
       deviceId: new FormControl(null, Validators.required),
       name: new FormControl(null, Validators.required),

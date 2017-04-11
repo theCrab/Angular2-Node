@@ -17,12 +17,13 @@ import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-conf
 export class SignupComponent implements OnInit {
 
 	public myForm: FormGroup;
-	
+
 	constructor(
 		private _authService: AuthService,
 		private _alertConfirmService: AlertConfirmService,
-		private _router: Router) {
+		private _router: Router) { }
 
+	ngOnInit() {
 		this.myForm = new FormGroup({
 			firstName: new FormControl(null, Validators.required),
 			lastName: new FormControl(null, Validators.required),
@@ -33,9 +34,6 @@ export class SignupComponent implements OnInit {
 			]),
 			password: new FormControl(null, Validators.required),
 		});
-	}
-
-	ngOnInit() {
 	}
 
 	onSubmit() {
@@ -49,13 +47,13 @@ export class SignupComponent implements OnInit {
 		this._authService.signup(user)
 			.subscribe(
 			data => {
-				this._alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入",'success'))
+				this._alertConfirmService.alert(new AlertConfirmModel("註冊成功", "恭喜您註冊成功，請重新登入", 'success'))
 					.ok(() => {
 						this._router.navigateByUrl('/auth/signin');
 					})
 			},
 			// error => console.error(error)
-			);
+		);
 		this.myForm.reset();
 	}
 

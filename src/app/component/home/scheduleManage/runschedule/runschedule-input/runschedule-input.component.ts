@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { Schedule } from './../../schedule/schedule.model';
 	templateUrl: './runschedule-input.component.html',
 	styleUrls: ['./runschedule-input.component.css']
 })
-export class RunscheduleInputComponent {
+export class RunscheduleInputComponent implements OnInit {
 
 	public schedules = [];
 	public myForm: FormGroup;
@@ -20,12 +20,14 @@ export class RunscheduleInputComponent {
 
 	constructor(
 		private _scheduleService: ScheduleService,
-		private _toast: ToastComponent) {
+		private _toast: ToastComponent) { }
+
+	ngOnInit() {
 		this.myForm = new FormGroup({
 			schedule_id: new FormControl(null, Validators.required),
 		});
-	}
 
+	}
 
 	onSubmit() {
 		this.submitted = true;
