@@ -8,9 +8,9 @@ import { DeviceService } from './../../machine/device.service';
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
-import { Schedule } from './../schedule.model';
-import { Production } from './../../production/production.model';
-import { Device } from './../../machine/device.model';
+import { Schedule } from "app/model/schedule.model";
+import { Production } from 'app/model/production.model';
+import { Device } from 'app/model/device.model';
 import { Subscription } from "rxjs/Subscription";
 
 @Component({

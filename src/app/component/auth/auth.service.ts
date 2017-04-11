@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 
-import { User } from './user.model';
+import { User } from "app/model/user.model";
 
 import { environment } from "environments/environment";
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";

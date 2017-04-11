@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { ScheduleService } from './../../schedule/schedule.service';
 
-import { Schedule } from './../../schedule/schedule.model';
+import { Schedule } from 'app/model/schedule.model';
 
 @Component({
 	selector: 'app-runschedule-input',

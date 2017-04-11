@@ -4,7 +4,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import { Subject } from 'rxjs/Subject';
 
-import { Schedule } from './schedule.model';
+import { Schedule } from "app/model/schedule.model";
 
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
 import { environment } from "environments/environment";

@@ -2,7 +2,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 
-import { Production } from './production.model';
+import { Production } from 'app/model/production.model';
+
 import { FileItem } from "ng2-file-upload";
 import { Subject } from "rxjs/Subject";
 

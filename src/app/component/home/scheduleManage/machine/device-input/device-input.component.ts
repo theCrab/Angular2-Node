@@ -6,7 +6,7 @@ import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
 import { DeviceService } from './../device.service';
-import { Device } from './../device.model';
+import { Device } from 'app/model/device.model';
 
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { Subscription } from "rxjs/Subscription";

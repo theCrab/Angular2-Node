@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from "rxjs/Subscription";
 
 import { ProductionService } from './../production.service';
-import { Production } from './../production.model';
-
+import { Production } from 'app/model/production.model';
 
 @Component({
 	selector: 'app-production-list',

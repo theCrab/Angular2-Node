@@ -5,10 +5,12 @@ import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
 import { ProductionService } from './../production.service';
-import { Production } from './../production.model';
+
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { SafeUrl, DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs/Subscription";
+
+import { Production } from 'app/model/production.model';
 
 import { environment } from "environments/environment";
 

@@ -1,7 +1,7 @@
 import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
 import { ScheduleService } from './../schedule.service';
-import { Schedule } from './../schedule.model';
+import { Schedule } from "app/model/schedule.model";
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";

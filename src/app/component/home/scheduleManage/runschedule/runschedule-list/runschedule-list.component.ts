@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from "rxjs/Subscription";
 
 import { ScheduleService } from './../../schedule/schedule.service';
-import { Schedule } from './../../schedule/schedule.model';
+import { Schedule } from 'app/model/schedule.model';
 @Component({
   selector: 'app-runschedule-list',
   templateUrl: './runschedule-list.component.html',

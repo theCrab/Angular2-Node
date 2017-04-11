@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from "rxjs/Subscription";
 
 import { DeviceService } from './../device.service';
-import { Device } from './../device.model';
+import { Device } from 'app/model/device.model';
 
 import { filterObject } from "app/shared/pipe/filter.model";
 

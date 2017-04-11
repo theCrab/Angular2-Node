@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 
-import { Device } from './device.model';
+import { Device } from 'app/model/device.model';
 
 import { environment } from "environments/environment";
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
