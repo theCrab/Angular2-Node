@@ -24,9 +24,9 @@ export class PopupService {
     }
 
     private keydownEvent = Observable.fromEvent(document, 'keydown')
-        .do(() => {
-            console.log(event);
-        })
+        // .do(() => {
+        //     console.log(event);
+        // })
         .filter((event: KeyboardEvent, index) => {
             return event.keyCode === 27;
         });
