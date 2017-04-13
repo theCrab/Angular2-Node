@@ -11,11 +11,14 @@ import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-conf
 
 import { DateFormat } from "assets/ts/DateFormat";
 
+import TakeUntilDestroy from 'angular2-take-until-destroy';
+
 @Component({
   selector: '[app-schedule-item]',
   templateUrl: './schedule-item.component.html',
   styleUrls: ['./schedule-item.component.css']
 })
+@TakeUntilDestroy
 export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
   //ALan:要修改的物件
@@ -60,6 +63,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
     this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
         this._scheduleService.delete(this.index, schedule)
+          .takeUntil((<any>this).componentDestroy())
           .subscribe(
           data => {
             this._toast.setMessage('排程刪除成功.', 'success');

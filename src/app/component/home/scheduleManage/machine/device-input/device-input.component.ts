@@ -9,18 +9,17 @@ import { DeviceService } from './../device.service';
 import { Device } from 'app/model/device.model';
 
 import { FileUploader, FileItem } from "ng2-file-upload";
-import { Subscription } from "rxjs/Subscription";
 
 import { environment } from "environments/environment";
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 
 @Component({
   selector: 'app-device-input',
   templateUrl: './device-input.component.html',
   styleUrls: ['./device-input.component.css']
 })
-export class DeviceInputComponent implements OnInit,OnDestroy {
-
-  private subscription$: Subscription;
+@TakeUntilDestroy
+export class DeviceInputComponent implements OnInit, OnDestroy {
 
   public uploader: FileUploader = environment.getUploadConfig('device');
   public isAdd: Boolean = true;
@@ -59,8 +58,9 @@ export class DeviceInputComponent implements OnInit,OnDestroy {
       this.fileBoloUrl = window.URL.createObjectURL(fileItem._file);
       this.filePreviewPath = this._sanitizer.bypassSecurityTrustUrl((this.fileBoloUrl));
     }
-    //Alan:訂閱Service裡面的參數
-    this.subscription$ = this._deviceService.device.subscribe(
+    this._deviceService.device
+      .takeUntil((<any>this).componentDestroy())
+      .subscribe(
       (device: Device) => {
         this.device = device;
         if (device) {
@@ -80,7 +80,7 @@ export class DeviceInputComponent implements OnInit,OnDestroy {
           }
         }
       }
-    );
+      );
   }
 
   onSubmit() {
@@ -94,6 +94,7 @@ export class DeviceInputComponent implements OnInit,OnDestroy {
           this.myForm.value.name,
         );
         this._deviceService.add(device, this.uploader.queue[0])
+          .takeUntil((<any>this).componentDestroy())
           .subscribe(
           data => {
             this._toast.setMessage('設備建立成功.', 'success');
@@ -113,6 +114,7 @@ export class DeviceInputComponent implements OnInit,OnDestroy {
         this.device.name = this.myForm.value.name;
 
         this._deviceService.update(this.device, this.uploader.queue[0])
+          .takeUntil((<any>this).componentDestroy())
           .subscribe(
           data => {
             this._toast.setMessage('設備修改成功.', 'success');
@@ -137,7 +139,6 @@ export class DeviceInputComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription$.unsubscribe();
   }
 
   // totalProgress: number = 0;

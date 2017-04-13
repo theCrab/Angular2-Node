@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import {
   Router,
@@ -11,6 +11,7 @@ import {
 } from "@angular/router";
 import { popup } from "app/shared/animation/animation";
 
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 //Alan:the reference:
 //http://stackoverflow.com/questions/37069609/show-loading-screen-when-navigating-between-routes-in-angular-2
 @Component({
@@ -21,16 +22,21 @@ import { popup } from "app/shared/animation/animation";
     popup(0, 300)
   ]
 })
-export class RouteLoadingComponent {
+@TakeUntilDestroy
+export class RouteLoadingComponent implements OnInit {
 
   // Sets initial value to true to show loading spinner on first load
-  loading: boolean = true;
+  public loading: boolean = true;
 
   constructor(
     private _router: Router) {
-    _router.events.subscribe((event: RouterEvent) => {
-      this.navigationInterceptor(event);
-    });
+  }
+  ngOnInit() {
+    this._router.events
+      .takeUntil((<any>this).componentDestroy())
+      .subscribe((event: RouterEvent) => {
+        this.navigationInterceptor(event);
+      });
   }
 
   // Shows and hides the loading spinner during RouterEvent changes
@@ -42,7 +48,7 @@ export class RouteLoadingComponent {
       // this timeout is to see the animation,
       // this.timeOutLoading(100);
       // you can use this for general
-       this.loading = false;
+      this.loading = false;
 
     }
   }

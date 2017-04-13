@@ -1,3 +1,4 @@
+import { DataLoadingDirective } from './../../../../shared/directive/data-loading.directive';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +31,9 @@ import { FileUrlModule } from "app/shared/pipe/file-url.module";
     MachineComponent,
     DeviceListComponent,
     DeviceItemComponent,
-    DeviceInputComponent
+    DeviceInputComponent,
+    DataLoadingDirective
+
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

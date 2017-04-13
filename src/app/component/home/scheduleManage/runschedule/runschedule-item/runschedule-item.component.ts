@@ -6,11 +6,14 @@ import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { ScheduleService } from './../../schedule/schedule.service';
 
 import { DateFormat } from "assets/ts/DateFormat";
+
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 @Component({
   selector: '[app-runschedule-item]',
   templateUrl: './runschedule-item.component.html',
   styleUrls: ['./runschedule-item.component.css']
 })
+@TakeUntilDestroy
 export class RunscheduleItemComponent implements OnInit {
 
   constructor(
@@ -51,6 +54,7 @@ export class RunscheduleItemComponent implements OnInit {
   runSchedule() {
     this.item.actionDate = new Date();
     this._scheduleService.update(this.item)
+      .takeUntil((<any>this).componentDestroy())
       .subscribe(
       data => {
         this._toast.setMessage('開始生產.', 'success');
@@ -69,6 +73,7 @@ export class RunscheduleItemComponent implements OnInit {
   finishSchedule() {
     this.item.finishDate = new Date();
     this._scheduleService.update(this.item)
+      .takeUntil((<any>this).componentDestroy())
       .subscribe(
       data => {
         this._toast.setMessage('結束生產.', 'success');

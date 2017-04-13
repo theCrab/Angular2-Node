@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { DeviceService } from './device.service';
 
-import { Subject } from "rxjs/Subject";
-
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
 @Component({

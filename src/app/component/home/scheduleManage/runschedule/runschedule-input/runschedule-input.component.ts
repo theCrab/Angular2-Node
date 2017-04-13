@@ -7,11 +7,14 @@ import { ScheduleService } from './../../schedule/schedule.service';
 
 import { Schedule } from 'app/model/schedule.model';
 
+import TakeUntilDestroy from "angular2-take-until-destroy";
+
 @Component({
 	selector: 'app-runschedule-input',
 	templateUrl: './runschedule-input.component.html',
 	styleUrls: ['./runschedule-input.component.css']
 })
+@TakeUntilDestroy
 export class RunscheduleInputComponent implements OnInit {
 
 	public schedules = [];
@@ -41,7 +44,9 @@ export class RunscheduleInputComponent implements OnInit {
 				this.myForm.value.createData,
 				this.myForm.value.schedule_id,
 			);
-			this._scheduleService.search(schedule).subscribe(
+			this._scheduleService.search(schedule)
+				.takeUntil((<any>this).componentDestroy())
+				.subscribe(
 				data => {
 					this._toast.setMessage('搜尋成功.', 'success');
 
@@ -52,7 +57,7 @@ export class RunscheduleInputComponent implements OnInit {
 					this._toast.setMessage(error.json(), 'warning');
 					//console.error(error);.error(error)
 				}
-			);
+				);
 		}
 	}
 

@@ -8,20 +8,19 @@ import { ProductionService } from './../production.service';
 
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { SafeUrl, DomSanitizer } from "@angular/platform-browser";
-import { Subscription } from "rxjs/Subscription";
 
 import { Production } from 'app/model/production.model';
 
 import { environment } from "environments/environment";
 
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 @Component({
 	selector: 'app-production-input',
 	templateUrl: './production-input.component.html',
 	styleUrls: ['./production-input.component.css']
 })
+@TakeUntilDestroy
 export class ProductionInputComponent implements OnInit, OnDestroy {
-
-	private subscription$: Subscription;
 
 	public uploader: FileUploader = environment.getUploadConfig('production');
 	public isAdd: Boolean = true;
@@ -38,7 +37,7 @@ export class ProductionInputComponent implements OnInit, OnDestroy {
 		private _toast: ToastComponent,
 		private _popup: PopUpComponent,
 		private _sanitizer: DomSanitizer) { }
-		
+
 	ngOnInit() {
 		this.myForm = new FormGroup({
 			name: new FormControl(null, Validators.required),
@@ -60,29 +59,29 @@ export class ProductionInputComponent implements OnInit, OnDestroy {
 			this.filePreviewPath = this._sanitizer.bypassSecurityTrustUrl((this.fileBlobUrl));
 		}
 
-		//Alan:訂閱Service裡面的參數
-		this.subscription$ =
-			this._productionService.production.subscribe(
-				(production: Production) => {
+		this._productionService.production
+			.takeUntil((<any>this).componentDestroy())
+			.subscribe(
+			(production: Production) => {
 
-					this.production = production
+				this.production = production
 
-					if (production) {
-						this.isAdd = false;
+				if (production) {
+					this.isAdd = false;
 
-						this.filePreviewPath = production.imageUrl;
-					} else {
-						this.isAdd = true;
+					this.filePreviewPath = production.imageUrl;
+				} else {
+					this.isAdd = true;
 
-						this.filePreviewPath = null;
-						//Alan:remove previous blob
-						if (this.fileBlobUrl) {
-							window.URL.revokeObjectURL(this.fileBlobUrl);
-							this.uploader.clearQueue();
-							this.fileBlobUrl = null;
-						}
+					this.filePreviewPath = null;
+					//Alan:remove previous blob
+					if (this.fileBlobUrl) {
+						window.URL.revokeObjectURL(this.fileBlobUrl);
+						this.uploader.clearQueue();
+						this.fileBlobUrl = null;
 					}
 				}
+			}
 			);
 	}
 
@@ -96,6 +95,7 @@ export class ProductionInputComponent implements OnInit, OnDestroy {
 					this.myForm.value.requireDate,
 				);
 				this._productionService.add(production, this.uploader.queue[0])
+					.takeUntil((<any>this).componentDestroy())
 					.subscribe(
 					data => {
 						this._toast.setMessage('產品建立成功.', 'success');
@@ -116,6 +116,7 @@ export class ProductionInputComponent implements OnInit, OnDestroy {
 				this.production.requireDate = this.myForm.value.requireDate
 
 				this._productionService.update(this.production, this.uploader.queue[0])
+					.takeUntil((<any>this).componentDestroy())
 					.subscribe(
 					data => {
 						this._toast.setMessage('產品修改成功.', 'success');
@@ -140,7 +141,6 @@ export class ProductionInputComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscription$.unsubscribe();
 	}
 
 	// totalProgress: number = 0;

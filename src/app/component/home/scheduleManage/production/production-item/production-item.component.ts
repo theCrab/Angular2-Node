@@ -10,11 +10,13 @@ import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-co
 import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-confirm.model";
 
 
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 @Component({
   selector: '[app-production-item]',
   templateUrl: './production-item.component.html',
   styleUrls: ['./production-item.component.css']
 })
+@TakeUntilDestroy
 export class ProductionItemComponent {
 
   //ALan:要修改的物件
@@ -37,6 +39,7 @@ export class ProductionItemComponent {
     this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
         this._productionService.delete(this.index, production)
+          .takeUntil((<any>this).componentDestroy())
           .subscribe(
           data => {
             this._toast.setMessage('產品刪除成功.', 'success');
