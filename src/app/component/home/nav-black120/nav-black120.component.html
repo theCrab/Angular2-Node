@@ -12,7 +12,10 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li *ngFor="let menu of menus" routerLinkActive="active">
-                    <a [routerLink]="menu.routerLink" (click)="toggle(button)">{{menu.routerTitle}}</a>
+                    <a [routerLink]="menu.routerLink" (click)="toggle(button)">
+                        <i [class]="menu.routerIcon"></i>                        
+                        {{menu.routerTitle}}
+                    </a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -4,7 +4,8 @@ mongoose.Promise = Promise;
 
 module.exports.connect = () => {
     return new Promise((resolve, reject) => {
-        let url = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
+        // let url = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
+        let url = process.env.MONGODB_URI || 'mongodb://alan:1111@ds060649.mlab.com:60649/mms_storage';
 
         let conn = mongoose.connection;
 

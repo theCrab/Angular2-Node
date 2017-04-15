@@ -184,6 +184,11 @@ textarea {
     -webkit-appearance: none;
 }
 
+.button[disabled],
+.button[disabled]:hover{
+    background: #989898
+}
+
 .button:hover,
 .button:focus {
     background: #179b77;

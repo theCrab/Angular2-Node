@@ -1,35 +1,43 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from "rxjs/Subscription";
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ProductionService } from './../production.service';
-import { Production } from './../production.model';
+import { Production } from 'app/model/production.model';
 
-
+import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { popup } from "app/shared/animation/animation";
+import { ProductionService } from "app/services/production.service";
 @Component({
 	selector: 'app-production-list',
 	templateUrl: './production-list.component.html',
-	styleUrls: ['./production-list.component.css']
+	styleUrls: ['./production-list.component.css'],
+	animations: [
+		popup()
+	]
 })
-export class ProductionListComponent implements OnDestroy {
+@TakeUntilDestroy
+export class ProductionListComponent implements OnInit, OnDestroy {
 
 	public currentPage: Number = 1;
 	public itemsPerPage: Number = 10;
 
-	public productions:Production[] = [];
-	private subscription$: Subscription;
+	public productions: Production[] = [];
 
-	constructor(
-		private _productionService: ProductionService) {
+	public isLoading: boolean = true;
 
-		this.subscription$ = this._productionService.productionsChanged
+	constructor(private _productionService: ProductionService) { }
+
+	ngOnInit() {
+		this._productionService.productionsChanged
+			.takeUntil((<any>this).componentDestroy())
 			.subscribe(
 			(productions: Production[]) => {
 				this.productions = productions;
 			});
 
 		this._productionService.get()
+			.takeUntil((<any>this).componentDestroy())
 			.subscribe(
 			(data) => {
+				this.isLoading = false;
 				console.log('get data success!');
 			},
 			error => {
@@ -38,6 +46,5 @@ export class ProductionListComponent implements OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscription$.unsubscribe();
 	}
 }

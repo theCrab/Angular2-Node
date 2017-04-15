@@ -1,25 +1,27 @@
+<div *myDataLoading="!isLoading" @popup>
 
-<table class="table table-bordered table-striped">
-  <thead class="thead-default">
-    <tr>
-      <th>產品名稱</th>
-      <th>運作設備</th>
-      <th>預計時間</th>
-      <th>執行時間</th>
-      <th>完成時間</th>
-      <th>耗時</th>
-      <th>建立人/<br>建立時間</th>
-      <th>狀態</th>
-      <th>功能</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of schedules | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage}" 
-        [app-runschedule-item]="item">      
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-bordered table-striped">
+    <thead class="thead-default">
+      <tr>
+        <th>產品名稱</th>
+        <th>運作設備</th>
+        <th>預計時間</th>
+        <th>執行時間</th>
+        <th>完成時間</th>
+        <th>耗時</th>
+        <th>建立人/<br>建立時間</th>
+        <th>狀態</th>
+        <th>功能</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of schedules | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage}" 
+          [app-runschedule-item]="item">      
+      </tr>
+    </tbody>
+  </table>
 
-<my-pagination (pageChange)="currentPage = $event;" 
-               (perPageChange)="itemsPerPage = $event;"
-               [perPageNum]="itemsPerPage"></my-pagination>
+  <my-pagination (pageChange)="currentPage = $event;" 
+                (perPageChange)="itemsPerPage = $event;"
+                [perPageNum]="itemsPerPage"></my-pagination>
+</div>

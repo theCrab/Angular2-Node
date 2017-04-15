@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { authRouting } from './auth.routing';
-
+import { AuthRoutingModule } from "app/component/auth/auth-routing.module";
 
 import { AuthComponent } from "./auth.component";
 import { SigninComponent } from "./signin/signin.component";
@@ -19,7 +18,8 @@ import { FocusChangeDirective } from "app/shared/directive/focus-change.directiv
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        authRouting,
+        
+        AuthRoutingModule,
         CustomFormsModule
     ],
     declarations: [

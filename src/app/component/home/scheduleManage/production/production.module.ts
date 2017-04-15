@@ -10,22 +10,23 @@ import { ProductionInputComponent } from './production-input/production-input.co
 import { Ng2PaginationModule } from "ng2-pagination";
 
 import { CalendarModule, SpinnerModule } from 'primeng/primeng';
-import { ProductionRoutes } from "./production.routing";
 import { FileUploadModule } from "ng2-file-upload";
 
 import { PopUpModule } from "app/shared/component/popUp/popUp.module";
 import { MyPaginationModule } from "app/shared/component/my-pagination/my-pagination.module";
 import { FileUrlModule } from "app/shared/pipe/file-url.module";
 
+import { ProductionRoutingModule } from "./production-routing.module";
+
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    ProductionRoutingModule,
 
     FileUploadModule,
 
     FormsModule,
-    ProductionRoutes,
 
     PopUpModule,
     MyPaginationModule,

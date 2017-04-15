@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertConfirmService } from "./alert-confirm.service";
 
@@ -9,7 +11,7 @@ import { AlertConfirmModel } from "./alert-confirm.model";
   templateUrl: './alert-confirm.component.html',
   styleUrls: ['./alert-confirm.component.css']
 })
-export class AlertConfirmComponent {
+export class AlertConfirmComponent implements OnInit {
   @ViewChild('modal') public modal: ModalDirective;
   public message: AlertConfirmModel;
   //Alan:用來切換subscribed狀態
@@ -38,11 +40,12 @@ export class AlertConfirmComponent {
   };
   public nowClassType = this.classList.success;
 
-  constructor(
-    private _alertConfirmService: AlertConfirmService
-  ) {
+  constructor(private _alertConfirmService: AlertConfirmService) { }
 
-    _alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
+  ngOnInit() {
+
+    this._alertConfirmService.alert$.subscribe((message: AlertConfirmModel) => {
+      this.subs();
       this.isShow = true;
       this.isConfirm = false;
       this.message = message;
@@ -51,7 +54,8 @@ export class AlertConfirmComponent {
       this.handleClose();
     });
 
-    _alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
+    this._alertConfirmService.confirm$.subscribe((message: AlertConfirmModel) => {
+      this.subs();
       this.isShow = true;
       this.isConfirm = true;
       this.message = message;
@@ -59,7 +63,6 @@ export class AlertConfirmComponent {
       this.modal.show();
       this.handleClose();
     });
-
   }
 
   private handleClose() {
@@ -67,6 +70,7 @@ export class AlertConfirmComponent {
       this.modal.onHidden.subscribe(() => {
         this.isShow = false;
         this.subscribedToClosing = true;
+        this.unSubs();
         if (this.isConfirm) {
           if (this.confirmed) {
             this._alertConfirmService.confirmCallback._ok();
@@ -89,6 +93,36 @@ export class AlertConfirmComponent {
   private cancel(): void {
     this.confirmed = false;
     this.modal.hide();
+  }
+
+  private subscription$: Subscription;
+  private keydownEvent = Observable.fromEvent(document, 'keydown')
+    // .do(() => {
+    //   console.log(event);
+    // })
+    .filter((event: KeyboardEvent, index) => {
+      return event.keyCode === 27 || event.key === "Enter";
+    })
+    .map(
+    ((event: KeyboardEvent) => {
+      return event.keyCode !== 27
+    }));
+
+  subs() {
+    this.subscription$ = this.keydownEvent.subscribe(
+      ((result: boolean) => {
+        if (result) {
+          this.ok();
+        } else {
+          this.cancel();
+        }
+        // this.subscription$.unsubscribe();
+      })
+    );
+  }
+
+  unSubs() {
+    this.subscription$.unsubscribe();
   }
 
 

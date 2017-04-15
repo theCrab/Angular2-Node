@@ -17,7 +17,7 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "my",
       "styles": [
         "../node_modules/primeng/resources/themes/omega/theme.css",
         "../node_modules/primeng/resources/primeng.min.css",
@@ -26,6 +26,7 @@
         "assets/css/font-style.css",
         "assets/css/background.css",
         "assets/css/color.css",
+        "assets/js/BlockUi/CoolCycle.css",
         "styles.css"
       ],
       "scripts": [

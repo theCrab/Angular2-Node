@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { ProductionService } from './production.service';
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
+import { ProductionService } from "app/services/production.service";
 
 @Component({
   selector: 'app-production',

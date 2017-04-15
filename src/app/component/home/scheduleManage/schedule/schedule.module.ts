@@ -1,11 +1,12 @@
-import { ScheduleRoutes } from './schedule.routing';
-import { ScheduleListComponent } from './schedule-list/schedule-list.component';
+
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ScheduleRoutingModule } from './schedule-routing.module';
 
 import { ScheduleComponent } from './schedule.component';
+import { ScheduleListComponent } from './schedule-list/schedule-list.component';
 import { ScheduleInputComponent } from './schedule-input/schedule-input.component';
 import { ScheduleItemComponent } from './schedule-item/schedule-item.component';
 
@@ -20,7 +21,7 @@ import { MyPaginationModule } from "app/shared/component/my-pagination/my-pagina
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ScheduleRoutes,
+    ScheduleRoutingModule,
     
     PopUpModule,
     MyPaginationModule,

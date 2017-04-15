@@ -7,29 +7,50 @@
         <div class="field-wrap">
             <label title #firstName>
                 姓<span class="req">*</span>
-              </label>
+                <span class="color-red" 
+                    *ngIf="myForm.get('firstName').invalid && (myForm.get('firstName').touched || submitted)">
+                    必填項目
+                </span>
+            </label>
             <input type="text" [focus-change]="firstName" formControlName="firstName">
+            
         </div>
+        
 
         <div class="field-wrap">
             <label title #lastName>
                 名<span class="req">*</span>
-              </label>
-            <input type="text" [focus-change]="lastName" formControlName="lastName">
+                <span class="color-red" 
+                    *ngIf="myForm.get('lastName').invalid && (myForm.get('lastName').touched || submitted)">
+                        必填項目
+                </span>
+            </label>
+            <input type="text" [focus-change]="lastName" formControlName="lastName">                
+            
         </div>
     </div>
     <div class="field-wrap">
         <label title #email>
               帳號<span class="req">*</span>
-            </label>
+              <span class="color-red" 
+                *ngIf="myForm.get('email').invalid && (myForm.get('email').touched || submitted)">
+                請輸入正確的信箱
+              </span>
+        </label>
         <input type="email" [focus-change]="email" formControlName="email">
+        
     </div>
 
     <div class="field-wrap">
         <label title #password>
               密碼<span class="req">*</span>
+              <span class="color-red" 
+                    *ngIf="myForm.get('password').invalid && (myForm.get('password').touched || submitted)">
+                    密碼格式不符合，不可少於4碼
+              </span>
         </label>
         <input type="password" [focus-change]="password" formControlName="password">
+        
     </div>
 
     <button class="button button-block" [disabled]="!myForm.valid">註冊</button>

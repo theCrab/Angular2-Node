@@ -1,7 +1,6 @@
 import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
-import { ScheduleService } from './../schedule.service';
-import { Schedule } from './../schedule.model';
+import { Schedule } from "app/model/schedule.model";
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
@@ -11,11 +10,15 @@ import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-conf
 
 import { DateFormat } from "assets/ts/DateFormat";
 
+import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { ScheduleService } from "app/services/schedule.service";
+
 @Component({
   selector: '[app-schedule-item]',
   templateUrl: './schedule-item.component.html',
   styleUrls: ['./schedule-item.component.css']
 })
+@TakeUntilDestroy
 export class ScheduleItemComponent implements OnInit, AfterViewInit {
 
   //ALan:要修改的物件
@@ -33,9 +36,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
     private _scheduleService: ScheduleService,
     private _toast: ToastComponent,
     private _popup: PopUpComponent,
-    private _alertConfirmService: AlertConfirmService) {
-
-  }
+    private _alertConfirmService: AlertConfirmService) { }
 
   ngOnInit() {
     this.checkIsAction();
@@ -62,6 +63,7 @@ export class ScheduleItemComponent implements OnInit, AfterViewInit {
     this._alertConfirmService.confirm(new AlertConfirmModel("刪除", "確定要刪除嗎？"))
       .ok(() => {
         this._scheduleService.delete(this.index, schedule)
+          .takeUntil((<any>this).componentDestroy())
           .subscribe(
           data => {
             this._toast.setMessage('排程刪除成功.', 'success');

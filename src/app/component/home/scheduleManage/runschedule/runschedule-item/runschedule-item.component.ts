@@ -1,16 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Schedule } from './../../schedule/schedule.model';
+import { Schedule } from 'app/model/schedule.model';
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
-import { ScheduleService } from './../../schedule/schedule.service';
+import { ScheduleService } from "app/services/schedule.service";
 
 import { DateFormat } from "assets/ts/DateFormat";
+
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 @Component({
   selector: '[app-runschedule-item]',
   templateUrl: './runschedule-item.component.html',
   styleUrls: ['./runschedule-item.component.css']
 })
+@TakeUntilDestroy
 export class RunscheduleItemComponent implements OnInit {
 
   constructor(
@@ -19,6 +22,9 @@ export class RunscheduleItemComponent implements OnInit {
 
   //ALan:要修改的物件
   @Input('app-runschedule-item') item: Schedule;
+
+  public isLoading: boolean = false;
+
   public totalTime: any;
   public state: any = {
     color: 'red',
@@ -46,11 +52,14 @@ export class RunscheduleItemComponent implements OnInit {
         }
       }
     }
+    this.isLoading = false;
   }
 
   runSchedule() {
-    this.item.actionDate = new Date();
-    this._scheduleService.update(this.item)
+    this.isLoading = true;
+    this.item.actionDate = new Date();   
+     this._scheduleService.update(this.item)
+      .takeUntil((<any>this).componentDestroy())
       .subscribe(
       data => {
         this._toast.setMessage('開始生產.', 'success');
@@ -67,8 +76,11 @@ export class RunscheduleItemComponent implements OnInit {
   }
 
   finishSchedule() {
+
+    this.isLoading = true;
     this.item.finishDate = new Date();
     this._scheduleService.update(this.item)
+      .takeUntil((<any>this).componentDestroy())
       .subscribe(
       data => {
         this._toast.setMessage('結束生產.', 'success');

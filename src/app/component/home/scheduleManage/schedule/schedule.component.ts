@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
+import { ScheduleService } from "app/services/schedule.service";
 
-import { ScheduleService } from './../schedule/schedule.service';
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html'
