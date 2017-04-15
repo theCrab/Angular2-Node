@@ -1,45 +1,61 @@
-import { Directive, ElementRef, OnInit, Renderer } from '@angular/core';
+import {
+  Directive,
+  TemplateRef,
+  ViewContainerRef,
+  Compiler,
+  Input,
+  NgModule,
+  Component
+} from '@angular/core';
 
+
+import { Subject } from 'rxjs/Subject';
 @Directive({
   selector: '[myDataLoading]'
 })
-export class DataLoadingDirective implements OnInit {
+export class DataLoadingDirective {
 
   constructor(
-    private _el: ElementRef,
-    private _renderer: Renderer
-  ) { }
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private compiler: Compiler) { }
 
-  ngOnInit() {
-    // this._renderer.createElement(this._el.nativeElement.parentNode, 'button');
+  @Input() set myDataLoading(condition: boolean) {
 
-    // var temp = document.createElement('div');
+    this.viewContainer.clear();
+    if (condition) {
+      // 新增 DOM
+      this.viewContainer.createEmbeddedView(this.templateRef);
 
-    // temp.innerHTML = `
-    //   <div class='loader'>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //   </div>
-    // `;
-
-    // console.log(this._el.nativeElement);
-
-    // this._el.nativeElement.innerHTML = `
-    //   <div class='loader'>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //     <div class='circle'></div>
-    //   </div>
-    // `;
+    } else {
+      // 移除 DOM
+      this.addComponent();
+    }
   }
 
-  // @HostListener('mouseenter') onMouseEnter() {
-  //   this._renderer.createElement(this._el.nativeElement.parentNode, 'button');
-  // }
+  private addComponent() {
+    @Component({
+      template: `
+                <div class='loader'>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                </div> 
+      `,
+      styleUrls: ['./data-loading.component.css']
+    })
+    class TemplateComponent { }
 
+    @NgModule({ declarations: [TemplateComponent] })
+    class TemplateModule { }
+
+    const mod = this.compiler.compileModuleAndAllComponentsSync(TemplateModule);
+    const factory = mod.componentFactories.find((comp) =>
+      comp.componentType === TemplateComponent
+    );
+
+    this.viewContainer.createComponent(factory);
+  }
 }

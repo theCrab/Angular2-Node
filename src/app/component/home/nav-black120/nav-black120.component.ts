@@ -1,52 +1,44 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 
-import { AuthService } from "../../auth/auth.service";
+import { MenuService } from "app/services/menu.service";
+import { AuthService } from "app/services/auth.service";
+
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
 import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-confirm.model";
 
 import { environment } from "environments/environment";
+
+import { Menu } from 'app/model/menu.model';
+
+import TakeUntilDestroy from 'angular2-take-until-destroy';
 
 @Component({
   selector: 'app-nav-black120',
   templateUrl: './nav-black120.component.html',
   styleUrls: ['./nav-black120.component.css']
 })
-export class NavBlack120Component {
+@TakeUntilDestroy
+export class NavBlack120Component implements OnInit {
 
   constructor(
     private _authService: AuthService,
     private _router: Router,
+    private _menuService: MenuService,
     private _alertConfirmService: AlertConfirmService) { }
 
   public mainPage = environment.mainPageUrl;
 
-  public menus = [
-    {
-      routerLink: ['run'],
-      routerTitle: '執行排程',
-      routerIcon: 'fa fa-home',
-      routerLinkActive: 'w3-black'
-    },
-    {
-      routerLink: ['sched'],
-      routerTitle: '排程管理',
-      routerIcon: 'fa fa-user',
-      routerLinkActive: 'w3-black'
-    },
-    {
-      routerLink: ['prod'],
-      routerTitle: '產品管理',
-      routerIcon: 'fa fa-eye',
-      routerLinkActive: 'w3-black'
-    },
-    {
-      routerLink: ['machine'],
-      routerTitle: '設備管理',
-      routerIcon: 'fa fa-envelope',
-      routerLinkActive: 'w3-black'
-    }
-  ];
+  public menus = [];
+
+  ngOnInit() {
+    this._menuService.get()
+      .takeUntil((<any>this).componentDestroy())
+      .subscribe(
+      (menu: Menu[]) => {
+        this.menus = menu;
+      });
+  }
 
   onLogout() {
     this._alertConfirmService.confirm(new AlertConfirmModel("登出", "確定要登出嗎？"))

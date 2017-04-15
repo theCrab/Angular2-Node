@@ -7,6 +7,7 @@ import { Production } from 'app/model/production.model';
 import { FileItem } from "ng2-file-upload";
 import { Subject } from "rxjs/Subject";
 
+import { BlockViewService } from "app/shared/component/block-view/block-view.service";
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
 import { environment } from "environments/environment";
 
@@ -14,8 +15,9 @@ import { environment } from "environments/environment";
 export class ProductionService {
 
     constructor(
-        private http: Http,
-        private alertConfirmService: AlertConfirmService
+        private _http: Http,
+        private _alertConfirmService: AlertConfirmService,
+        private _blockViewService: BlockViewService
     ) { }
 
     private productions: Production[] = [];
@@ -25,7 +27,7 @@ export class ProductionService {
     public productionsChanged = new Subject<Production[]>();
 
     get() {
-        return this.http.get(environment.serverUrl + '/production')
+        return this._http.get(environment.serverUrl + '/production')
             .map((response: Response) => {
                 this.productions = response.json().obj
                     .map((item) => {
@@ -35,13 +37,13 @@ export class ProductionService {
                 return this.productions;
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
 
     add(production: Production, img: FileItem) {
-
+        this._blockViewService.block("儲存中...");
         if (img) {
             return this.upload(img._file)
                 .concatMap(
@@ -57,6 +59,8 @@ export class ProductionService {
     }
 
     update(production: Production, img: FileItem) {
+        this._blockViewService.block("儲存中...");
+
         let body = JSON.stringify(production);
 
         if (img) {
@@ -74,15 +78,21 @@ export class ProductionService {
     }
 
     delete(index: number, production: Production) {
-        return this.http.delete(environment.serverUrl + '/production/' + production._id, environment.getRequestOptions())
+        this._blockViewService.block("刪除中...");
+
+        return this._http.delete(environment.serverUrl + '/production/' + production._id, environment.getRequestOptions())
             .map((response: Response) => {
                 this.productions.splice(index, 1);
 
                 this.productionsChanged.next(this.productions.slice());
                 return this.production;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._blockViewService.unblock();
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -101,7 +111,7 @@ export class ProductionService {
     postAdd(production: Production): Observable<any> {
         const body = JSON.stringify(production);
 
-        return this.http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
+        return this._http.post(environment.serverUrl + '/production', body, environment.getRequestOptions())
             .map((response: Response) => {
                 let production = this.createModel(response.json().obj);
                 this.productions.push(production);
@@ -109,8 +119,12 @@ export class ProductionService {
                 this.productionsChanged.next(this.productions.slice());
                 return production;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._blockViewService.unblock();
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
@@ -118,16 +132,20 @@ export class ProductionService {
 
     postUpdate(production: Production): Observable<any> {
         const body = JSON.stringify(production);
-        return this.http.patch(environment.serverUrl + '/production/' + production._id, body, environment.getRequestOptions())
-            .map((response: Response) => {                
+        return this._http.patch(environment.serverUrl + '/production/' + production._id, body, environment.getRequestOptions())
+            .map((response: Response) => {
                 this.productions[this.editIndex]
                     = this.createModel(response.json().obj);
 
                 this.productionsChanged.next(this.productions.slice());
                 return production;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._blockViewService.unblock();
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -137,7 +155,7 @@ export class ProductionService {
         formData.append('MMSUploadFile', file, file.name);
         formData.append('toUrl', 'production');
 
-        return this.http.post(environment.serverUrl + "/file/upload", formData, new RequestOptions({
+        return this._http.post(environment.serverUrl + "/file/upload", formData, new RequestOptions({
             headers: new Headers({
                 'authorization': sessionStorage.getItem('token')
             })

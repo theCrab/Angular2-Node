@@ -7,6 +7,7 @@ import { Device } from 'app/model/device.model';
 
 import { environment } from "environments/environment";
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
+import { BlockViewService } from "app/shared/component/block-view/block-view.service";
 
 import { Subject } from "rxjs/Subject";
 
@@ -15,7 +16,8 @@ export class DeviceService {
 
     constructor(
         private _http: Http,
-        private _alertConfirmService: AlertConfirmService
+        private _alertConfirmService: AlertConfirmService,
+        private _blockViewService: BlockViewService
     ) { }
 
     private devices: Device[] = [];
@@ -48,7 +50,7 @@ export class DeviceService {
     }
 
     add(device: Device, img: FileItem) {
-
+        this._blockViewService.block("儲存中...");
         if (img) {
             return this.upload(img._file)
                 .concatMap(
@@ -75,6 +77,7 @@ export class DeviceService {
     }
 
     update(device: Device, img: FileItem) {
+        this._blockViewService.block("儲存中...");
         let body = JSON.stringify(device);
 
         if (img) {
@@ -92,6 +95,7 @@ export class DeviceService {
     }
 
     delete(index: number, device: Device) {
+        this._blockViewService.block("刪除中...");
 
         return this._http.delete(`${environment.serverUrl}/device/${device._id}`, environment.getRequestOptions())
             .map((response: Response) => {
@@ -100,7 +104,11 @@ export class DeviceService {
                 this.devicesChanged.next(this.devices.slice());
                 return this.devices;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
+                this._blockViewService.unblock();
                 this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
@@ -127,7 +135,11 @@ export class DeviceService {
 
                 return device;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
+                this._blockViewService.unblock();
                 this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
@@ -144,7 +156,11 @@ export class DeviceService {
                 this.devicesChanged.next(this.devices.slice());
                 return device;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
+                this._blockViewService.unblock();
                 this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });

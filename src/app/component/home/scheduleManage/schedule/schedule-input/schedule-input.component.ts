@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { ScheduleService } from './../schedule.service';
-import { ProductionService } from './../../production/production.service';
-import { DeviceService } from './../../machine/device.service';
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
@@ -14,6 +11,9 @@ import { Device } from 'app/model/device.model';
 import { Subscription } from "rxjs/Subscription";
 
 import TakeUntilDestroy from "angular2-take-until-destroy";
+import { ScheduleService } from "app/services/schedule.service";
+import { ProductionService } from "app/services/production.service";
+import { DeviceService } from "app/services/device.service";
 
 @Component({
   selector: 'app-schedule-input',
@@ -93,12 +93,8 @@ export class ScheduleInputComponent implements OnInit, OnDestroy {
     this.submitted = true;
     if (this.myForm.valid) {
       if (this.schedule && this.schedule._id) {
-        this.schedule.scheduleDate = this.myForm.value.scheduleDate;
-        this.schedule.production = this.myForm.value.production;
-        this.schedule.device = this.myForm.value.device;
-        this.schedule.createData = new Date();
 
-        this._scheduleService.update(this.schedule)
+        this._scheduleService.update( this.myForm.value)
           .takeUntil((<any>this).componentDestroy())
           .subscribe(
           data => {
@@ -145,6 +141,6 @@ export class ScheduleInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
+
   }
 }

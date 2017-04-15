@@ -5,23 +5,30 @@
     <div class="field-wrap">
         <label title #account>
               帳號<span class="req">*</span>
+              <span class="color-red" 
+                    *ngIf="myForm.get('email').invalid && (myForm.get('email').touched || submitted)">
+                    請輸入正確的信箱
+              </span>
         </label>
         <input type="email" 
                [focus-change]="account"
                formControlName="email"
-               required>
-        <!--<span class="color-red" *ngIf="myForm.get('email').invalid" >請輸入正確的帳號</span>                              -->
+               required>        
     </div>
 
     <div class="field-wrap">
         <label title #password>
               密碼<span class="req">*</span>
+              <span class="color-red" 
+                    *ngIf="myForm.get('password').invalid && (myForm.get('password').touched || submitted)">
+                    密碼格式不符合，不可少於4碼
+              </span>
         </label>
         <input type="password" 
                [focus-change]="password"
                formControlName="password"
                required>
-        <!--<span class="color-red" *ngIf="myForm.get('password').invalid">請輸入密碼</span>        -->
+        
     </div>
     <p class="forgot">
 

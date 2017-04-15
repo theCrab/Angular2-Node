@@ -1,13 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { ProductionService } from './../production.service';
 import { Production } from 'app/model/production.model';
 
 import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { popup } from "app/shared/animation/animation";
+import { ProductionService } from "app/services/production.service";
 @Component({
 	selector: 'app-production-list',
 	templateUrl: './production-list.component.html',
-	styleUrls: ['./production-list.component.css']
+	styleUrls: ['./production-list.component.css'],
+	animations: [
+		popup()
+	]
 })
 @TakeUntilDestroy
 export class ProductionListComponent implements OnInit, OnDestroy {
@@ -16,6 +20,8 @@ export class ProductionListComponent implements OnInit, OnDestroy {
 	public itemsPerPage: Number = 10;
 
 	public productions: Production[] = [];
+
+	public isLoading: boolean = true;
 
 	constructor(private _productionService: ProductionService) { }
 
@@ -31,6 +37,7 @@ export class ProductionListComponent implements OnInit, OnDestroy {
 			.takeUntil((<any>this).componentDestroy())
 			.subscribe(
 			(data) => {
+				this.isLoading = false;
 				console.log('get data success!');
 			},
 			error => {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from "@angular/router";
 
-import { AppCanActivateService } from './app-canActivate.service';
+import { AuthGuard } from "app/auth-guard.service";
 
 const routes: Routes = [
     {
@@ -11,7 +11,8 @@ const routes: Routes = [
     },
     {
         path: 'index',
-        loadChildren: './component/home/home.module#HomeModule'
+        loadChildren: './component/home/home.module#HomeModule',
+        canLoad: [AuthGuard]
     },
     {
         path: 'auth',
@@ -26,7 +27,13 @@ const routes: Routes = [
 
 //  { useHash: true }
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [
+        RouterModule.forRoot(
+            routes
+        ),
+    ],
+    exports: [
+        RouterModule
+    ]
 })
 export class AppRoutingModule { }

@@ -5,13 +5,13 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
-import { DeviceService } from './../device.service';
 import { Device } from 'app/model/device.model';
 
 import { FileUploader, FileItem } from "ng2-file-upload";
 
 import { environment } from "environments/environment";
 import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { DeviceService } from "app/services/device.service";
 
 @Component({
   selector: 'app-device-input',

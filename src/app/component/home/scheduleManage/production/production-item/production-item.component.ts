@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
-import { ProductionService } from './../production.service';
 import { Production } from 'app/model/production.model';
 
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
@@ -11,6 +10,7 @@ import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-conf
 
 
 import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { ProductionService } from "app/services/production.service";
 @Component({
   selector: '[app-production-item]',
   templateUrl: './production-item.component.html',

@@ -24,12 +24,19 @@
   <p [ngStyle]="state">{{state.text}}</p>
 </td>
 <td>
-  <button *ngIf="state.state==0" class="btn btn-sm btn-warning" (click)="runSchedule()">
+  <button *ngIf="state.state==0" 
+          [disabled]="isLoading" 
+          class="btn btn-sm btn-warning" 
+          (click)="runSchedule()">
           <i class="fa fa-pencil"></i>
           開始生產
-          </button>
-  <button *ngIf="state.state==1" class="btn btn-sm btn-warning" (click)="finishSchedule()">
+  </button>
+
+  <button *ngIf="state.state==1" 
+          [disabled]="isLoading" 
+          class="btn btn-sm btn-warning" 
+          (click)="finishSchedule()">
           <i class="fa fa-pencil"></i>
           結束生產
-          </button>
+  </button>
 </td>

@@ -8,15 +8,18 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 //Component
 
+import { BlockViewModule } from "app/shared/component/block-view/block-view.module";
 import { AlertConfirmComponent } from "app/shared/component/alert-confirm/alert-confirm.component";
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { RouteLoadingComponent } from "app/shared/component/route-loading/route-loading.component";
 //routing
 import { AppRoutingModule } from './app-routing.module';
 //Service
-import { AppCanActivateService } from './app-canActivate.service';
+import { AuthGuard } from './auth-guard.service';
+import { AuthService } from "app/services/auth.service";
+
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
-import { AuthService } from "app/component/auth/auth.service";
+import { MenuService } from './services/menu.service';
 
 //3rd
 import { ModalModule, AlertModule } from 'ng2-bootstrap';
@@ -36,7 +39,7 @@ import 'rxjs/add/observable/fromEvent';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    
+
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
@@ -44,7 +47,9 @@ import 'rxjs/add/observable/fromEvent';
 
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    CustomFormsModule
+    CustomFormsModule,
+
+    BlockViewModule
   ],
   declarations: [
     AppComponent,
@@ -57,7 +62,8 @@ import 'rxjs/add/observable/fromEvent';
     AuthService,
     AlertConfirmService,
     ToastComponent,
-    AppCanActivateService
+    AuthGuard,
+    MenuService
   ],
   bootstrap: [AppComponent]
 })

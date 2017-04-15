@@ -1,8 +1,10 @@
-import { PopupService } from './popup.service';
-import { PopUpComponent } from './popUp.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { PopUpComponent } from './popUp.component';
+import { PopupService } from './popup.service';
+import { DataLoadingDirective } from "app/shared/directive/data-loading.directive";
+import { DataLoadingComponent } from "app/shared/component/data-loading/data-loading.component";
 
 @NgModule({
     imports: [
@@ -10,13 +12,17 @@ import { CommonModule } from '@angular/common';
     ],
     declarations: [
         PopUpComponent,
+        DataLoadingDirective,
+        DataLoadingComponent
     ],
     providers: [
         PopUpComponent,
-        PopupService
+        PopupService,
     ],
     exports: [
         PopUpComponent,
+        DataLoadingDirective,
+        DataLoadingComponent
     ]
 })
 export class PopUpModule { }

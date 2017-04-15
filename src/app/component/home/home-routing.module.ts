@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './home.component';
 import { Routes, RouterModule } from "@angular/router";
 
-import { AppCanActivateService } from "app/app-canActivate.service";
-
+import { HomeComponent } from './home.component';
+import { AuthGuard } from 'app/auth-guard.service';
 const routes: Routes = [
     {
         path: '',
@@ -13,30 +12,33 @@ const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        canActivate: [AppCanActivateService],
         children: [
             {
                 path: 'run',
-                loadChildren: './scheduleManage/runschedule/runschedule.module#RunscheduleModule'
+                loadChildren: './scheduleManage/runschedule/runschedule.module#RunscheduleModule',
+                canActivate:[AuthGuard]
             },
             {
                 path: 'sched',
-                loadChildren: './scheduleManage/schedule/schedule.module#ScheduleModule'
+                loadChildren: './scheduleManage/schedule/schedule.module#ScheduleModule',
+                canActivate:[AuthGuard]
             },
             {
                 path: 'prod',
-                loadChildren: './scheduleManage/production/production.module#ProductionModule'
+                loadChildren: './scheduleManage/production/production.module#ProductionModule',
+                canActivate:[AuthGuard]
             },
             {
                 path: 'machine',
-                loadChildren: './scheduleManage/machine/machine.module#MachineModule'
+                loadChildren: './scheduleManage/machine/machine.module#MachineModule',
+                canActivate:[AuthGuard]
             },
         ]
     }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class HomeRoutingModule { }

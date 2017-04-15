@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { AuthService } from "../auth.service";
+import { AuthService } from "app/services/auth.service";
+
 import { User } from "app/model/user.model";
 
 import { environment } from "environments/environment";
@@ -26,7 +27,10 @@ export class SigninComponent implements OnInit {
 				Validators.email,
 				Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 			]),
-			password: new FormControl('1111', Validators.required),
+			password: new FormControl('1111', [
+				Validators.required,
+				Validators.minLength(4)
+			]),
 			remeberMe: new FormControl(false)
 		});
 	}

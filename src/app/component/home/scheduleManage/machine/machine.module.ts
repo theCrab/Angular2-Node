@@ -1,4 +1,3 @@
-import { DataLoadingDirective } from './../../../../shared/directive/data-loading.directive';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +15,7 @@ import { MyPaginationModule } from "app/shared/component/my-pagination/my-pagina
 import { FileUrlModule } from "app/shared/pipe/file-url.module";
 
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 @NgModule({
   imports: [
     CommonModule,
@@ -31,9 +31,7 @@ import { FileUrlModule } from "app/shared/pipe/file-url.module";
     MachineComponent,
     DeviceListComponent,
     DeviceItemComponent,
-    DeviceInputComponent,
-    DataLoadingDirective
-
+    DeviceInputComponent
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

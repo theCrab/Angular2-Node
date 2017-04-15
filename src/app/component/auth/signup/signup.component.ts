@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { AuthService } from "../auth.service";
+import { AuthService } from "app/services/auth.service";
 
 import { Router } from "@angular/router";
 
@@ -33,7 +33,10 @@ export class SignupComponent implements OnInit {
 				Validators.email,
 				Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 			]),
-			password: new FormControl(null, Validators.required),
+			password: new FormControl(null, [
+				Validators.required,
+				Validators.minLength(4)
+			]),
 		});
 	}
 

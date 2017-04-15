@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Schedule } from 'app/model/schedule.model';
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
-import { ScheduleService } from './../../schedule/schedule.service';
+import { ScheduleService } from "app/services/schedule.service";
 
 import { DateFormat } from "assets/ts/DateFormat";
 
@@ -22,6 +22,9 @@ export class RunscheduleItemComponent implements OnInit {
 
   //ALan:要修改的物件
   @Input('app-runschedule-item') item: Schedule;
+
+  public isLoading: boolean = false;
+
   public totalTime: any;
   public state: any = {
     color: 'red',
@@ -49,11 +52,13 @@ export class RunscheduleItemComponent implements OnInit {
         }
       }
     }
+    this.isLoading = false;
   }
 
   runSchedule() {
-    this.item.actionDate = new Date();
-    this._scheduleService.update(this.item)
+    this.isLoading = true;
+    this.item.actionDate = new Date();   
+     this._scheduleService.update(this.item)
       .takeUntil((<any>this).componentDestroy())
       .subscribe(
       data => {
@@ -71,6 +76,8 @@ export class RunscheduleItemComponent implements OnInit {
   }
 
   finishSchedule() {
+
+    this.isLoading = true;
     this.item.finishDate = new Date();
     this._scheduleService.update(this.item)
       .takeUntil((<any>this).componentDestroy())

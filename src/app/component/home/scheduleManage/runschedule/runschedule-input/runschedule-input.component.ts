@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
-import { ScheduleService } from './../../schedule/schedule.service';
+import { ScheduleService } from "app/services/schedule.service";
 
 import { Schedule } from 'app/model/schedule.model';
 
@@ -54,7 +54,7 @@ export class RunscheduleInputComponent implements OnInit {
 					//console.error(error);.log(data)
 				},
 				error => {
-					this._toast.setMessage(error.json(), 'warning');
+					this._toast.setMessage('找不到資料', 'warning');
 					//console.error(error);.error(error)
 				}
 				);

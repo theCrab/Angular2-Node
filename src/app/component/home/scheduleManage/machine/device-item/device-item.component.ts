@@ -3,12 +3,12 @@ import { Component, Input } from '@angular/core';
 import { ToastComponent } from "app/shared/component/toast/toast.component";
 import { PopUpComponent } from "app/shared/component/popUp/popUp.component";
 
-import { DeviceService } from './../device.service';
 import { Device } from 'app/model/device.model';
 
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
 import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-confirm.model";
 import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { DeviceService } from "app/services/device.service";
 
 @Component({
   selector: `[app-device-item]`,

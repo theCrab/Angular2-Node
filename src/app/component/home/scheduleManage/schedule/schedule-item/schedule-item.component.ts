@@ -1,6 +1,5 @@
 import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 
-import { ScheduleService } from './../schedule.service';
 import { Schedule } from "app/model/schedule.model";
 
 import { ToastComponent } from "app/shared/component/toast/toast.component";
@@ -12,6 +11,7 @@ import { AlertConfirmModel } from "app/shared/component/alert-confirm/alert-conf
 import { DateFormat } from "assets/ts/DateFormat";
 
 import TakeUntilDestroy from 'angular2-take-until-destroy';
+import { ScheduleService } from "app/services/schedule.service";
 
 @Component({
   selector: '[app-schedule-item]',

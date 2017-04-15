@@ -8,13 +8,15 @@ import { Schedule } from "app/model/schedule.model";
 
 import { AlertConfirmService } from "app/shared/component/alert-confirm/alert-confirm.service";
 import { environment } from "environments/environment";
+import { BlockViewService } from "app/shared/component/block-view/block-view.service";
 
 @Injectable()
 export class ScheduleService {
 
     constructor(
-        private http: Http,
-        private alertConfirmService: AlertConfirmService
+        private _http: Http,
+        private _alertConfirmService: AlertConfirmService,
+        private _blockViewService: BlockViewService
     ) { }
 
     private schedules: Schedule[] = [];
@@ -23,8 +25,12 @@ export class ScheduleService {
     public schedule = new Subject<Schedule>();
     public schedulesChanged = new Subject<Schedule[]>();
 
+    public isLoading = new Subject<boolean>();
+
     get() {
-        return this.http.get(environment.serverUrl + '/schedule')
+        this.isLoading.next(true);
+
+        return this._http.get(environment.serverUrl + '/schedule')
             .map((response: Response) => {
                 this.schedules = response.json().obj
                     .map((item) => {
@@ -33,56 +39,91 @@ export class ScheduleService {
                 this.schedulesChanged.next(this.schedules.slice());
                 return this.schedules;
             })
+            .do(() => {
+                this.isLoading.next(false);
+            })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
 
     add(schedule: Schedule) {
+        this._blockViewService.block("儲存中...");
+
         const body = JSON.stringify(schedule);
 
-        return this.http.post(environment.serverUrl + '/schedule', body, environment.getRequestOptions())
+        return this._http.post(environment.serverUrl + '/schedule', body, environment.getRequestOptions())
             .map((response: Response) => {
                 let schedule = this.createModel(response.json().obj);
                 this.schedules.push(schedule);
 
                 this.schedulesChanged.next(this.schedules.slice());
+
                 return schedule;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._blockViewService.unblock();
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json())
             });
     }
 
-    update(schedule: Schedule) {
-        const body = JSON.stringify(schedule);
+    update(formData: any) {
+        this._blockViewService.block("儲存中...");
+        var tmp: any;
+        if (!formData._id) {
+            tmp = Object.assign({}, this.schedules[this.editIndex]);
 
-        return this.http.patch(environment.serverUrl + '/schedule/' + schedule._id, body, environment.getRequestOptions())
+            tmp.scheduleDate = formData.scheduleDate;
+            tmp.production = formData.production;
+            tmp.device = formData.device;
+            tmp.createData = new Date();
+        } else {
+            tmp = formData;
+        }
+        const body = JSON.stringify(tmp);
+
+        return this._http.patch(environment.serverUrl + '/schedule/' + tmp._id, body, environment.getRequestOptions())
+
             .map((response: Response) => {
                 this.schedules[this.editIndex]
                     = this.createModel(response.json().obj);
 
                 this.schedulesChanged.next(this.schedules.slice());
-                return schedule;
+
+                return this.schedules[this.editIndex];
+            })
+            .do(() => {
+                this._blockViewService.unblock();
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._blockViewService.unblock();
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
 
     delete(index: number, schedule: Schedule) {
-        return this.http.delete(environment.serverUrl + '/schedule/' + schedule._id, environment.getRequestOptions())
+        this._blockViewService.block("刪除中...");
+
+        return this._http.delete(environment.serverUrl + '/schedule/' + schedule._id, environment.getRequestOptions())
             .map((response: Response) => {
                 this.schedules.splice(index, 1);
 
                 this.schedulesChanged.next(this.schedules.slice());
+
                 return this.schedule;
             })
+            .do(() => {
+                this._blockViewService.unblock();
+            })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this._blockViewService.unblock();
+                this._alertConfirmService.alert(error.json());
                 return Observable.throw(error.json());
             });
     }
@@ -98,32 +139,32 @@ export class ScheduleService {
     }
 
     search(schedule?: Schedule) {
+        this.isLoading.next(true);
 
         const body = JSON.stringify(schedule);
 
-        return this.http.post(environment.serverUrl + '/schedule/s', body, environment.getRequestOptions())
-            .map((response: Response) => {
-                const result: Schedule[] = response.json().obj;
-                let transformedList: Schedule[] = [];
-                for (let schedule of result) {
-                    transformedList.push(new Schedule(
-                        schedule.scheduleDate,
-                        schedule.production,
-                        schedule.device,
-                        schedule.creator,
-                        schedule.createData,
-                        schedule._id,
-                        schedule.actionDate,
-                        schedule.finishDate)
-                    );
-                }
-                this.schedules = transformedList;
-                this.schedulesChanged.next(this.schedules);
+        return this._http.post(environment.serverUrl + '/schedule/s', body, environment.getRequestOptions())
 
-                return transformedList;
+            .do(() => {
+                this.isLoading.next(false);
+            })
+            .map((response: Response) => {
+                this.schedules = response.json().obj
+                    .map((item) => {
+                        return this.createModel(item)
+                    });
+                this.schedulesChanged.next(this.schedules.slice());
+
+                return this.schedules;
             })
             .catch((error: Response) => {
-                this.alertConfirmService.alert(error.json());
+                this.isLoading.next(false);
+                // this.alertConfirmService.alert(
+                //     {
+                //         title: '無資料',
+                //         message: '不存在的編號!'
+                //     }
+                // );
                 return Observable.throw(error.json());
             });
     }
