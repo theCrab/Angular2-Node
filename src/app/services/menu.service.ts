@@ -20,7 +20,6 @@ export class MenuService {
   private editIndex: number;
 
   public menu = new Subject<Menu>();
-  public menusChanged = new Subject<Menu[]>();
 
   get() {
     return this._http.get(environment.serverUrl + '/menu')
@@ -29,7 +28,6 @@ export class MenuService {
           .map((item) => {
             return new Menu(item);
           });
-        this.menusChanged.next(this.menus.slice());
         return this.menus;
       })
       .catch((error: Response) => {
