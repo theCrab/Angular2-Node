@@ -1,0 +1,12 @@
+<h2>Angular 2 Animation - Complex Fade </h2>
+
+<div [@isVisibleChanged]="isVisible" (@isVisibleChanged.done)="animationDone($event)">
+    Hello Thomas
+    <p>Can you see me? I should fade in or out...</p>
+</div>
+
+<button (click)="isVisible = !isVisible">Toggle</button>
+
+<div class="copyright">
+    <hr> Copyright 2016, <a href="http://thoughtram.io">thoughtram</a> GmbH. All Rights Reserved.
+</div>

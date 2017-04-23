@@ -16,7 +16,7 @@ const routes: Routes = [
         //Alan: resolve
         resolve: {
             /*
-            前面是傳過去的ID，後面是provide的ID
+            直接使用resolve
              */
             menuList: MenuResolve
         },
@@ -47,7 +47,6 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]　,
     providers: [
         MenuResolve
         // {
@@ -56,6 +55,7 @@ const routes: Routes = [
         //         return 'sdfsdfsdf';
         //     }
         // }
-    ]
+    ],
+    exports: [RouterModule]
 })
 export class HomeRoutingModule { }

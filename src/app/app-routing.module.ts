@@ -15,6 +15,11 @@ const routes: Routes = [
         canLoad: [AuthGuard]
     },
     {
+        path: 'manage',
+        loadChildren: './component/manage/manage.module#ManageModule',
+        canLoad: [AuthGuard]
+    },
+    {
         path: 'auth',
         loadChildren: './component/auth/auth.module#AuthModule'
     },

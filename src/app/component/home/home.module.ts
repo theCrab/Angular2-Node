@@ -3,22 +3,20 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { HomeComponent } from './home.component';
-import { NavBlack120Component } from './nav-black120/nav-black120.component';
-import { HomeRoutingModule } from "./home-routing.module";
 import { DeviceService } from "app/services/device.service";
 import { ProductionService } from "app/services/production.service";
 import { ScheduleService } from "app/services/schedule.service";
+import { NavBarModule } from "app/component/home/nav-bar/nav-bar.module";
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HomeRoutingModule,
+    NavBarModule
   ],
   declarations: [
-    HomeComponent,
-    NavBlack120Component
-],
+    HomeComponent
+  ],
   providers: [
     DeviceService,
     ProductionService,

@@ -11,11 +11,11 @@ import { environment } from "environments/environment";
 import { Menu } from 'app/model/menu.model';
 
 @Component({
-  selector: 'app-nav-black120',
-  templateUrl: './nav-black120.component.html',
-  styleUrls: ['./nav-black120.component.css']
+  selector: 'app-nav-bar',
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.css']
 })
-export class NavBlack120Component implements OnInit {
+export class NavBarComponent implements OnInit {
 
   constructor(
     private _authService: AuthService,
